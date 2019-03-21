@@ -6,11 +6,11 @@
 
     <!-- Your product logo - 144dp color version of your app icon -->
     <item>
-
         <bitmap
-            android:src="@drawable/boatlogo"
-            android:gravity="center"/>
+            android:src="@drawable/dabandroid"
+            android:gravity="center" />
 
     </item>
+
 
 </layer-list>
