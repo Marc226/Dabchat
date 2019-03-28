@@ -1,0 +1,75 @@
+package com.example.LoginService.model;
+
+
+import org.springframework.data.annotation.Id;
+
+public class User {
+
+    @Id
+    private String _id;
+
+    private String firstName = "";
+    private String lastName = "";
+    private String passWord;
+    private String mail;
+    private int phoneNumber;
+
+    public User(){
+    }
+
+    public User(String id, String passWord, String mail) {
+        this._id = id;
+        this.passWord = passWord;
+        this.mail = mail;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        this._id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String eMail) {
+        this.mail = eMail;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
+}
