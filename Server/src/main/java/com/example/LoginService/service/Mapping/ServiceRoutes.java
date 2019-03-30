@@ -1,7 +1,8 @@
-package com.example.LoginService.service;
+package com.example.LoginService.service.Mapping;
 
 import com.example.LoginService.model.LoginForm;
 import com.example.LoginService.model.User;
+import com.example.LoginService.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
