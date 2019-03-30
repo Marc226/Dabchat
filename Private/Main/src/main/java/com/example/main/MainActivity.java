@@ -17,7 +17,7 @@ public class MainActivity extends DaggerAppCompatActivity  {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_Standard);
         setContentView(R.layout.main_content);
-        Navigation.findNavController(this, R.id.main_content).navigate(R.id.redirectToLogin);
+        Navigation.findNavController(this, R.id.main_content).navigate(R.id.action_rootFragment_to_upload_fragment);
     }
 
 

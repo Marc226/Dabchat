@@ -11,8 +11,12 @@
         android:name="com.example.main.StartFragment"
         android:label="RootFragment" >
         <action
-            android:id="@+id/redirectToLogin"
-            app:destination="@id/login_navigation_graph" />
+            android:id="@+id/action_rootFragment_to_upload_fragment"
+            app:destination="@id/upload_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/upload_fragment"
+        android:name="com.example.uploadfeature.ui.Upload_fragment"
+        android:label="Upload_fragment" />
 
 </navigation>
