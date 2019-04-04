@@ -14,4 +14,9 @@
     <string name="password_register">Password</string>
     <string name="password_repeat_register">Password repeat</string>
     <string name="register_form">Register Form</string>
+
+
+    <!--Upload-->
+    <string name="upload_btn">Upload</string>
+    <string name="dank_view">Dankload</string>
 </resources>
