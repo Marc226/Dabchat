@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/upload_fragment"
-        android:name="com.example.main.ui.Upload_fragment"
+        android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
         tools:layout="@layout/fragment_upload_fragment" />
 

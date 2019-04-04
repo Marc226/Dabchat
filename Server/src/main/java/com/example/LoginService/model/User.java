@@ -3,6 +3,8 @@ package com.example.LoginService.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.List;
+
 public class User {
 
     @Id
@@ -13,6 +15,8 @@ public class User {
     private String passWord;
     private String mail;
     private int phoneNumber;
+    private List<String> frientList;
+
 
     public User(){
     }
@@ -71,5 +75,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public List<String> getFrientList() {
+        return frientList;
+    }
 
+    public void setFrientList(List<String> frientList) {
+        this.frientList = frientList;
+    }
 }
