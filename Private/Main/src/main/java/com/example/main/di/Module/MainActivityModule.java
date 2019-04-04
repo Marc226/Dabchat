@@ -2,7 +2,7 @@ package com.example.main.di.Module;
 
 import android.content.Context;
 
-import com.example.common.Common.di.Scopes.MainActivityScope;
+import com.example.main.di.Scopes.MainActivityScope;
 import com.example.main.MainActivity;
 import com.example.main.R;
 

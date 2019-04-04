@@ -1,9 +1,8 @@
 package com.example.main.di.Module;
 
-import com.example.loginfeature.di.LoginModule;
-import com.example.loginfeature.di.LoginScope;
-import com.example.loginfeature.ui.LoginFragment;
-import com.example.loginfeature.ui.RegisterFragment;
+import com.example.main.di.Scopes.LoginScope;
+import com.example.main.ui.LoginFragment;
+import com.example.main.ui.RegisterFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

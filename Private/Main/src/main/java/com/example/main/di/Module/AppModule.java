@@ -3,8 +3,8 @@ package com.example.main.di.Module;
 import android.content.Context;
 
 
-import com.example.common.Common.di.Scopes.AppScope;
-import com.example.common.Common.utils.ApplicationConfig;
+import com.example.main.di.Scopes.AppScope;
+import com.example.main.utils.ApplicationConfig;
 import com.example.main.App;
 
 import java.util.concurrent.Executor;

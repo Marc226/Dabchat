@@ -1,24 +1,17 @@
 package com.example.main.di.Module;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.widget.Toast;
 
-import com.example.common.Common.di.Scopes.AppScope;
-import com.example.common.Common.utils.ApplicationConfig;
-import com.example.common.Common.utils.NetworkUtil;
-
-import java.util.concurrent.TimeUnit;
+import com.example.main.di.Scopes.AppScope;
+import com.example.main.utils.ApplicationConfig;
+import com.example.main.utils.NetworkUtil;
 
 import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -1,1 +1,1 @@
-include ':common', ':Main', ':loginfeature', ':uploadfeature'
+include ':Main'
