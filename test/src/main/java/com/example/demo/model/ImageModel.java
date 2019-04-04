@@ -1,8 +1,13 @@
 package com.example.demo.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class ImageModel {
+    @Id
+    private int imageId;
+
     private String fromUser;
     private List<String> toUsers;
     private String imageData;
