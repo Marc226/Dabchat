@@ -1,6 +1,6 @@
 package com.example.LoginService.service.Mapping;
 
-import com.example.LoginService.model.Message;
+import com.example.MessageService.model.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
