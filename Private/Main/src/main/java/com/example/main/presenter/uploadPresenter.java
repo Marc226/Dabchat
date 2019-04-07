@@ -4,7 +4,7 @@ import com.example.main.interfaces.uploadContract;
 
 
 
-public class UploadPresenter implements uploadContract.iUploadView{
+public class uploadPresenter implements uploadContract.iUploadView{
 
 
 }
