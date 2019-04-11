@@ -1,5 +1,6 @@
-package com.example.LoginService.model;
+package com.example.MessageService.model;
 
+import com.example.LoginService.model.User;
 import org.springframework.data.annotation.Id;
 
 import java.io.File;
@@ -10,6 +11,8 @@ public class Message {
 
     @Id
     String id;
+
+    User fromUser;
     List<User> recipients;
     File image;
 
@@ -43,4 +46,13 @@ public class Message {
         }
         return null;
     }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
+
 }

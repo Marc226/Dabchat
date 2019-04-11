@@ -20,7 +20,7 @@ import com.example.main.R;
 import static android.app.Activity.RESULT_OK;
 
 
-public class UploadFragment extends DaggerFragment {
+public class UploadFragment extends Fragment {
     ImageView upload_imageView;
     Button upload_button;
     private static final int PICK_IMAGE = 100;
