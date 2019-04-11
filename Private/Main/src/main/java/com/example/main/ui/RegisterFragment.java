@@ -76,7 +76,10 @@ public class RegisterFragment extends DaggerFragment implements RegisterContract
 
     @Override
     public void displayToast(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        System.out.println("Trying to show toast...");
+        final Toast currentToast = Toast.makeText(this.getContext(), null, Toast.LENGTH_SHORT);
+        currentToast.setText(message);
+        currentToast.show();
     }
 
     @Override
@@ -118,6 +121,18 @@ public class RegisterFragment extends DaggerFragment implements RegisterContract
                 presenter.checkPhoneNumber(phone.getText().toString()) == 0){
             return false;
         }
+        if(stringsEmptyOrNull(email.getText().toString(), password.getText().toString(), password_repeat.getText().toString(), phone.getText().toString())) {
+            return false;
+        }
         return true;
+    }
+
+    private boolean stringsEmptyOrNull(String... strings) {
+        for(String str : strings) {
+            if(str == null || str == "") {
+                return true;
+            }
+        }
+        return false;
     }
 }
