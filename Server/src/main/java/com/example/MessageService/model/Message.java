@@ -11,6 +11,7 @@ public class Message {
 
     @Id
     String id;
+
     User fromUser;
     List<User> recipients;
     File image;
@@ -53,4 +54,5 @@ public class Message {
     public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
     }
+
 }

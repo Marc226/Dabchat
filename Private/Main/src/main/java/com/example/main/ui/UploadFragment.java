@@ -20,18 +20,18 @@ import com.example.main.R;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Upload_fragment extends Fragment {
+public class UploadFragment extends Fragment {
     ImageView upload_imageView;
     Button upload_button;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
 
-    public Upload_fragment() {
+    public UploadFragment() {
         // Required empty public constructor
     }
 
-    public static Upload_fragment newInstance(String param1, String param2) {
-        Upload_fragment fragment = new Upload_fragment();
+    public static UploadFragment newInstance(String param1, String param2) {
+        UploadFragment fragment = new UploadFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
