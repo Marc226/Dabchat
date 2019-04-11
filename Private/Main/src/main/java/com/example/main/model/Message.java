@@ -3,30 +3,27 @@ package com.example.main.model;
 import android.media.Image;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-@Entity
+
 public class Message {
 
-    @PrimaryKey
-    @NonNull
+
     private String id;
-    @ColumnInfo(name = "image")
+    private User fromUser;
+    private List<String> recipientsID;
     private File image;
 
 
-    @Ignore
     public Message (){
     }
 
     public Message(String id, File image) {
         this.id = id;
         this.image = image;
+        this.recipientsID = new ArrayList<>();
     }
 
     public File getImage() {
@@ -41,5 +38,16 @@ public class Message {
         return id;
     }
 
+    public void addRecipient(String id){
+        this.recipientsID.add(id);
+    }
 
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
 }

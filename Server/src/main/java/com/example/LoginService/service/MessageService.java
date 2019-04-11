@@ -14,7 +14,11 @@ public class MessageService implements IMessageService {
 
     @Override
     public ResponseEntity<Message> sendMessage(Message message) {
-        repository.save(message);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+
+        if(repository.findByid(message.getId()) == null) {
+            repository.save(message);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
