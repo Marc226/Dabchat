@@ -1,8 +1,7 @@
-package com.example.MessageService.common;
+package com.example.LoginService.common;
 
-import com.example.MessageService.model.Message;
+import com.example.LoginService.model.Message;
 
-import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 
 public interface IMessageService {

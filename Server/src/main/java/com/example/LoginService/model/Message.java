@@ -1,6 +1,8 @@
-package com.example.MessageService.model;
+package com.example.LoginService.model;
 
 import com.example.LoginService.model.User;
+import com.example.LoginService.service.RegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
 import java.io.File;
@@ -13,13 +15,18 @@ public class Message {
     String id;
 
     User fromUser;
-    List<User> recipients;
+    List<String> recipientsID;
     File image;
+
+
+    public Message(){
+
+    }
 
     public Message(String id, File image) {
         this.id = id;
         this.image = image;
-        this.recipients = new ArrayList<>();
+        this.recipientsID = new ArrayList<>();
     }
 
     public File getImage() {
@@ -34,18 +41,10 @@ public class Message {
         return id;
     }
 
-    public void addRecipient(User user){
-        this.recipients.add(user);
+    public void addRecipient(String id){
+        this.recipientsID.add(id);
     }
 
-    public User getUser(String id){
-        for(User user: recipients){
-            if(user.getId().contentEquals(id)){
-                return user;
-            }
-        }
-        return null;
-    }
 
     public User getFromUser() {
         return fromUser;

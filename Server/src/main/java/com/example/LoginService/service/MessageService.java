@@ -1,8 +1,8 @@
-package com.example.MessageService.service;
+package com.example.LoginService.service;
 
-import com.example.MessageService.common.IMessageService;
-import com.example.MessageService.common.MessageRepository;
-import com.example.MessageService.model.Message;
+import com.example.LoginService.common.IMessageService;
+import com.example.LoginService.common.MessageRepository;
+import com.example.LoginService.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
