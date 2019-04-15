@@ -76,7 +76,6 @@ public class RegisterFragment extends DaggerFragment implements RegisterContract
 
     @Override
     public void displayToast(String message) {
-        System.out.println("Trying to show toast...");
         final Toast currentToast = Toast.makeText(this.getContext(), null, Toast.LENGTH_SHORT);
         currentToast.setText(message);
         currentToast.show();
