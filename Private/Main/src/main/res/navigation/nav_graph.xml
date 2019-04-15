@@ -10,8 +10,8 @@
         android:name="com.example.main.ui.StartFragment"
         android:label="RootFragment" >
         <action
-            android:id="@+id/action_rootFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_rootFragment_to_upload_fragment"
+            app:destination="@id/upload_fragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -38,6 +38,6 @@
         android:id="@+id/upload_fragment"
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
-        tools:layout="@layout/fragment_upload_fragment" />
+        tools:layout="@layout/upload_fragment" />
 
 </navigation>
