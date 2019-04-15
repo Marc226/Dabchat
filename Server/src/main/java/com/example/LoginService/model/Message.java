@@ -42,9 +42,19 @@ public class Message {
     }
 
     public void addRecipient(String id){
+        if(this.recipientsID==null)
+            this.recipientsID = new ArrayList<>();
+
         this.recipientsID.add(id);
     }
 
+    public void removeRecipient(String id) {
+        this.recipientsID.remove(id);
+    }
+
+    public int recipientCount() {
+        return this.recipientsID.size();
+    }
 
     public User getFromUser() {
         return fromUser;
