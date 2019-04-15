@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface IMessageService {
     ResponseEntity<Message> sendMessage (Message message);
-
+    ResponseEntity<List<Message>> getPendingMessages(User user);
 }

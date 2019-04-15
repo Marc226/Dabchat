@@ -10,4 +10,5 @@ public interface IRegisterService {
     ResponseEntity<User> getProfile(ObjectId id);
     ResponseEntity<User> changeProfile(User user);
     ResponseEntity<Boolean> removeUser(User user);
+    ResponseEntity<User> findByMail(String email);
 }

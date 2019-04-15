@@ -54,6 +54,12 @@ public class RegisterService implements IRegisterService {
         return new ResponseEntity<>(new User(null, null, null), HttpStatus.BAD_REQUEST);
     }
 
+    @Override
+    public ResponseEntity<User> findByMail(String email) {
+        User user = repository.findByMail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 
     @Override
     public ResponseEntity<User> getProfile(ObjectId id) {
