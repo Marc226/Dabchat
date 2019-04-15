@@ -41,6 +41,6 @@ public class MessageService implements IMessageService {
         }
 
 
-        return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+        return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 }
