@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 import com.example.main.R;
 
+import javax.inject.Inject;
+
 import static android.app.Activity.RESULT_OK;
 
 

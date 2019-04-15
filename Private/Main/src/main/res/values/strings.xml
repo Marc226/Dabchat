@@ -19,4 +19,7 @@
     <!--Upload-->
     <string name="upload_btn">Upload</string>
     <string name="dank_view">Dankload</string>
-    </resources>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
