@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
         <activity
-            android:name=".ui.MenuActivity"
+            android:name=".ui.MenuFragment"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.Launcher.NoActionBar"></activity>
         <activity android:name=".ui.MainActivity">

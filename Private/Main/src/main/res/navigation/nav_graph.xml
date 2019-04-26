@@ -13,11 +13,8 @@
             android:id="@+id/action_rootFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_rootFragment_to_menuActivity"
-            app:destination="@id/menuActivity2" />
-        <action
-            android:id="@+id/action_rootFragment_to_uploadFragment"
-            app:destination="@id/uploadFragment" />
+            android:id="@+id/action_rootFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -42,9 +39,14 @@
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
         tools:layout="@layout/upload_fragment" />
-    <activity
-        android:id="@+id/menuActivity2"
-        android:name="com.example.main.ui.MenuActivity"
+    <fragment
+        android:id="@+id/friendListFragment"
+        android:name="com.example.main.ui.FriendListFragment"
+        android:label="friendlist_fragment"
+        tools:layout="@layout/friendlist_fragment" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.main.ui.MenuFragment"
         android:label="main_screen_tabbar"
         tools:layout="@layout/main_screen_tabbar" />
 

@@ -2,9 +2,11 @@ package com.example.main.di.Module;
 
 import com.example.main.di.Scopes.FriendListScope;
 import com.example.main.di.Scopes.LoginScope;
+import com.example.main.di.Scopes.MenuActivityScope;
 import com.example.main.di.Scopes.UploadScope;
 import com.example.main.ui.FriendListFragment;
 import com.example.main.ui.LoginFragment;
+import com.example.main.ui.MenuFragment;
 import com.example.main.ui.RegisterFragment;
 import com.example.main.ui.UploadFragment;
 
@@ -24,6 +26,10 @@ public abstract class FragmentModule {
     @ContributesAndroidInjector(modules = {UploadModule.class})
     @UploadScope
     abstract UploadFragment bindUploadFragment();
+
+    @ContributesAndroidInjector(modules = {MenuActivityModule.class})
+    @MenuActivityScope
+    abstract MenuFragment bindMenuFragment();
 
     @ContributesAndroidInjector()
     @FriendListScope
