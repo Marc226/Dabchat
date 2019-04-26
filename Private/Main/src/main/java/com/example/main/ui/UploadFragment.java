@@ -16,15 +16,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.main.R;
+import com.example.main.interfaces.UploadContract;
+import com.example.main.model.Message;
+
+import java.io.File;
+
+import javax.inject.Inject;
 
 import javax.inject.Inject;
 
 import static android.app.Activity.RESULT_OK;
 
 
+
 public class UploadFragment extends DaggerFragment {
+
+    @Inject UploadContract.iUploadPresenter presenter;
+    File imageFile;
     ImageView upload_imageView;
     Button upload_button;
+    Button send_button;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
 
@@ -32,12 +43,7 @@ public class UploadFragment extends DaggerFragment {
         // Required empty public constructor
     }
 
-    public static UploadFragment newInstance(String param1, String param2) {
-        UploadFragment fragment = new UploadFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public static UploadFragment newInstance() { return new UploadFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,13 @@ public class UploadFragment extends DaggerFragment {
             }
         });
 
+        send_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.sendMessage(new Message(null, imageFile));
+            }
+        });
+
     }
 
         private void openGallery(){
@@ -74,6 +87,7 @@ public class UploadFragment extends DaggerFragment {
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE ){
             imageUri = data.getData();
             upload_imageView.setImageURI(imageUri);
+            imageFile = new File(imageUri.getPath());
         }
     }
 
@@ -81,7 +95,7 @@ public class UploadFragment extends DaggerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_upload_fragment, container, false);
+        return inflater.inflate(R.layout.upload_fragment, container, false);
     }
 
 
@@ -99,6 +113,7 @@ public class UploadFragment extends DaggerFragment {
     private void initUI(){
         upload_imageView = (ImageView) getView().findViewById(R.id.imageView);
         upload_button = (Button) getView().findViewById(R.id.upload_btn);
+        send_button = (Button) getView().findViewById(R.id.send_button);
     }
 
 

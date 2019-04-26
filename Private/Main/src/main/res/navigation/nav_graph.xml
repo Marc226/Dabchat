@@ -41,7 +41,7 @@
         android:id="@+id/uploadFragment"
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
-        tools:layout="@layout/fragment_upload_fragment" />
+        tools:layout="@layout/upload_fragment" />
     <activity
         android:id="@+id/menuActivity2"
         android:name="com.example.main.ui.MenuActivity"
