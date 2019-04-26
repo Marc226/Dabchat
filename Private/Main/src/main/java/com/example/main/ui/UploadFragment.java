@@ -2,6 +2,8 @@ package com.example.main.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import dagger.android.support.DaggerFragment;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +23,11 @@ import com.example.main.interfaces.MainActivityController;
 import com.example.main.interfaces.UploadContract;
 import com.example.main.model.Message;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-import javax.inject.Inject;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.inject.Inject;
 
@@ -36,10 +41,13 @@ public class UploadFragment extends DaggerFragment {
     MainActivityController mainActivityController;
     @Inject
     UploadContract.iUploadPresenter presenter;
+
+
     File imageFile;
     ImageView upload_imageView;
     Button upload_button;
     Button send_button;
+    byte[] imageData;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
 
@@ -62,7 +70,6 @@ public class UploadFragment extends DaggerFragment {
 
         initUI();
         mainActivityController.showNavBar();
-        //initUI();
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +80,10 @@ public class UploadFragment extends DaggerFragment {
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.sendMessage(new Message(null, imageFile));
+
+                Message msg = new Message(null, imageData);
+
+                presenter.sendMessage(msg);
             }
         });
 
@@ -89,8 +99,23 @@ public class UploadFragment extends DaggerFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE ){
             imageUri = data.getData();
+
             upload_imageView.setImageURI(imageUri);
             imageFile = new File(imageUri.getPath());
+
+            try (InputStream imageS = this.getContext().getContentResolver().openInputStream(imageUri)) {
+                Bitmap bm = BitmapFactory.decodeStream(imageS);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                imageData= baos.toByteArray();
+            } catch (FileNotFoundException e) {
+                System.out.println(e);
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+
         }
     }
 

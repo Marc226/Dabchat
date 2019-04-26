@@ -14,23 +14,23 @@ public class Message {
     private String id;
     private User fromUser;
     private List<String> recipientsID;
-    private File image;
+    private byte[] image;
 
 
     public Message (){
     }
 
-    public Message(String id, File image) {
+    public Message(String id, byte[] image) {
         this.id = id;
         this.image = image;
         this.recipientsID = new ArrayList<>();
     }
 
-    public File getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

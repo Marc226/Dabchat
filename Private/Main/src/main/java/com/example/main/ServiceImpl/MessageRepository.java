@@ -32,6 +32,7 @@ public class MessageRepository implements IMessageRepository {
 
     @Override
     public void sendMessage(Message message) {
+
         Call<Message> call = webService.sendMessage(message);
         call.enqueue(new Callback<Message>() {
             @Override
@@ -45,7 +46,8 @@ public class MessageRepository implements IMessageRepository {
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
-                Log.d(TAG, "message service called, but not available");
+                Log.d(TAG, "message service called, but not available\n"+t);
+
             }
         });
     }

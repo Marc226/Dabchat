@@ -17,24 +17,24 @@ public class Message {
 
     User fromUser;
     List<String> recipientsID;
-    File image;
+    byte[] image;
 
 
     public Message(){
 
     }
 
-    public Message(String id, File image) {
+    public Message(String id, byte[] image) {
         this.id = id;
         this.image = image;
         this.recipientsID = new ArrayList<>();
     }
 
-    public File getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
