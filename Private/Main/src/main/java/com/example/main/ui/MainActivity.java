@@ -1,7 +1,9 @@
-package com.example.main;
+package com.example.main.ui;
 
 import android.os.Bundle;
 
+
+import com.example.main.R;
 
 import androidx.navigation.Navigation;
 import dagger.android.AndroidInjection;
@@ -17,7 +19,7 @@ public class MainActivity extends DaggerAppCompatActivity  {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_Standard);
         setContentView(R.layout.main_content);
-        Navigation.findNavController(this, R.id.main_content).navigate(R.id.action_rootFragment_to_loginFragment);
+        Navigation.findNavController(this, R.id.main_content).navigate(R.id.action_rootFragment_to_uploadFragment);
     }
 
 

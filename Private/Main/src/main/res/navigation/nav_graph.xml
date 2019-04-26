@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_rootFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_rootFragment_to_menuActivity"
+            app:destination="@id/menuActivity2" />
+        <action
+            android:id="@+id/action_rootFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -21,9 +27,6 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_upload_fragment2"
-            app:destination="@id/upload_fragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -35,9 +38,14 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/upload_fragment"
+        android:id="@+id/uploadFragment"
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
-        tools:layout="@layout/fragment_upload_fragment" />
+        tools:layout="@layout/upload_fragment" />
+    <activity
+        android:id="@+id/menuActivity2"
+        android:name="com.example.main.ui.MenuActivity"
+        android:label="main_screen_tabbar"
+        tools:layout="@layout/main_screen_tabbar" />
 
 </navigation>

@@ -118,6 +118,5 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
 
     @Override
     public void LoginRequestFinished() {
-        Navigation.findNavController(this.getView()).navigate(R.id.action_loginFragment_to_upload_fragment2);
     }
 }

@@ -2,9 +2,9 @@ package com.example.main.di.Module;
 
 import android.content.Context;
 
+import com.example.main.R;
 import com.example.main.di.Scopes.MainActivityScope;
 import com.example.main.ui.MainActivity;
-import com.example.main.R;
 
 import javax.inject.Named;
 
@@ -14,7 +14,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class MainActivityModule {
+public class MenuActivityModule {
     @Provides
     @MainActivityScope
     @Named("Activity-Context")
