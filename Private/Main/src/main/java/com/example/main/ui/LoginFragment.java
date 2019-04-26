@@ -19,13 +19,17 @@ import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.interfaces.LoginContract;
+import com.example.main.interfaces.MainActivityController;
 
 import javax.inject.Inject;
 
 
 public class LoginFragment extends DaggerFragment implements LoginContract.iLoginView {
 
-    @Inject LoginContract.iLoginPresenter presenter;
+    @Inject
+    LoginContract.iLoginPresenter presenter;
+    @Inject
+    MainActivityController mainActivityController;
 
     EditText username;
     EditText password;
@@ -53,6 +57,7 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initUI();
+        mainActivityController.hideNavBar();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,5 +123,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
 
     @Override
     public void LoginRequestFinished() {
+        mainActivityController.navigateToUpload();
     }
 }

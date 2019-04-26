@@ -3,6 +3,7 @@ package com.example.main.di.Module;
 import android.content.Context;
 
 import com.example.main.di.Scopes.MainActivityScope;
+import com.example.main.interfaces.MainActivityController;
 import com.example.main.ui.MainActivity;
 import com.example.main.R;
 
@@ -24,7 +25,8 @@ public class MainActivityModule {
 
     @Provides
     @MainActivityScope
-    public NavController provideNavController(MainActivity main){
-        return Navigation.findNavController(main, R.id.main_content);
+    public MainActivityController provideController(MainActivity main){
+        MainActivityController mainActivityController = main;
+        return mainActivityController;
     }
 }

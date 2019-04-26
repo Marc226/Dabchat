@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.main.R;
+import com.example.main.interfaces.MainActivityController;
 import com.example.main.interfaces.UploadContract;
 import com.example.main.model.Message;
 
@@ -31,6 +32,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class UploadFragment extends DaggerFragment {
 
+    @Inject
+    MainActivityController mainActivityController;
     @Inject
     UploadContract.iUploadPresenter presenter;
     File imageFile;
@@ -58,7 +61,7 @@ public class UploadFragment extends DaggerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         initUI();
-
+        mainActivityController.showNavBar();
         //initUI();
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
