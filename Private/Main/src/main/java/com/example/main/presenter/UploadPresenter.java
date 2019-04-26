@@ -4,10 +4,13 @@ import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.UploadContract;
 import com.example.main.model.Message;
 
+import javax.inject.Inject;
+
 
 public class UploadPresenter implements UploadContract.iUploadPresenter{
 
-    IMessageRepository repository;
+
+    private IMessageRepository repository;
 
     public UploadPresenter(IMessageRepository repository){
         this.repository = repository;

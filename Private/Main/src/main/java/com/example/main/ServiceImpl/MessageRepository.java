@@ -9,6 +9,8 @@ import com.example.main.webservice.MessageWebService;
 
 import java.util.concurrent.Executor;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,8 +21,7 @@ public class MessageRepository implements IMessageRepository {
     private final String TAG = "message repository";
     MessageWebService webService;
 
-    Executor executor;
-
+    private Executor executor;
 
     public MessageRepository(Retrofit retrofit, Executor executor){
         this.webService = retrofit.create(MessageWebService.class);

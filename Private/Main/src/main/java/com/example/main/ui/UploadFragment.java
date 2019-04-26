@@ -31,7 +31,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class UploadFragment extends DaggerFragment {
 
-    @Inject UploadContract.iUploadPresenter presenter;
+    @Inject
+    UploadContract.iUploadPresenter presenter;
     File imageFile;
     ImageView upload_imageView;
     Button upload_button;
@@ -56,8 +57,7 @@ public class UploadFragment extends DaggerFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        upload_imageView = (ImageView) getView().findViewById(R.id.imageView);
-        upload_button = (Button) getView().findViewById(R.id.upload_btn);
+        initUI();
 
         //initUI();
         upload_button.setOnClickListener(new View.OnClickListener() {
