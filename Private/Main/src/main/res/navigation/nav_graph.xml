@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_rootFragment_to_menuActivity"
             app:destination="@id/menuActivity2" />
+        <action
+            android:id="@+id/action_rootFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
