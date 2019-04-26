@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import dagger.android.support.DaggerFragment;
 
 import android.view.LayoutInflater;
@@ -23,8 +24,6 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import javax.inject.Inject;
-
 import static android.app.Activity.RESULT_OK;
 
 
@@ -33,6 +32,8 @@ public class UploadFragment extends DaggerFragment {
 
     @Inject
     UploadContract.iUploadPresenter presenter;
+
+
     File imageFile;
     ImageView upload_imageView;
     Button upload_button;
@@ -58,8 +59,6 @@ public class UploadFragment extends DaggerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         initUI();
-
-        //initUI();
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +69,7 @@ public class UploadFragment extends DaggerFragment {
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Presenter: " + presenter.toString());
                 presenter.sendMessage(new Message(null, imageFile));
             }
         });
