@@ -10,8 +10,6 @@ import org.mockito.Mock;
 
 import retrofit2.Retrofit;
 
-import static org.junit.Assert.*;
-
 public class LoginRepositoryTest {
 
     @Mock Context context;

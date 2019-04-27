@@ -5,18 +5,44 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/rootFragment">
 
-    <include app:graph="@navigation/login_navigation_graph" />
     <fragment
         android:id="@+id/rootFragment"
-        android:name="com.example.main.StartFragment"
+        android:name="com.example.main.ui.StartFragment"
         android:label="RootFragment" >
         <action
-            android:id="@+id/action_rootFragment_to_upload_fragment"
-            app:destination="@id/upload_fragment" />
+            android:id="@+id/action_rootFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/upload_fragment"
-        android:name="com.example.uploadfeature.ui.Upload_fragment"
-        android:label="Upload_fragment" />
+        android:id="@+id/loginFragment"
+        android:name="com.example.main.ui.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.main.ui.RegisterFragment"
+        android:label="register_fragment"
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadFragment"
+        android:name="com.example.main.ui.UploadFragment"
+        android:label="fragment_upload_fragment"
+        tools:layout="@layout/upload_fragment" />
+    <fragment
+        android:id="@+id/friendListFragment"
+        android:name="com.example.main.ui.FriendListFragment"
+        android:label="friendlist_fragment"
+        tools:layout="@layout/friendlist_fragment" />
 
 </navigation>

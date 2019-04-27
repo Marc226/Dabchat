@@ -1,7 +1,7 @@
 package com.example.main.di.Component;
 
 
-import com.example.common.Common.di.Scopes.AppScope;
+import com.example.main.di.Scopes.AppScope;
 import com.example.main.App;
 import com.example.main.di.Module.AppActivityModule;
 import com.example.main.di.Module.AppModule;
