@@ -1,16 +1,15 @@
 package com.example.LoginService.service.Mapping;
 
+import com.example.LoginService.common.IUserService;
 import com.example.LoginService.model.LoginForm;
 import com.example.LoginService.model.User;
 import com.example.LoginService.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -19,6 +18,9 @@ public class ServiceRoutes {
 
     @Autowired
     private RegisterService regService;
+
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping("/")
     public String index(){
@@ -49,6 +51,23 @@ public class ServiceRoutes {
     @RequestMapping("/changeProfile")
     public ResponseEntity<User> changeUser(@Valid @RequestBody User users){
         return regService.changeProfile(users);
+    }
+
+    @CrossOrigin
+    @RequestMapping("/addFriend")
+    public ResponseEntity<Boolean> addFriend(@Valid @RequestBody User user, @RequestParam String friendEmail){
+        System.out.println("id: "+user.getId()+"\tfriend email: "+friendEmail);
+        return userService.addFriend(user, friendEmail);
+    }
+    @CrossOrigin
+    @RequestMapping("/getFriend")
+    public ResponseEntity<User> getFriend(@Valid @RequestBody User user, @RequestParam String friendEmail){
+        return userService.getFriend(user, friendEmail);
+    }
+    @CrossOrigin
+    @RequestMapping("/getAllFriends")
+    public ResponseEntity<List<User>> getAllFriends(@Valid @RequestBody User user){
+        return userService.getAllFriends(user);
     }
 
     @CrossOrigin
