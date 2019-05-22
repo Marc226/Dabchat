@@ -76,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/preview" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendRecycler"
         android:layout_width="395dp"
         android:layout_height="423dp"
         android:layout_marginStart="8dp"

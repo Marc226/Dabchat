@@ -12,6 +12,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.main.R;
+import com.example.main.adapter.FriendListAdapter;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
 import com.example.main.model.User;
@@ -51,8 +54,9 @@ public class UploadFragment extends DaggerFragment  {
     @Inject
     FriendListViewModel viewModel;
 
-
-
+    private RecyclerView.LayoutManager layoutManager;
+    private FriendListAdapter friendListAdapter;
+    private RecyclerView recyclerView;
     private File imageFile;
     private ImageView upload_imageView;
     private Button upload_button;
@@ -77,8 +81,12 @@ public class UploadFragment extends DaggerFragment  {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         initUI();
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        friendListAdapter = new FriendListAdapter();
+        recyclerView.setAdapter(friendListAdapter);
         mainActivityController.showNavBar();
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s)));
@@ -135,6 +143,7 @@ public class UploadFragment extends DaggerFragment  {
     }
 
     private void initUI(){
+        recyclerView = getView().findViewById(R.id.friendRecycler);
         upload_imageView = getView().findViewById(R.id.preview);
         upload_button = getView().findViewById(R.id.upload_btn);
         send_button = getView().findViewById(R.id.send_button);
