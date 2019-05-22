@@ -16,6 +16,7 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,23 +39,23 @@ public class MessageRepository implements IMessageRepository {
 
 
     @Override
-    public void sendMessage(Message message) {
+    public void sendMessage(Message message, MutableLiveData<String> data) {
 
         Call<Message> call = webService.sendMessage(message);
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if(response.isSuccessful()){
-
+                    data.setValue("Upload successful");
                 } else {
-
+                    data.setValue("Upload failed");
                 }
             }
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
                 Log.d(TAG, "message service called, but not available\n"+t);
-
+                data.setValue("Service unavailable!");
             }
         });
     }

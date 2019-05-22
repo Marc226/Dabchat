@@ -80,12 +80,7 @@ public class UploadFragment extends DaggerFragment implements UploadContract.iUp
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Message msg = new Message(null, imageData);
-
-                presenter.sendMessage(msg);
-
-
 
             }
         });
