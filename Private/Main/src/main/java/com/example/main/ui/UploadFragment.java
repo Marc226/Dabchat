@@ -47,6 +47,7 @@ public class UploadFragment extends DaggerFragment {
     ImageView upload_imageView;
     Button upload_button;
     Button send_button;
+    Button add_friend_button;
     byte[] imageData;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
@@ -142,6 +143,14 @@ public class UploadFragment extends DaggerFragment {
         upload_imageView = (ImageView) getView().findViewById(R.id.imageView);
         upload_button = (Button) getView().findViewById(R.id.upload_btn);
         send_button = (Button) getView().findViewById(R.id.send_button);
+        add_friend_button = (Button) getView().findViewById(R.id.button_add_friend);
+
+        add_friend_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Hello world!!!!!!!");
+            }
+        });
     }
 
 
