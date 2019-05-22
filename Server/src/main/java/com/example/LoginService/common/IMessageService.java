@@ -9,4 +9,6 @@ import java.util.List;
 public interface IMessageService {
     ResponseEntity<Message> sendMessage (Message message);
     ResponseEntity<List<Message>> getPendingMessages(String id);
+    ResponseEntity<Message> getMessage (String id);
+
 }
