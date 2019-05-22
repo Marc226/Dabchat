@@ -1,5 +1,7 @@
 package com.example.main.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,13 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.interfaces.UploadContract;
 import com.example.main.model.Message;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,6 +54,7 @@ public class UploadFragment extends DaggerFragment implements UploadContract.iUp
     Button upload_button;
     Button send_button;
     Button add_friend_button;
+    EditText textfield_email;
     byte[] imageData;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
@@ -147,11 +154,13 @@ public class UploadFragment extends DaggerFragment implements UploadContract.iUp
         upload_button = (Button) getView().findViewById(R.id.upload_btn);
         send_button = (Button) getView().findViewById(R.id.send_button);
         add_friend_button = (Button) getView().findViewById(R.id.button_add_friend);
+        textfield_email = (EditText) getView().findViewById(R.id.textfield_email);
 
         add_friend_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Hello world!!!!!!!");
+                System.out.println(textfield_email.getText());
+
             }
         });
     }
