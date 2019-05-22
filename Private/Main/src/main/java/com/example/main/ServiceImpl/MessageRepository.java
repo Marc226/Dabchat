@@ -10,12 +10,14 @@ import com.example.main.webservice.MessageWebService;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+@Singleton
 public class MessageRepository implements IMessageRepository {
 
     private final String TAG = "message repository";

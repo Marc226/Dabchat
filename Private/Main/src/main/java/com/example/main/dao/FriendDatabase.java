@@ -17,7 +17,7 @@ public abstract class FriendDatabase extends RoomDatabase {
 
     public static FriendDatabase getMemoryDatabase(Context context){
         if(INSTANCE == null){
-            INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), FriendDatabase.class)
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), FriendDatabase.class, "FriendList")
                     .build();
         }
         return INSTANCE;

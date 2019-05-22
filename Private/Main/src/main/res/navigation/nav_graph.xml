@@ -39,10 +39,5 @@
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
         tools:layout="@layout/upload_fragment" />
-    <fragment
-        android:id="@+id/friendListFragment"
-        android:name="com.example.main.ui.FriendListFragment"
-        android:label="friendlist_fragment"
-        tools:layout="@layout/friendlist_fragment" />
 
 </navigation>

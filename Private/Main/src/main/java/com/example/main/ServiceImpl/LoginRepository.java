@@ -14,11 +14,14 @@ import com.example.main.webservice.LoginWebService;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+@Singleton
 public class LoginRepository implements ILoginRepository {
 
     private final String TAG = "user repository";
