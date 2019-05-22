@@ -35,6 +35,7 @@ public class FriendListViewModel extends ViewModel {
         return friends;
     }
 
+
     void loadFriends(){
         executor.submit(()->{
             User currentUser = loginRepository.getLoggedInUser();
