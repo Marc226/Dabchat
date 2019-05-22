@@ -7,6 +7,8 @@ import com.example.main.dao.FriendDatabase;
 import com.example.main.di.Scopes.FriendListScope;
 import com.example.main.interfaces.IFriendListRepository;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Named;
 
 import androidx.room.Room;
@@ -25,8 +27,8 @@ public class FriendListModule {
 
     @Provides
     @FriendListScope
-    public IFriendListRepository provideFriendListRepository(Retrofit retrofit, FriendDatabase database){
-        IFriendListRepository repository = new FriendListRepository(retrofit, database);
+    public IFriendListRepository provideFriendListRepository(Retrofit retrofit, FriendDatabase database, Executor executor){
+        IFriendListRepository repository = new FriendListRepository(retrofit, database, executor);
         return repository;
     }
 }

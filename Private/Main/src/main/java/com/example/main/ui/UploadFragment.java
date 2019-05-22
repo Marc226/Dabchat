@@ -143,7 +143,7 @@ public class UploadFragment extends DaggerFragment implements UploadContract.iUp
     }
 
     private void initUI(){
-        upload_imageView = (ImageView) getView().findViewById(R.id.imageView);
+        upload_imageView = (ImageView) getView().findViewById(R.id.preview);
         upload_button = (Button) getView().findViewById(R.id.upload_btn);
         send_button = (Button) getView().findViewById(R.id.send_button);
         add_friend_button = (Button) getView().findViewById(R.id.button_add_friend);
