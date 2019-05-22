@@ -53,13 +53,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="53dp"
-        android:layout_marginTop="239dp"
+        android:layout_marginTop="264dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="12dp"
         android:text="@string/add_friend"
         app:layout_constraintBottom_toTopOf="@+id/fragment2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toEndOf="@+id/upload_btn"
         app:layout_constraintTop_toTopOf="parent" />
     <ImageView
