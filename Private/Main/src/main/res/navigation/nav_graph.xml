@@ -3,16 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rootFragment">
+    app:startDestination="@id/loginFragment">
 
-    <fragment
-        android:id="@+id/rootFragment"
-        android:name="com.example.main.ui.StartFragment"
-        android:label="RootFragment" >
-        <action
-            android:id="@+id/action_rootFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.main.ui.LoginFragment"

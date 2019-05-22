@@ -4,16 +4,12 @@ import android.util.Log;
 
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.Message;
-import com.example.main.observer.LoginObserverListener;
-import com.example.main.observer.ObserverTag;
-import com.example.main.observer.UploadObserverListener;
 import com.example.main.webservice.MessageWebService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import androidx.lifecycle.MutableLiveData;
@@ -29,12 +25,10 @@ public class MessageRepository implements IMessageRepository {
     MessageWebService webService;
 
     private Executor executor;
-    private ArrayList<UploadObserverListener> observerListeners;
 
     public MessageRepository(Retrofit retrofit, Executor executor){
         this.webService = retrofit.create(MessageWebService.class);
         this.executor = executor;
-        this.observerListeners = new ArrayList<>();
     }
 
 
@@ -61,20 +55,21 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public void receiveMessagesByUserID(String id) {
+    public void receiveMessagesByUserID(String id, MutableLiveData<String> data) {
         Call<List<Message>> call = webService.receiveMessages(id);
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if(response.isSuccessful()){
-                    notifyObserver(response.body(), true);
+                    data.setValue(response.message());
                 } else {
-                    notifyObserver(null, false);
+                    data.setValue("loading failed!");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
+                data.setValue("loading failed!");
                 Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
 
             }
@@ -82,23 +77,5 @@ public class MessageRepository implements IMessageRepository {
     }
 
 
-    @Override
-    public void subscribeObserver(UploadObserverListener obs) {
-        observerListeners.add(obs);
-    }
 
-    @Override
-    public void removeObserver(UploadObserverListener obs) {
-        observerListeners.remove(obs);
-    }
-
-
-    @Override
-    public void notifyObserver(List<Message> messages, boolean success) {
-        for(UploadObserverListener obs : observerListeners){
-
-                obs.dataChanged(messages, success);
-
-        }
-    }
 }
