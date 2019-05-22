@@ -4,6 +4,7 @@ import com.example.main.model.User;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,4 +24,7 @@ public interface FriendDao {
 
     @Query("SELECT * FROM user WHERE id LIKE :id")
     User getFriend(String id);
+
+    @Query("DELETE FROM user")
+    public void dropTable();
 }

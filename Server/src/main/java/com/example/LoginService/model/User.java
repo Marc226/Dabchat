@@ -3,6 +3,7 @@ package com.example.LoginService.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -77,6 +78,16 @@ public class User {
 
     public List<String> getFrientList() {
         return frientList;
+    }
+
+    public void createFriendList() {
+        frientList = new ArrayList();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof User)) return false;
+        return _id.equals(((User) obj)._id);
     }
 
     public void setFrientList(List<String> frientList) {
