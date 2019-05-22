@@ -44,4 +44,15 @@ public class MessageService implements IMessageService {
 
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Message> getMessage(String id) {
+        if(!id.equals(null)){
+            Message receivedMessage = repository.findByid(id);
+              return new ResponseEntity<>(receivedMessage, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 }
