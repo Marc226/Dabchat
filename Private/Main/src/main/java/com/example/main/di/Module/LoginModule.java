@@ -25,7 +25,7 @@ public class LoginModule {
     @Provides
     @LoginScope
     public UserDatabase provideUserDatabase(@Named("App-Context")Context context){
-        return Room.databaseBuilder(context, UserDatabase.class, "database-name").build();
+        return Room.databaseBuilder(context, UserDatabase.class, "login").build();
     }
 
     @Provides

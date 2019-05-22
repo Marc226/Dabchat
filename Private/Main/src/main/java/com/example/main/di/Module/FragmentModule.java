@@ -26,7 +26,7 @@ public abstract class FragmentModule {
     abstract UploadFragment bindUploadFragment();
 
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = {FriendListModule.class})
     @FriendListScope
     abstract FriendListFragment bindFriendListFragment();
 
