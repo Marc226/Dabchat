@@ -47,7 +47,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="23dp"
         android:text="@string/add_friend"
-        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintStart_toEndOf="@+id/textfield_email"
         app:layout_constraintTop_toBottomOf="@+id/preview" />
 
     <ImageView
@@ -64,7 +64,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/textfield_email"
         android:layout_width="266dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -74,4 +74,14 @@
         android:text="Friend's Email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preview" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="395dp"
+        android:layout_height="423dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textfield_email" />
 </androidx.constraintlayout.widget.ConstraintLayout>
