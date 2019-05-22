@@ -2,8 +2,6 @@ package com.example.main.presenter;
 
 import com.example.main.interfaces.IFriendListRepository;
 import com.example.main.interfaces.ILoginRepository;
-import com.example.main.interfaces.IMessageRepository;
-import com.example.main.model.Message;
 import com.example.main.model.User;
 
 import java.util.List;
@@ -22,17 +20,12 @@ import androidx.lifecycle.ViewModel;
 public class FriendListViewModel extends ViewModel {
 
     @Inject
-    IFriendListRepository friendListRepository;
+    IFriendListRepository repository;
 
     @Inject
     ILoginRepository loginRepository;
-
-    @Inject
-    IMessageRepository messageRepository;
-
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<List<User>> friends;
-    private MutableLiveData<String> sendMes;
 
     public LiveData<List<User>> getFriendList(){
         if(friends == null){
@@ -42,24 +35,10 @@ public class FriendListViewModel extends ViewModel {
         return friends;
     }
 
-    public LiveData<String> sendMessage(Message message){
-        sendMes = new MutableLiveData<>();
-        uploadMessage(message);
-        return sendMes;
-    }
-
     void loadFriends(){
         executor.submit(()->{
             User currentUser = loginRepository.getLoggedInUser();
-            friendListRepository.getAllFriends(currentUser, friends);
+            repository.getAllFriends(currentUser, friends);
         });
     }
-
-    void uploadMessage(Message message){
-        executor.submit(() ->{
-           messageRepository.sendMessage(message, sendMes);
-        });
-    }
-
-
 }
