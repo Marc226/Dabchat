@@ -42,6 +42,7 @@ public class FriendListViewModel extends ViewModel {
         return friends;
     }
 
+    
     public LiveData<String> sendMessage(Message message){
         sendMes = new MutableLiveData<>();
         uploadMessage(message);
