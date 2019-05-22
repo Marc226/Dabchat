@@ -11,12 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import dagger.android.support.DaggerFragment;
 
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.interfaces.MainActivityController;
@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 
-public class UploadFragment extends DaggerFragment {
+public class UploadFragment extends DaggerFragment implements UploadContract.iUploadView {
 
     @Inject
     MainActivityController mainActivityController;
@@ -85,6 +85,9 @@ public class UploadFragment extends DaggerFragment {
                 Message msg = new Message(null, imageData);
 
                 presenter.sendMessage(msg);
+
+
+
             }
         });
 
@@ -154,4 +157,8 @@ public class UploadFragment extends DaggerFragment {
     }
 
 
+    @Override
+    public void displayToast(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }
