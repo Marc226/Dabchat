@@ -113,7 +113,10 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     }
 
     private void updateFriendList(){
-        viewModel.getFriendList().observe(this, users -> friendListAdapter.updateFriends(users));
+        viewModel.getFriendList().observe(this, users -> {
+                friendList = users;
+                friendListAdapter.updateFriends(users);
+        });
     }
 
     private void openGallery(){
@@ -176,7 +179,17 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
         add_friend_button.setOnClickListener(view ->
                 {
-                    LiveData<String> success = viewModel.addFriend(textfield_email.getText().toString());
+                    viewModel.addFriend(textfield_email.getText().toString()).observe(this, new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            if(s.contains(String.valueOf(R.string.friend_added))){
+                                updateFriendList();
+                            }
+                            displayToast(s);
+                        }
+                    });
+
+
                 }
         );
     }

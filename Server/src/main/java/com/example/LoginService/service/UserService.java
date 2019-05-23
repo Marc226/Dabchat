@@ -49,8 +49,6 @@ public class UserService implements IUserService {
     public ResponseEntity<Boolean> addFriend(User user, String email) {
         User usr = repository.findByMail(user.getMail());
         User newFriend = repository.findByMail(email);
-        System.out.println("usr null: "+(usr==null));
-        System.out.println("newFriend null: "+(newFriend==null));
         boolean success = false;
         if(usr!=null && newFriend!=null) {
             if(usr.getFrientList() == null) usr.createFriendList();
@@ -62,8 +60,11 @@ public class UserService implements IUserService {
                 repository.save(usr);
             }
         }
-
-        return new ResponseEntity<Boolean>(success, HttpStatus.OK);
+        if(success) {
+            return new ResponseEntity<Boolean>(success, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Boolean>(success, HttpStatus.NOT_FOUND);
+        }
     }
 
 
