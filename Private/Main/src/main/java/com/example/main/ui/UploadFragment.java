@@ -100,7 +100,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         initUI();
         initRecycler();
         mainActivityController.showNavBar();
-        service.run();
     }
 
     private void initRecycler(){
