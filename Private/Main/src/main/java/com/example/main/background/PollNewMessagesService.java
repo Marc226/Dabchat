@@ -66,6 +66,7 @@ public class PollNewMessagesService extends Service {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                if(messageRepository!=null && running) {
                     MutableLiveData<List<User>> users = new MutableLiveData<>();
                     messageRepository.receiveFriendsWithPendingMessages(null, users);
 
