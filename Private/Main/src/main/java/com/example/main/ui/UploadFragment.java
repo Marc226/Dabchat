@@ -106,8 +106,13 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        friendListAdapter = new FriendListAdapter();
+        friendListAdapter = new FriendListAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(friendListAdapter);
+        updateFriendList();
+    }
+
+    private void updateFriendList(){
+        viewModel.getFriendList().observe(this, users -> friendListAdapter.updateFriends(users));
     }
 
     private void openGallery(){
@@ -177,6 +182,11 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+
+    @Override
+    public boolean isClicked(int position) {
+        return targetFriends.contains(friendList.get(position));
+    }
 
     @Override
     public void add(int position) {
