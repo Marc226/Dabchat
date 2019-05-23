@@ -1,9 +1,14 @@
 package com.example.main.interfaces;
 
 
+import com.example.main.model.User;
+
+import androidx.lifecycle.LiveData;
+
 public interface LoginContract {
-    interface iLoginPresenter extends ServiceContract.basePresenter<iLoginView>{
-        void Login(String username, String password);
+    interface iLoginViewModel{
+        LiveData<String> Login(String username, String password);
+        LiveData<User> getCurrentUser();
         void Logout();
     }
 

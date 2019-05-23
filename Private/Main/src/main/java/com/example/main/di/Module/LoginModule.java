@@ -3,14 +3,9 @@ package com.example.main.di.Module;
 import androidx.room.Room;
 import android.content.Context;
 
-import com.example.main.ServiceImpl.FriendListRepository;
-import com.example.main.dao.FriendDatabase;
 import com.example.main.dao.UserDatabase;
-import com.example.main.di.Scopes.AppScope;
 import com.example.main.di.Scopes.LoginScope;
-import com.example.main.di.Scopes.UploadScope;
-import com.example.main.interfaces.IFriendListRepository;
-import com.example.main.presenter.LoginPresenter;
+import com.example.main.presenter.LoginViewModel;
 import com.example.main.presenter.RegisterPresenter;
 import com.example.main.ServiceImpl.LoginRepository;
 import com.example.main.interfaces.ILoginRepository;
@@ -35,8 +30,8 @@ public class LoginModule {
 
     @Provides
     @LoginScope
-    public LoginContract.iLoginPresenter providePresenter(ILoginRepository repository){
-        LoginContract.iLoginPresenter presenter = new LoginPresenter(repository);
+    public LoginContract.iLoginViewModel providePresenter(ILoginRepository repository){
+        LoginContract.iLoginViewModel presenter = new LoginViewModel(repository);
         return presenter;
     }
 

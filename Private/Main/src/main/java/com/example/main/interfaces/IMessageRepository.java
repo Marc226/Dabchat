@@ -5,12 +5,16 @@ import com.example.main.model.User;
 
 import java.util.List;
 
+import java.util.List;
+
 import androidx.lifecycle.MutableLiveData;
 
 
 public interface IMessageRepository{
     public void sendMessage (Message message, MutableLiveData<String> data);
-    public void receiveMessagesByUserID(String id, MutableLiveData<String> data);
     public void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data);
     public List<User> getPendingFromUsers();
+    public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
+
+
 }
