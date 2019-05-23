@@ -90,16 +90,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         initUI();
         initRecycler();
         mainActivityController.showNavBar();
-        upload_button.setOnClickListener(v -> openGallery());
-        send_button.setOnClickListener(v -> {
-            if (!targetFriends.isEmpty() || imageData.length != 0) {
-                viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s));
-            } else if(targetFriends.isEmpty()){
-                displayToast("Please select a friend");
-            } else {
-                displayToast("Please select a picture");
-            }
-        });
     }
 
     private void initRecycler(){
@@ -182,16 +172,22 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                     viewModel.addFriend(textfield_email.getText().toString()).observe(this, new Observer<String>() {
                         @Override
                         public void onChanged(String s) {
-                            if(s.contains(String.valueOf(R.string.friend_added))){
-                                updateFriendList();
-                            }
+                            updateFriendList();
                             displayToast(s);
                         }
                     });
-
-
                 }
         );
+        upload_button.setOnClickListener(v -> openGallery());
+        send_button.setOnClickListener(v -> {
+            if (!targetFriends.isEmpty() || imageData.length != 0) {
+                viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s));
+            } else if(targetFriends.isEmpty()){
+                displayToast("Please select a friend");
+            } else {
+                displayToast("Please select a picture");
+            }
+        });
     }
 
     private void displayToast(String message){
