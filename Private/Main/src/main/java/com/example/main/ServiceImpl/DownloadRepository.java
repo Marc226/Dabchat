@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.main.interfaces.IDownloadRepository;
 import com.example.main.model.Message;
 import com.example.main.webservice.DownloadWebService;
+import com.example.main.webservice.MessageWebService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -18,12 +19,12 @@ import retrofit2.Retrofit;
 public class DownloadRepository implements IDownloadRepository {
 
     private final String TAG = "message repository";
-    DownloadWebService webService;
+    MessageWebService webService;
 
     private Executor executor;
 
     public DownloadRepository(Retrofit retrofit, Executor executor){
-        this.webService = retrofit.create(DownloadWebService.class);
+        this.webService = retrofit.create(MessageWebService.class);
         this.executor = executor;
     }
 

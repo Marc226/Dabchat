@@ -35,5 +35,10 @@
             android:id="@+id/action_uploadFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.example.main.ui.DownloadFragment"
+        android:label="fragment_download"
+        tools:layout="@layout/fragment_download" />
 
 </navigation>

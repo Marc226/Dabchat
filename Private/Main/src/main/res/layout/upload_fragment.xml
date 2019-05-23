@@ -53,7 +53,7 @@
     <ImageView
         android:id="@+id/preview"
         android:layout_width="200dp"
-        android:layout_height="320dp"
+        android:layout_height="10dp"
         android:maxHeight="320dp"
         android:maxWidth="200dp"
         android:layout_marginStart="8dp"

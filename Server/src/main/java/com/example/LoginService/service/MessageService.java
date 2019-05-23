@@ -32,6 +32,7 @@ public class MessageService implements IMessageService {
     @Override
     public ResponseEntity<List<Message>> getPendingMessages(String id) {
         List<Message> messages = repository.findAllByRecipientsIDContains(id);
+        System.out.println("ID:     "+id);
         for(Message msg : messages) {
             msg.removeRecipient(id);
 
