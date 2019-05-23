@@ -24,22 +24,22 @@ import retrofit2.Retrofit;
 @Singleton
 public class FriendListRepository implements IFriendListRepository {
 
-    private final String tag = "FriendList Repo";
+    private final String TAG = "FriendList Repo";
     private FriendDatabase database;
     private FriendListService webservice;
     private Executor executor;
 
-    @Inject
+
     public FriendListRepository(Retrofit retrofit, FriendDatabase database, Executor executor) {
+        webservice = retrofit.create(FriendListService.class);
         this.database = database;
         this.executor = executor;
-        webservice = retrofit.create(FriendListService.class);
     }
 
     @Override
     public void addFriend(User user, String currentUserId, MutableLiveData<String> data) {
-
         Call<String> call = webservice.addFriend(user, currentUserId);
+
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -85,7 +85,7 @@ public class FriendListRepository implements IFriendListRepository {
 
                 @Override
                 public void onFailure(Call<List<User>> call, Throwable t) {
-                    Log.d(tag, "service unavailable");
+                    Log.d(TAG, "service unavailable");
                 }
             });
 
