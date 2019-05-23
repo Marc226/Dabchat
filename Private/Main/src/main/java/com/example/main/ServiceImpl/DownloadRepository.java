@@ -16,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class DownloadRepository implements IDownloadRepository {
+public class DownloadRepository /*implements IDownloadRepository*/ {
 
     private final String TAG = "message repository";
     MessageWebService webService;
@@ -28,7 +28,7 @@ public class DownloadRepository implements IDownloadRepository {
         this.executor = executor;
     }
 
-    @Override
+    /*@Override
     public void receiveMessagesByUserID(String id, MutableLiveData<String> data) {
         Call<List<Message>> call = webService.receiveMessages(id);
         call.enqueue(new Callback<List<Message>>() {
@@ -48,5 +48,5 @@ public class DownloadRepository implements IDownloadRepository {
 
             }
         });
-    }
+    }*/
 }

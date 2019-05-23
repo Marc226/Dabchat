@@ -5,4 +5,6 @@ public interface MainActivityController {
     void showNavBar();
     void navigateToUpload();
     void logout();
+    void navigateToPopup();
+
 }

@@ -77,6 +77,11 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
         navController.navigate(R.id.action_uploadFragment_to_loginFragment);
     }
 
+    @Override
+    public void navigateToPopup() {
+        navController.navigate(R.id.action_downloadFragment_to_popupFragment);
+    }
+
 
     @Override
     public AndroidInjector<Activity> activityInjector() {

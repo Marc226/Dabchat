@@ -1,6 +1,8 @@
 package com.example.main.ui;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +15,10 @@ import dagger.android.support.DaggerFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 
 import com.example.main.R;
@@ -31,7 +36,7 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class DownloadFragment extends DaggerFragment implements MessageListAdapter.OnMessageNoteListner {
-
+    private ImageView message_imageView;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private Button donwload_button;
@@ -42,6 +47,8 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     @Inject
     MessageListViewModel viewModel;
 
+    @Inject
+    MainActivityController mainActivityController;
 
     public DownloadFragment() {
         // Required empty public constructor
@@ -50,6 +57,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        message_imageView = getView().findViewById(R.id.popup_imageView);
         initUI();
         initRecycler();
 
@@ -65,9 +73,9 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private void initUI() {
         recyclerView = getView().findViewById(R.id.message_recycleView);
         this.donwload_button = getView().findViewById(R.id.download_button);
-        this.donwload_button.setOnClickListener(v -> {
+        /*this.donwload_button.setOnClickListener(v -> {
             updateMessageList();
-        });
+        });*/
     }
 
 
@@ -88,11 +96,27 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     }
 
-
-
-
     @Override
-    public void showPopup() {
-        messageListAdapter.showPopup();
+    public void showPopup(int position) {
+        Message currentMessage = messageList.get(position);
+        //View popupView = LayoutInflater.from(getContext()).inflate(R.layout.message_popup, null);
+
+
+        //final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        //Button btnDismiss = popupView.findViewById(R.id.close_button);
+
+        byte[] imageArray = currentMessage.getImage();
+
+
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
+        //message_imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, message_imageView.getWidth(), message_imageView.getHeight(), false));
+
+
+        mainActivityController.navigateToPopup();
+
+        //popupWindow.showAsDropDown(popupView, 0, 0);
     }
+
+
 }
