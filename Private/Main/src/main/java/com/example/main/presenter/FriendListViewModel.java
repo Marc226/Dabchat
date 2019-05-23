@@ -67,6 +67,10 @@ public class FriendListViewModel extends ViewModel {
         return sendMes;
     }
 
+    public void Logout(){
+        loginRepository.Logout();
+    }
+
 
 
 }

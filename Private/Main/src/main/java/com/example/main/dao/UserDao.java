@@ -1,6 +1,7 @@
 package com.example.main.dao;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,6 +20,9 @@ public interface UserDao {
 
     @Query("SELECT * FROM user")
     User getCurrentUser();
+
+    @Query("SELECT * FROM user")
+    LiveData<User> autoLogin();
 
     @Query("DELETE FROM user")
     void dropTable();
