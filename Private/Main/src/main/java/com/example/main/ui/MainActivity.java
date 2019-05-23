@@ -1,10 +1,14 @@
 package com.example.main.ui;
 
+import android.app.Activity;
+import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 
 import com.example.main.R;
+import com.example.main.background.PollNewMessagesService;
 import com.example.main.interfaces.MainActivityController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,13 +20,22 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.HasServiceInjector;
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class MainActivity extends DaggerAppCompatActivity implements MainActivityController {
+public class MainActivity extends DaggerAppCompatActivity implements MainActivityController, HasActivityInjector, HasServiceInjector {
 
     NavController navController;
 
     BottomNavigationView bottomNav;
+    @Inject
+    DispatchingAndroidInjector<Activity> activityInjector;
+    @Inject
+    DispatchingAndroidInjector<Service> serviceInjector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,10 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
         setContentView(R.layout.main_screen_tabbar);
         navController = Navigation.findNavController(this, R.id.main_nav);
         setupButtonNavigation();
+
+        //Start Background Service
+        Intent startPollService = new Intent(MainActivity.this, PollNewMessagesService.class);
+        startService(startPollService);
     }
 
 
@@ -56,4 +73,13 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
     }
 
 
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return this.activityInjector;
+    }
+
+    @Override
+    public AndroidInjector<Service> serviceInjector() {
+        return this.serviceInjector;
+    }
 }

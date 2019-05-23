@@ -1,6 +1,9 @@
 package com.example.main.model;
 
+import org.mockito.internal.matchers.Equals;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -78,6 +81,14 @@ public class User {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof User)) return false;
+        User other = (User) obj;
+
+        return this.getMail().equals(((User) obj).getMail());
     }
 }
 

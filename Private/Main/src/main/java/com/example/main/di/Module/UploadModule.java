@@ -28,8 +28,8 @@ public class UploadModule {
 
     @Provides
     @UploadScope
-    public  IMessageRepository providesMessageRepository(Retrofit retrofit, Executor executor){
-        IMessageRepository messageRepository = new MessageRepository(retrofit, executor);
+    public  IMessageRepository providesMessageRepository(Retrofit retrofit, ILoginRepository rep, Executor executor){
+        IMessageRepository messageRepository = new MessageRepository(retrofit, rep, executor);
         return messageRepository;
     }
 

@@ -3,12 +3,14 @@ package com.example.LoginService.service;
 import com.example.LoginService.common.IMessageService;
 import com.example.LoginService.common.MessageRepository;
 import com.example.LoginService.model.Message;
+import com.example.LoginService.model.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +45,19 @@ public class MessageService implements IMessageService {
 
 
         return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
+
+
+    public ResponseEntity<List<User>> getFriendsWithPendingMessages(String id) {
+        List<Message> messages = repository.findAllByRecipientsIDContains(id);
+        List<User> friends = new ArrayList();
+        for(Message msg : messages) {
+            friends.add(msg.getFromUser());
+            msg.getFromUser().setPassWord("");
+        }
+
+
+        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
     @Override

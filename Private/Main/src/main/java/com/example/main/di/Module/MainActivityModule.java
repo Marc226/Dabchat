@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = {ServiceModule.class})
 public class MainActivityModule {
     @Provides
     @MainActivityScope

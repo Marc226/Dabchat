@@ -1,6 +1,7 @@
 package com.example.main.di.Component;
 
 
+import com.example.main.di.Module.ServiceModule;
 import com.example.main.di.Scopes.AppScope;
 import com.example.main.App;
 import com.example.main.di.Module.AppActivityModule;
@@ -16,7 +17,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppModule.class,
         AppActivityModule.class,
         AndroidSupportInjectionModule.class,
-        NetworkModule.class
+        NetworkModule.class,
+        ServiceModule.class
     }
 )
 @AppScope
@@ -27,4 +29,7 @@ public interface AppComponent extends AndroidInjector<App> {
         AppComponent.Builder application(App app);
         AppComponent build();
     }
+
+    @Override
+    void inject(App instance);
 }
