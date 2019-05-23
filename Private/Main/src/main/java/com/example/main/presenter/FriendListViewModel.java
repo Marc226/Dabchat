@@ -60,15 +60,12 @@ public class FriendListViewModel extends ViewModel {
     
     public LiveData<String> sendMessage(Message message){
         sendMes = new MutableLiveData<>();
-        uploadMessage(message);
+        executor.submit(() ->{
+            messageRepository.sendMessage(message, sendMes);
+        });
         return sendMes;
     }
 
-    void uploadMessage(Message message){
-        executor.submit(() ->{
-           messageRepository.sendMessage(message, sendMes);
-        });
-    }
 
 
 }

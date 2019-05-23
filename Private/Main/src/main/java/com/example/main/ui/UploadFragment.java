@@ -121,6 +121,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
             imageUri = data.getData();
 
             upload_imageView.setImageURI(imageUri);
+            upload_imageView.setVisibility(View.VISIBLE);
             imageFile = new File(imageUri.getPath());
 
             try (InputStream imageS = this.getContext().getContentResolver().openInputStream(imageUri)) {
@@ -135,7 +136,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                 System.out.println(e);
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -181,7 +181,11 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> {
             if (!targetFriends.isEmpty() || imageData.length != 0) {
-                viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s));
+                Message message = new Message(null, imageData);
+                for(User user: targetFriends){
+                    message.addRecipient(user.getId());
+                }
+                viewModel.sendMessage(message).observe(getViewLifecycleOwner(), s -> displayToast(s));
             } else if(targetFriends.isEmpty()){
                 displayToast("Please select a friend");
             } else {
