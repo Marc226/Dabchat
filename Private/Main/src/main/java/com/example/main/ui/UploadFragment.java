@@ -121,6 +121,8 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
             imageUri = data.getData();
 
             upload_imageView.setImageURI(imageUri);
+            upload_imageView.setMaxHeight(500);
+            upload_imageView.setMaxWidth(300);
             upload_imageView.setVisibility(View.VISIBLE);
             imageFile = new File(imageUri.getPath());
 
