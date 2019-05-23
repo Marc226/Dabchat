@@ -9,6 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 
 public interface IFriendListRepository {
     void addFriend(User user, String currentUserId, MutableLiveData<String> data);
-    void getAllFriends(User currentUser, MutableLiveData<List<User>> data);
-    void getSpecificFriend(String id, MutableLiveData<User> data);
+    LiveData<List<User>> getAllFriends(User currentUser);
+    LiveData<User> getSpecificFriend(String id);
 }

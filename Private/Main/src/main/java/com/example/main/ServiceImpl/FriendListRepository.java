@@ -2,6 +2,7 @@ package com.example.main.ServiceImpl;
 
 import android.util.Log;
 
+import com.example.main.R;
 import com.example.main.dao.FriendDatabase;
 import com.example.main.interfaces.IFriendListRepository;
 import com.example.main.model.User;
@@ -44,7 +45,7 @@ public class FriendListRepository implements IFriendListRepository {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    data.setValue("Friend added");
+                    data.setValue("Friend added!");
                 } else {
                     data.setValue("Request unsuccessful");
                 }
@@ -58,37 +59,36 @@ public class FriendListRepository implements IFriendListRepository {
     }
 
     @Override
-    public void getAllFriends(User currentUser, MutableLiveData<List<User>> data) {
+    public LiveData<List<User>> getAllFriends(User currentUser) {
         refreshFriendList(currentUser);
-        data.setValue(database.friendDao().getAllFriends());
+        return database.friendDao().getAllFriends();
     }
 
     @Override
-    public void getSpecificFriend(String id, MutableLiveData<User> data) {
-        data.setValue(database.friendDao().getFriend(id));
+    public LiveData<User> getSpecificFriend(String id) {
+        return database.friendDao().getFriend(id);
     }
 
     private void refreshFriendList(User currentUser){
-        executor.execute(()->{
-            Call<List<User>> call = webservice.getAllFriends(currentUser);
+        Call<List<User>> call = webservice.getAllFriends(currentUser);
 
-            call.enqueue(new Callback<List<User>>() {
-                @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    if(response.isSuccessful()){
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.isSuccessful()){
+                    executor.execute(()->{
                         database.friendDao().dropTable();
                         for(User user: response.body()){
                             database.friendDao().insertFriend(user);
                         }
-                    }
+                    });
                 }
+            }
 
-                @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
-                    Log.d(TAG, "service unavailable");
-                }
-            });
-
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d(TAG, "service unavailable");
+            }
         });
     }
 
