@@ -121,6 +121,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
             imageUri = data.getData();
 
             upload_imageView.setImageURI(imageUri);
+            upload_imageView.setVisibility(View.VISIBLE);
             imageFile = new File(imageUri.getPath());
 
             try (InputStream imageS = this.getContext().getContentResolver().openInputStream(imageUri)) {
@@ -135,7 +136,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                 System.out.println(e);
                 e.printStackTrace();
             }
-
         }
     }
 

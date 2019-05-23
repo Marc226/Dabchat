@@ -25,11 +25,11 @@ import dagger.Component;
 public class FriendListViewModel extends ViewModel {
 
 
-    IFriendListRepository friendListRepository;
+    private IFriendListRepository friendListRepository;
 
-    ILoginRepository loginRepository;
+    private ILoginRepository loginRepository;
 
-    IMessageRepository messageRepository;
+    private IMessageRepository messageRepository;
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<String> sendMes;
@@ -60,16 +60,13 @@ public class FriendListViewModel extends ViewModel {
     
     public LiveData<String> sendMessage(Message message){
         sendMes = new MutableLiveData<>();
-        uploadMessage(message);
-        return sendMes;
-    }
-
-    void uploadMessage(Message message){
         executor.submit(() ->{
             message.setFromUser(this.loginRepository.getLoggedInUser());
             messageRepository.sendMessage(message, sendMes);
         });
+        return sendMes;
     }
+
 
 
 }
