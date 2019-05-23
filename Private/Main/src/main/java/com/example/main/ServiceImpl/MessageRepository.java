@@ -55,21 +55,21 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public void receiveMessagesByUserID(String id, MutableLiveData<String> data) {
+    public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data) {
         Call<List<Message>> call = webService.receiveMessages(id);
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if(response.isSuccessful()){
-                    data.setValue(response.message());
+                    data.setValue(response.body());
                 } else {
-                    data.setValue("loading failed!");
+                    Log.d(TAG,"Could not find list");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
-                data.setValue("loading failed!");
+
                 Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
 
             }

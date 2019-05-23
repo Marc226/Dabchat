@@ -4,6 +4,7 @@ package com.example.main.ui;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
@@ -14,14 +15,30 @@ import android.widget.Button;
 
 
 import com.example.main.R;
+import com.example.main.adapter.MessageListAdapter;
+import com.example.main.model.Message;
+import com.example.main.presenter.MessageListViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DownloadFragment extends DaggerFragment {
+public class DownloadFragment extends DaggerFragment implements MessageListAdapter.OnMessageNoteListner {
 
+    private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private Button donwload_button;
+    private MessageListAdapter messageListAdapter;
+    private List<Message> messageList;
+
+
+    @Inject
+    MessageListViewModel viewModel;
+
 
     public DownloadFragment() {
         // Required empty public constructor
@@ -43,4 +60,25 @@ public class DownloadFragment extends DaggerFragment {
     }
 
 
+    private void initRecycler(){
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        messageListAdapter = new MessageListAdapter(new ArrayList<>(), this);
+        recyclerView.setAdapter(messageListAdapter);
+        updateMessageList();
+    }
+
+    private void updateMessageList() {
+        viewModel.downloadMessages().observe(this, messages -> {
+            messageList = messages;
+            messageListAdapter.updateMessages(messageList);
+        });
+
+    }
+
+    @Override
+    public void showPopup() {
+        messageListAdapter.showPopup();
+    }
 }
