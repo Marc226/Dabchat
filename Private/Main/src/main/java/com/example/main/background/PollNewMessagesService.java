@@ -32,11 +32,16 @@ public class PollNewMessagesService extends Service {
     private Executor executor;
     private static String CHANNEL_ID = "Message Notification Channel";
     private List<User> currentUsers;
+    private boolean running = false;
 
     @Inject
     IMessageRepository messageRepository;
 
     public PollNewMessagesService() {
+    }
+
+    public void run() {
+        running = true;
     }
 
     @Override
@@ -61,7 +66,6 @@ public class PollNewMessagesService extends Service {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                if(messageRepository!=null) {
                     MutableLiveData<List<User>> users = new MutableLiveData<>();
                     messageRepository.receiveFriendsWithPendingMessages(null, users);
 

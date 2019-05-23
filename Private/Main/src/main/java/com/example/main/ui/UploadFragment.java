@@ -1,7 +1,9 @@
 package com.example.main.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +17,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.HasServiceInjector;
 import dagger.android.support.DaggerFragment;
 
 import android.view.LayoutInflater;
@@ -28,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.adapter.FriendListAdapter;
+import com.example.main.background.PollNewMessagesService;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
 import com.example.main.model.User;
@@ -56,6 +63,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     @Inject
     FriendListViewModel viewModel;
 
+
     private RecyclerView recyclerView;
     private File imageFile;
     private ImageView upload_imageView;
@@ -72,9 +80,9 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
     private List<User> targetFriends;
     private List<User> friendList;
-
     public UploadFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -90,6 +98,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         initUI();
         initRecycler();
         mainActivityController.showNavBar();
+        service.run();
     }
 
     private void initRecycler(){
