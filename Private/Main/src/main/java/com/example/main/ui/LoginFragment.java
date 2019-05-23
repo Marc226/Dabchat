@@ -42,13 +42,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     public LoginFragment() {
     }
 
-    public static LoginFragment newInstance() {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
