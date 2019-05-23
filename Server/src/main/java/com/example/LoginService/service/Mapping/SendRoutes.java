@@ -41,6 +41,14 @@ public class SendRoutes {
         return messages;
     }
 
+    @RequestMapping("/user_has_messages")
+    public ResponseEntity<List<User>> userHasMessages(@Valid @RequestBody LoginForm form) {
+        User user = regService.login(form.getEmail(), form.getPassword()).getBody();
+        ResponseEntity<List<User>> messages = messageService.getFriendsWithPendingMessages(user.getId());
+
+        return messages;
+    }
+
     @RequestMapping("/test")
     public ResponseEntity<String> generateTestData(){
         Message message = new Message();

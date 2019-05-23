@@ -1,6 +1,8 @@
 package com.example.main.webservice;
 
+import com.example.main.model.LoginForm;
 import com.example.main.model.Message;
+import com.example.main.model.User;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ public interface MessageWebService  {
     Call<Message> sendMessage (@Body Message message);
     @POST("user/messages")
     Call<List<Message>> receiveMessages (@Body String id);
+    @POST("send/user_has_messages")
+    Call<List<User>> userHasMessage (@Body LoginForm form);
 
 
 }
