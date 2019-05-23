@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
@@ -62,6 +63,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     private Button upload_button;
     private Button send_button;
     private Button add_friend_button;
+    private Button logoutBut;
 
     private RecyclerView.LayoutManager layoutManager;
     private FriendListAdapter friendListAdapter;
@@ -166,28 +168,27 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         send_button = getView().findViewById(R.id.send_button);
         add_friend_button = getView().findViewById(R.id.button_add_friend);
         textfield_email = getView().findViewById(R.id.textfield_email);
+        logoutBut = getView().findViewById(R.id.logoutBut);
 
         add_friend_button.setOnClickListener(view ->
                 {
-                    viewModel.addFriend(textfield_email.getText().toString()).observe(this, new Observer<String>() {
-                        @Override
-                        public void onChanged(String s) {
-                            updateFriendList();
-                            displayToast(s);
-                        }
+                    viewModel.addFriend(textfield_email.getText().toString()).observe(this, s -> {
+                        updateFriendList();
+                        displayToast(s);
                     });
                 }
         );
+        logoutBut.setOnClickListener(v -> {
+            viewModel.Logout();
+            mainActivityController.logout();
+        });
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> {
             if (!targetFriends.isEmpty() || imageData != null) {
                 Message m = new Message(null, imageData);
-                System.out.println("Recipients:");
                 for(User friend : targetFriends) {
                     m.addRecipient(friend.getId());
-                    System.out.println(friend.getId());
                 }
-
                 viewModel.sendMessage(m).observe(getViewLifecycleOwner(), s -> displayToast(s));
             } else if(targetFriends.isEmpty()){
                 displayToast("Please select a friend");

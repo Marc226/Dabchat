@@ -30,6 +30,10 @@
         android:id="@+id/uploadFragment"
         android:name="com.example.main.ui.UploadFragment"
         android:label="fragment_upload_fragment"
-        tools:layout="@layout/upload_fragment" />
+        tools:layout="@layout/upload_fragment" >
+        <action
+            android:id="@+id/action_uploadFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>

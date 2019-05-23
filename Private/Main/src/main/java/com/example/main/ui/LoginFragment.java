@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.example.main.R;
 import com.example.main.interfaces.LoginContract;
 import com.example.main.interfaces.MainActivityController;
+import com.example.main.model.User;
 
 import javax.inject.Inject;
 
@@ -27,7 +29,7 @@ import javax.inject.Inject;
 public class LoginFragment extends DaggerFragment implements LoginContract.iLoginView {
 
     @Inject
-    LoginContract.iLoginPresenter presenter;
+    LoginContract.iLoginViewModel viewModel;
     @Inject
     MainActivityController mainActivityController;
 
@@ -57,12 +59,20 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initUI();
-        mainActivityController.hideNavBar();
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.Login(username.getText().toString(), password.getText().toString());
+        viewModel.getCurrentUser().observe(this, user -> {
+            if(user != null) {
+                enableButtonClick(true);
+                stopInProgress();
+                LoginRequestFinished();
             }
+        });
+        mainActivityController.hideNavBar();
+        login.setOnClickListener(v -> {
+            showInProgress();
+            viewModel.Login(username.getText().toString(), password.getText().toString()).observe(getViewLifecycleOwner(), s -> {
+                stopInProgress();
+                displayToast(s);
+            });
         });
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +87,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onAttach(this);
     }
 
 
@@ -98,7 +107,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     @Override
     public void onPause() {
         super.onPause();
-        presenter.onDetach();
     }
 
     @Override

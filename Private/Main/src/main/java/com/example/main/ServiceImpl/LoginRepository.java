@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.main.dao.UserDatabase;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.model.LoginForm;
+import com.example.main.model.Message;
 import com.example.main.model.User;
 import com.example.main.observer.LoginObserverListener;
 import com.example.main.observer.ObserverTag;
@@ -16,6 +17,8 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Singleton;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,33 +65,34 @@ public class LoginRepository implements ILoginRepository {
     }
 
     @Override
-    public void Login(LoginForm form) {
+    public LiveData<String> Login(LoginForm form) {
+        MutableLiveData<String> message = new MutableLiveData<>();
         Call<User> call = webservice.loginUser(form);
         call.enqueue(new Callback<User>(){
             @Override
             public void onResponse(Call<User> call, final retrofit2.Response<User> response) {
                 if(!response.isSuccessful()){
-                    notifyObserver("Login failed", false, ObserverTag.LOGIN);
+                    message.setValue("Failed to login!");
                     Log.d(TAG, "Login attempt failed, at " + call.request().url());
                 } else {
+                    message.setValue("Login Successful!");
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            database.userDao().dropTable();
                             database.userDao().insertCurrentUser(response.body());
                         }
                     });
-                    notifyObserver("Login Successful, redirecting...", true, ObserverTag.LOGIN);
                     Log.d(TAG, "Login attempt successful");
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                message.setValue("Service Unavailable");
                 Log.d(TAG, t.getMessage());
-                notifyObserver("Service unavailable", false, ObserverTag.LOGIN);
             }
         });
+        return message;
     }
 
     @Override
@@ -97,6 +101,11 @@ public class LoginRepository implements ILoginRepository {
         executor.execute(()->{
             database.userDao().dropTable();
         });
+    }
+
+    @Override
+    public LiveData<User> autoLogin() {
+        return database.userDao().autoLogin();
     }
 
 
