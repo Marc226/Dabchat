@@ -5,8 +5,10 @@ import android.content.Context;
 import com.example.main.ServiceImpl.FriendListRepository;
 import com.example.main.ServiceImpl.MessageRepository;
 import com.example.main.dao.FriendDatabase;
+import com.example.main.di.Scopes.LoginScope;
 import com.example.main.di.Scopes.UploadScope;
 import com.example.main.interfaces.IFriendListRepository;
+import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.presenter.FriendListViewModel;
 
@@ -19,7 +21,7 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 
-@Module
+@Module(includes = {LoginModule.class})
 public class UploadModule {
 
 
@@ -46,8 +48,8 @@ public class UploadModule {
 
     @Provides
     @UploadScope
-    public FriendListViewModel provideFriendListViewModel(){
-        return new FriendListViewModel();
+    public FriendListViewModel provideFriendListViewModel(IFriendListRepository rep, ILoginRepository i, IMessageRepository m){
+        return new FriendListViewModel(rep, i, m);
     }
 
 }

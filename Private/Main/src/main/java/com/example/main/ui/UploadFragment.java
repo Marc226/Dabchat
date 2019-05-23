@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -174,7 +175,9 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         textfield_email = getView().findViewById(R.id.textfield_email);
 
         add_friend_button.setOnClickListener(view ->
-                System.out.println(textfield_email.getText())
+                {
+                    LiveData<String> success = viewModel.addFriend(textfield_email.getText().toString());
+                }
         );
     }
 
