@@ -12,27 +12,47 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+import dagger.Component;
+
 
 public class FriendListViewModel extends ViewModel {
 
-    @Inject
+
     IFriendListRepository friendListRepository;
 
-    @Inject
     ILoginRepository loginRepository;
 
-    @Inject
     IMessageRepository messageRepository;
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<List<User>> friends;
     private MutableLiveData<String> sendMes;
+    private User currentUser;
+
+    public FriendListViewModel(IFriendListRepository rep, ILoginRepository i, IMessageRepository m) {
+        friendListRepository=rep;
+        loginRepository=i;
+        messageRepository=m;
+        executor.submit(()->{
+            currentUser = loginRepository.getLoggedInUser();
+        });
+
+    }
+
+    public LiveData<String> addFriend(String mail) {
+        MutableLiveData<String> friend = new MutableLiveData();
+        friendListRepository.addFriend(currentUser, mail, friend);
+        executor.submit(()->{
+        });
+        return friend;
+    }
 
     public LiveData<List<User>> getFriendList(){
         if(friends == null){
