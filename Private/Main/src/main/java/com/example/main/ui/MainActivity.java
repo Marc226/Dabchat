@@ -33,6 +33,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
         setContentView(R.layout.main_screen_tabbar);
         navController = Navigation.findNavController(this, R.id.main_nav);
         setupButtonNavigation();
+        navController.navigate(R.id.action_rootFragment_to_loginFragment);
     }
 
 

@@ -1,7 +1,9 @@
 package com.example.main.di.Module;
 
+import com.example.main.di.Scopes.FriendListScope;
 import com.example.main.di.Scopes.LoginScope;
 import com.example.main.di.Scopes.UploadScope;
+import com.example.main.ui.FriendListFragment;
 import com.example.main.ui.LoginFragment;
 import com.example.main.ui.RegisterFragment;
 import com.example.main.ui.UploadFragment;
@@ -24,5 +26,8 @@ public abstract class FragmentModule {
     abstract UploadFragment bindUploadFragment();
 
 
+    @ContributesAndroidInjector(modules = {FriendListModule.class})
+    @FriendListScope
+    abstract FriendListFragment bindFriendListFragment();
 
 }

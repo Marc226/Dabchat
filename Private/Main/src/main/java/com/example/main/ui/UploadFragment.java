@@ -1,7 +1,5 @@
 package com.example.main.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,36 +9,25 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.main.R;
-import com.example.main.adapter.FriendListAdapter;
 import com.example.main.interfaces.MainActivityController;
+import com.example.main.interfaces.UploadContract;
 import com.example.main.model.Message;
-import com.example.main.model.User;
-import com.example.main.presenter.FriendListViewModel;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -48,22 +35,18 @@ import static android.app.Activity.RESULT_OK;
 
 
 
-public class UploadFragment extends DaggerFragment  {
+public class UploadFragment extends DaggerFragment implements UploadContract.iUploadView {
 
     @Inject
     MainActivityController mainActivityController;
     @Inject
-    FriendListViewModel viewModel;
+    UploadContract.iUploadPresenter presenter;
 
-    private RecyclerView.LayoutManager layoutManager;
-    private FriendListAdapter friendListAdapter;
-    private RecyclerView recyclerView;
-    private File imageFile;
-    private ImageView upload_imageView;
-    private Button upload_button;
-    private Button send_button;
-    private Button add_friend_button;
-    EditText textfield_email;
+
+    File imageFile;
+    ImageView upload_imageView;
+    Button upload_button;
+    Button send_button;
     byte[] imageData;
     private static final int PICK_IMAGE = 100;
     Uri imageUri;
@@ -71,6 +54,8 @@ public class UploadFragment extends DaggerFragment  {
     public UploadFragment() {
         // Required empty public constructor
     }
+
+    public static UploadFragment newInstance() { return new UploadFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,22 +67,36 @@ public class UploadFragment extends DaggerFragment  {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         initUI();
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        friendListAdapter = new FriendListAdapter();
-        recyclerView.setAdapter(friendListAdapter);
         mainActivityController.showNavBar();
-        upload_button.setOnClickListener(v -> openGallery());
-        send_button.setOnClickListener(v -> viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s)));
+        upload_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+
+        send_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Message msg = new Message(null, imageData);
+
+                presenter.sendMessage(msg);
+
+
+
+            }
+        });
+
     }
 
-    private void openGallery(){
+        private void openGallery(){
         Intent gallery = new Intent(Intent.ACTION_PICK);
         gallery.setType("image/*");
         startActivityForResult(gallery, PICK_IMAGE);
-    }
+        }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -127,7 +126,6 @@ public class UploadFragment extends DaggerFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.upload_fragment, container, false);
     }
 
@@ -144,26 +142,14 @@ public class UploadFragment extends DaggerFragment  {
     }
 
     private void initUI(){
-        recyclerView = getView().findViewById(R.id.friendRecycler);
-        upload_imageView = getView().findViewById(R.id.preview);
-        upload_button = getView().findViewById(R.id.upload_btn);
-        send_button = getView().findViewById(R.id.send_button);
-        add_friend_button = getView().findViewById(R.id.button_add_friend);
-        textfield_email = getView().findViewById(R.id.textfield_email);
-
-        add_friend_button.setOnClickListener(view ->
-                {
-                    LiveData<String> success = viewModel.addFriend(textfield_email.getText().toString());
-                }
-        );
+        upload_imageView = (ImageView) getView().findViewById(R.id.preview);
+        upload_button = (Button) getView().findViewById(R.id.upload_btn);
+        send_button = (Button) getView().findViewById(R.id.send_button);
     }
 
-    private void displayToast(String message){
+
+    @Override
+    public void displayToast(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
-
-
-
-
 }

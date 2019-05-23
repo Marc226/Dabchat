@@ -54,12 +54,12 @@ public class UserService implements IUserService {
         boolean success = false;
         if(usr!=null && newFriend!=null) {
             if(usr.getFrientList() == null) usr.createFriendList();
-            success = true;
 
             if(!usr.getFrientList().contains(newFriend.getMail())) {
                 newFriend.setPassWord("");
                 usr.getFrientList().add(newFriend.getMail());
                 repository.save(usr);
+                success = true;
             }
         }
 

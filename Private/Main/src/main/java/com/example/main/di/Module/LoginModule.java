@@ -3,13 +3,8 @@ package com.example.main.di.Module;
 import androidx.room.Room;
 import android.content.Context;
 
-import com.example.main.ServiceImpl.FriendListRepository;
-import com.example.main.dao.FriendDatabase;
 import com.example.main.dao.UserDatabase;
-import com.example.main.di.Scopes.AppScope;
 import com.example.main.di.Scopes.LoginScope;
-import com.example.main.di.Scopes.UploadScope;
-import com.example.main.interfaces.IFriendListRepository;
 import com.example.main.presenter.LoginPresenter;
 import com.example.main.presenter.RegisterPresenter;
 import com.example.main.ServiceImpl.LoginRepository;
@@ -46,8 +41,6 @@ public class LoginModule {
         ILoginRepository repo = new LoginRepository(retrofit, database, exec);
         return repo;
     }
-
-
 
     @Provides
     @LoginScope
