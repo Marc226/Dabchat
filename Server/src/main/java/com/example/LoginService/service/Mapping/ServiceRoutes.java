@@ -56,7 +56,6 @@ public class ServiceRoutes {
     @CrossOrigin
     @RequestMapping("/addFriend")
     public ResponseEntity<Boolean> addFriend(@Valid @RequestBody User user, @RequestParam String friendEmail){
-        System.out.println("id: "+user.getId()+"\tfriend email: "+friendEmail);
         return userService.addFriend(user, friendEmail);
     }
     @CrossOrigin
@@ -67,7 +66,9 @@ public class ServiceRoutes {
     @CrossOrigin
     @RequestMapping("/getAllFriends")
     public ResponseEntity<List<User>> getAllFriends(@Valid @RequestBody User user){
-        return userService.getAllFriends(user);
+        ResponseEntity<List<User>> users = userService.getAllFriends(user);
+        System.out.println(users.getBody().size());
+        return users;
     }
 
     @CrossOrigin

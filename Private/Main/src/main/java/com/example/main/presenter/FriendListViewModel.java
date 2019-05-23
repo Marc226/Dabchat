@@ -32,7 +32,6 @@ public class FriendListViewModel extends ViewModel {
     IMessageRepository messageRepository;
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
-    private MutableLiveData<List<User>> friends;
     private MutableLiveData<String> sendMes;
     private User currentUser;
 
@@ -48,18 +47,14 @@ public class FriendListViewModel extends ViewModel {
 
     public LiveData<String> addFriend(String mail) {
         MutableLiveData<String> friend = new MutableLiveData();
-        friendListRepository.addFriend(currentUser, mail, friend);
         executor.submit(()->{
+            friendListRepository.addFriend(currentUser, mail, friend);
         });
         return friend;
     }
 
     public LiveData<List<User>> getFriendList(){
-        if(friends == null){
-            friends = new MutableLiveData<>();
-            loadFriends();
-        }
-        return friends;
+        return friendListRepository.getAllFriends(currentUser);
     }
 
     
@@ -67,13 +62,6 @@ public class FriendListViewModel extends ViewModel {
         sendMes = new MutableLiveData<>();
         uploadMessage(message);
         return sendMes;
-    }
-
-    void loadFriends(){
-        executor.submit(()->{
-            User currentUser = loginRepository.getLoggedInUser();
-            friendListRepository.getAllFriends(currentUser, friends);
-        });
     }
 
     void uploadMessage(Message message){

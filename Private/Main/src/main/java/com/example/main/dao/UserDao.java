@@ -20,4 +20,6 @@ public interface UserDao {
     @Query("SELECT * FROM user")
     User getCurrentUser();
 
+    @Query("DELETE FROM user")
+    void dropTable();
 }

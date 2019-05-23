@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,25 +49,29 @@ import static android.app.Activity.RESULT_OK;
 
 
 
-public class UploadFragment extends DaggerFragment  {
+public class UploadFragment extends DaggerFragment implements FriendListAdapter.OnFriendNoteListner {
 
     @Inject
     MainActivityController mainActivityController;
     @Inject
     FriendListViewModel viewModel;
 
-    private RecyclerView.LayoutManager layoutManager;
-    private FriendListAdapter friendListAdapter;
     private RecyclerView recyclerView;
     private File imageFile;
     private ImageView upload_imageView;
     private Button upload_button;
     private Button send_button;
     private Button add_friend_button;
-    EditText textfield_email;
+
+    private RecyclerView.LayoutManager layoutManager;
+    private FriendListAdapter friendListAdapter;
+    private EditText textfield_email;
     byte[] imageData;
     private static final int PICK_IMAGE = 100;
-    Uri imageUri;
+    private Uri imageUri;
+
+    private List<User> targetFriends;
+    private List<User> friendList;
 
     public UploadFragment() {
         // Required empty public constructor
@@ -83,14 +88,25 @@ public class UploadFragment extends DaggerFragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initUI();
+        initRecycler();
+        mainActivityController.showNavBar();
+    }
+
+    private void initRecycler(){
+        targetFriends = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        friendListAdapter = new FriendListAdapter();
+        friendListAdapter = new FriendListAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(friendListAdapter);
-        mainActivityController.showNavBar();
-        upload_button.setOnClickListener(v -> openGallery());
-        send_button.setOnClickListener(v -> viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s)));
+        updateFriendList();
+    }
+
+    private void updateFriendList(){
+        viewModel.getFriendList().observe(this, users -> {
+                friendList = users;
+                friendListAdapter.updateFriends(users);
+        });
     }
 
     private void openGallery(){
@@ -153,9 +169,25 @@ public class UploadFragment extends DaggerFragment  {
 
         add_friend_button.setOnClickListener(view ->
                 {
-                    LiveData<String> success = viewModel.addFriend(textfield_email.getText().toString());
+                    viewModel.addFriend(textfield_email.getText().toString()).observe(this, new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            updateFriendList();
+                            displayToast(s);
+                        }
+                    });
                 }
         );
+        upload_button.setOnClickListener(v -> openGallery());
+        send_button.setOnClickListener(v -> {
+            if (!targetFriends.isEmpty() || imageData.length != 0) {
+                viewModel.sendMessage(new Message(null, imageData)).observe(getViewLifecycleOwner(), s -> displayToast(s));
+            } else if(targetFriends.isEmpty()){
+                displayToast("Please select a friend");
+            } else {
+                displayToast("Please select a picture");
+            }
+        });
     }
 
     private void displayToast(String message){
@@ -163,7 +195,18 @@ public class UploadFragment extends DaggerFragment  {
     }
 
 
+    @Override
+    public boolean isClicked(int position) {
+        return targetFriends.contains(friendList.get(position));
+    }
 
+    @Override
+    public void add(int position) {
+        targetFriends.add(friendList.get(position));
+    }
 
-
+    @Override
+    public void remove(int position) {
+        targetFriends.remove(friendList.get(position));
+    }
 }

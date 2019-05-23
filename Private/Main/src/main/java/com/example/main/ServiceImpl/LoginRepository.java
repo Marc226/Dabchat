@@ -74,6 +74,7 @@ public class LoginRepository implements ILoginRepository {
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
+                            database.userDao().dropTable();
                             database.userDao().insertCurrentUser(response.body());
                         }
                     });
@@ -93,7 +94,9 @@ public class LoginRepository implements ILoginRepository {
     @Override
     public void Logout() {
         Log.d(TAG,"user logged out");
-        database.userDao().removeCurrentUser(database.userDao().getCurrentUser());
+        executor.execute(()->{
+            database.userDao().dropTable();
+        });
     }
 
 

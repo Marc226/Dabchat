@@ -20,10 +20,10 @@ public interface FriendDao {
     void removeFriend(User user);
 
     @Query("SELECT * FROM user")
-    List<User> getAllFriends();
+    LiveData<List<User>> getAllFriends();
 
     @Query("SELECT * FROM user WHERE id LIKE :id")
-    User getFriend(String id);
+    LiveData<User> getFriend(String id);
 
     @Query("DELETE FROM user")
     public void dropTable();

@@ -17,12 +17,13 @@
 
 
     <!--Upload-->
-    <string name="upload_btn">Upload</string>
-    <string name="dank_view">Dankload</string>
+    <string name="upload_btn">Browse</string>
+    <string name="dank_view">Dankupload</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="add_friend">Add Friend</string>
     <string name="background_channel_name">DabChat Notification</string>
     <string name="background_channel_description">This is the notification channel that informs the user, that they have received new messages.</string>
+    <string name="friend_added">Friend added successfully!</string>
 </resources>
