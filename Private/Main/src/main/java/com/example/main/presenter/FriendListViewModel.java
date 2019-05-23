@@ -61,6 +61,7 @@ public class FriendListViewModel extends ViewModel {
     public LiveData<String> sendMessage(Message message){
         sendMes = new MutableLiveData<>();
         executor.submit(() ->{
+            message.setFromUser(this.loginRepository.getLoggedInUser());
             messageRepository.sendMessage(message, sendMes);
         });
         return sendMes;

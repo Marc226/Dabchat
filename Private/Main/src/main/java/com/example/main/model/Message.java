@@ -26,6 +26,12 @@ public class Message {
         this.recipientsID = new ArrayList<>();
     }
 
+    public void addRecipients(String... reps) {
+        for(String str : reps) {
+            recipientsID.add(str);
+        }
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -50,4 +56,6 @@ public class Message {
     public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
     }
+
+    public List<String> getRecipientsID() {return recipientsID;}
 }

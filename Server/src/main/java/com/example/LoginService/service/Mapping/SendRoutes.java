@@ -26,6 +26,10 @@ public class SendRoutes {
     @RequestMapping("/upload")
     public ResponseEntity<Message> uploadMessage(@Valid @RequestBody Message message){
         System.out.println("image data: \n"+message.getImage());
+        System.out.println("Recipients!:");
+        for(String rec : message.getRecipientsID()) {
+            System.out.println(rec);
+        }
         messageService.sendMessage(message);
 
         return null;
