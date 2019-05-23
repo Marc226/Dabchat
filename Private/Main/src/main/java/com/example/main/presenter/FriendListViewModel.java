@@ -25,11 +25,11 @@ import dagger.Component;
 public class FriendListViewModel extends ViewModel {
 
 
-    IFriendListRepository friendListRepository;
+    private IFriendListRepository friendListRepository;
 
-    ILoginRepository loginRepository;
+    private ILoginRepository loginRepository;
 
-    IMessageRepository messageRepository;
+    private IMessageRepository messageRepository;
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<String> sendMes;
