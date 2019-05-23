@@ -30,6 +30,10 @@ public class Message {
         this.recipientsID = new ArrayList<>();
     }
 
+    public List<String> getRecipientsID() {
+        return recipientsID;
+    }
+
     public byte[] getImage() {
         return image;
     }

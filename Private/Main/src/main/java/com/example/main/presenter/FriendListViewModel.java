@@ -66,7 +66,8 @@ public class FriendListViewModel extends ViewModel {
 
     void uploadMessage(Message message){
         executor.submit(() ->{
-           messageRepository.sendMessage(message, sendMes);
+            message.setFromUser(this.loginRepository.getLoggedInUser());
+            messageRepository.sendMessage(message, sendMes);
         });
     }
 

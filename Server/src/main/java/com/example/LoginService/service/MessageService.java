@@ -21,7 +21,6 @@ public class MessageService implements IMessageService {
 
     @Override
     public ResponseEntity<Message> sendMessage(Message message) {
-
         if(repository.findByid(message.getId()) == null) {
             message.setId(ObjectId.get().toString());
             repository.save(message);
