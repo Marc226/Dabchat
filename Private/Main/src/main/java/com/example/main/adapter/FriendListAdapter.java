@@ -68,7 +68,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
                 itemView.setBackgroundColor(Color.WHITE);
                 noteListner.remove(getAdapterPosition());
             } else {
-                itemView.setBackgroundColor(Color.GREEN);
+                itemView.setBackgroundColor(Color.rgb(0,133,119));
                 noteListner.add(getAdapterPosition());
             }
         }
