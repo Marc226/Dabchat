@@ -46,7 +46,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         public MessageListViewHolder(@NonNull View itemView, OnMessageNoteListner onMessageNoteListner) {
             super(itemView);
-            messageName = itemView.findViewById(R.id.message_recycleView);
+            messageName = itemView.findViewById(R.id.messageNameRecycler);
 
             this.noteListner = onMessageNoteListner;
 
@@ -55,7 +55,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         @Override
         public void onClick(View v) {
-            noteListner.showPopup();
+            noteListner.showPopup(getAdapterPosition());
         }
     }
 
@@ -63,7 +63,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
 
     public interface OnMessageNoteListner{
-        void showPopup();
+        void showPopup(int position);
     }
 
     public void updateMessages(List<Message> messages){
@@ -71,29 +71,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         notifyDataSetChanged();
     }
 
-    public void showPopup() {
-        View popupView = LayoutInflater.from(this.parent.getContext()).inflate(R.layout.message_popup, null);
-
-        final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        Button btnDismiss = popupView.findViewById(R.id.close_button);
-        ImageView messageView = popupView.findViewById(R.id.popup_imageView);
-        byte[] imageArray = currentMessage.getImage();
-
-
-        Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
-        messageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, messageView.getWidth(), messageView.getHeight(), false));
-
-
-
-        btnDismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
-        popupWindow.showAsDropDown(popupView, 0, 0);
-    }
 
 
     @NonNull
@@ -107,8 +84,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageListViewHolder holder, int position) {
-        this.currentMessage = messageList.get(position);
-        holder.messageName.setText(currentMessage.getFromUser().getFirstName());
+       this.currentMessage = messageList.get(position);
+        System.out.println("messageName: "+holder.messageName);
+
+
+        holder.messageName.setText(currentMessage.getFromUser().getMail());
     }
 
 

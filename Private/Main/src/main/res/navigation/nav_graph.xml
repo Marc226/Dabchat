@@ -35,5 +35,19 @@
             android:id="@+id/action_uploadFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.example.main.ui.DownloadFragment"
+        android:label="fragment_download"
+        tools:layout="@layout/fragment_download" >
+        <action
+            android:id="@+id/action_downloadFragment_to_popupFragment"
+            app:destination="@id/popupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/popupFragment"
+        android:name="com.example.main.ui.PopupFragment"
+        android:label="message_popup"
+        tools:layout="@layout/message_popup" />
 
 </navigation>

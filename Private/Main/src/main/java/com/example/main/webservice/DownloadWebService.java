@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 
 public interface DownloadWebService {
 
-    @POST("user/messages")
+    @POST("/send/get_pending")
     Call<List<Message>> receiveMessages (@Body String id);
 
 }

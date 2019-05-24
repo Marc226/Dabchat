@@ -17,14 +17,14 @@ public class Message {
 
     User fromUser;
     List<String> recipientsID;
-    byte[] image;
+    String image;
 
 
     public Message(){
 
     }
 
-    public Message(String id, byte[] image) {
+    public Message(String id, String image) {
         this.id = id;
         this.image = image;
         this.recipientsID = new ArrayList<>();
@@ -34,11 +34,11 @@ public class Message {
         return recipientsID;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

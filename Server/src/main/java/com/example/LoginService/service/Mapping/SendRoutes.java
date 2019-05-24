@@ -36,9 +36,9 @@ public class SendRoutes {
     }
 
     @RequestMapping("/get_pending")
-    public ResponseEntity<List<Message>> getMessagesForUser(@Valid @RequestBody LoginForm form) {
-        User user = regService.login(form.getEmail(), form.getPassword()).getBody();
-        ResponseEntity<List<Message>> messages = messageService.getPendingMessages(user.getId());
+    public ResponseEntity<List<Message>> getMessagesForUser(@Valid @RequestBody String id) {
+
+        ResponseEntity<List<Message>> messages = messageService.getPendingMessages(id.substring(1, id.length()-1));
 
         return messages;
     }
