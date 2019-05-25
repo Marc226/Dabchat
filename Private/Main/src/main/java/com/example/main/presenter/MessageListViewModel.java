@@ -18,7 +18,6 @@ public class MessageListViewModel extends ViewModel {
     ILoginRepository loginRepository;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<List<Message>> receivedListOfMessages;
-    private MutableLiveData<Message> receivedMessage;
     private User currentUser;
 
     public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository){
