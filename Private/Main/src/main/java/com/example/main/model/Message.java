@@ -1,6 +1,7 @@
 package com.example.main.model;
 
 import android.media.Image;
+import android.util.Base64;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Message {
     private String id;
     private User fromUser;
     private List<String> recipientsID;
-    private byte[] image;
+    private String image;
 
 
     public Message (){
@@ -22,7 +23,7 @@ public class Message {
 
     public Message(String id, byte[] image) {
         this.id = id;
-        this.image = image;
+        this.image = Base64.encodeToString(image, Base64.DEFAULT);
         this.recipientsID = new ArrayList<>();
     }
 
@@ -33,11 +34,12 @@ public class Message {
     }
 
     public byte[] getImage() {
-        return image;
+        return Base64.decode(image, Base64.DEFAULT);
     }
 
     public void setImage(byte[] image) {
-        this.image = image;
+        this.image = Base64.encodeToString(image, Base64.DEFAULT);
+
     }
 
     public String getId() {

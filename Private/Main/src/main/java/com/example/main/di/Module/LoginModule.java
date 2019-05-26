@@ -30,14 +30,14 @@ public class LoginModule {
 
     @Provides
     @LoginScope
-    public LoginContract.iLoginViewModel providePresenter(ILoginRepository repository){
+    public LoginContract.iLoginViewModel provideLoginViewModel(ILoginRepository repository){
         LoginContract.iLoginViewModel presenter = new LoginViewModel(repository);
         return presenter;
     }
 
     @Provides
     @LoginScope
-    public ILoginRepository providerepository(Retrofit retrofit, UserDatabase database, Executor exec){
+    public ILoginRepository provideRepository(Retrofit retrofit, UserDatabase database, Executor exec){
         ILoginRepository repo = new LoginRepository(retrofit, database, exec);
         return repo;
     }

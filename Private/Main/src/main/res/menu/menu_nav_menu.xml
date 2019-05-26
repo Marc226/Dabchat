@@ -3,9 +3,16 @@
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@id/uploadFragment"
+    android:id="@id/uploadFragment"
+    android:enabled="true"
+    android:icon="@mipmap/ic_launcher_round"
+    android:title="Upload"
+    android:visible="true" />
+
+    <item
+        android:id="@id/downloadFragment"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher_round"
-        android:title="Upload"
+        android:title="Download"
         android:visible="true" />
 </menu>
