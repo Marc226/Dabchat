@@ -36,12 +36,13 @@ public class PopupFragment extends DaggerFragment {
         Message message = PopupFragmentArgs.fromBundle(getArguments()).getMessage();
         byte[] imageArray = message.getImage();
         Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
+
         ViewTreeObserver vto = message_imageView.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 message_imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                message_imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, message_imageView.getMeasuredWidth(), message_imageView.getMeasuredHeight(), false));
+                message_imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(), bmp.getHeight(), false));
                 return true;
             }
         });
