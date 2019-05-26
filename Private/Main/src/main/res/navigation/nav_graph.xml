@@ -41,13 +41,18 @@
         android:label="fragment_download"
         tools:layout="@layout/fragment_download" >
         <action
-            android:id="@+id/action_downloadFragment_to_popupFragment"
+            android:id="@+id/downloadToImage"
             app:destination="@id/popupFragment" />
     </fragment>
     <fragment
         android:id="@+id/popupFragment"
         android:name="com.example.main.ui.PopupFragment"
         android:label="message_popup"
-        tools:layout="@layout/message_popup" />
-
+        tools:layout="@layout/message_popup" >
+        <argument
+            android:name="message"
+            app:argType="com.example.main.model.Message"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

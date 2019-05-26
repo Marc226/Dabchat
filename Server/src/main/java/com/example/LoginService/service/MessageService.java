@@ -3,6 +3,7 @@ package com.example.LoginService.service;
 import com.example.LoginService.common.IMessageService;
 import com.example.LoginService.common.MessageRepository;
 import com.example.LoginService.common.MessageSeenRepository;
+import com.example.LoginService.common.UserRepository;
 import com.example.LoginService.model.Message;
 import com.example.LoginService.model.MessageSeen;
 import com.example.LoginService.model.User;
@@ -22,6 +23,8 @@ public class MessageService implements IMessageService {
     private MessageRepository repository;
     @Autowired
     private MessageSeenRepository messageSeenRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public ResponseEntity<Message> sendMessage(Message message) {
         if(repository.findByid(message.getId()) == null) {
@@ -41,6 +44,7 @@ public class MessageService implements IMessageService {
     public ResponseEntity<List<Message>> getPendingMessages(String id) {
         List<Message> messages = repository.findAllByRecipientsIDContains(id);
         System.out.println("Length:     "+ messages.size());
+        
         for(Message msg : messages) {
             //msg.removeRecipient(id);
             //msg.setImage(null);
@@ -84,6 +88,26 @@ public class MessageService implements IMessageService {
               return new ResponseEntity<>(receivedMessage, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public boolean removeUserFromPending(User user, String mailId) {
+
+        //In case no id is given, but mail is accessible.
+        if(user.getId()==null) user = userRepository.findByMail(user.getMail());
+
+        Message message = repository.findByid(mailId);
+
+        if(message==null || !message.getRecipientsID().contains(user.getId())) return false;
+
+        message.removeRecipient(user.getId());
+        if(message.recipientCount()>0) {
+            repository.save(message);
+        } else {
+            repository.delete(message);
+        }
+
+        return true;
     }
 
 

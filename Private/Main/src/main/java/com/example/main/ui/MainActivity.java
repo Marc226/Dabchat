@@ -78,7 +78,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
 
     @Override
     public void navigateToPopup() {
-        navController.navigate(R.id.action_downloadFragment_to_popupFragment);
+        navController.navigate(R.id.downloadToImage);
     }
 
 

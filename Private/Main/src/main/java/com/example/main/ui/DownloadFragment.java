@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
@@ -36,7 +37,7 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class DownloadFragment extends DaggerFragment implements MessageListAdapter.OnMessageNoteListner {
-    private ImageView message_imageView;
+
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private Button donwload_button;
@@ -57,7 +58,6 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        message_imageView = getView().findViewById(R.id.popup_imageView);
         initUI();
         initRecycler();
 
@@ -99,21 +99,15 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     @Override
     public void showPopup(int position) {
         Message currentMessage = messageList.get(position);
-        //View popupView = LayoutInflater.from(getContext()).inflate(R.layout.message_popup, null);
-
-
-        //final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        //Button btnDismiss = popupView.findViewById(R.id.close_button);
 
         byte[] imageArray = currentMessage.getImage();
 
+        DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
+        action.setMessage(currentMessage);
+
+        Navigation.findNavController(getView()).navigate(action);
 
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
-        //message_imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, message_imageView.getWidth(), message_imageView.getHeight(), false));
-
-
-        mainActivityController.navigateToPopup();
 
         //popupWindow.showAsDropDown(popupView, 0, 0);
     }

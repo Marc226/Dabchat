@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -38,6 +39,17 @@ public class SendRoutes {
         ResponseEntity<List<Message>> messages = messageService.getPendingMessages(id.substring(1, id.length()-1));
 
         return messages;
+    }
+
+    @RequestMapping("/remove_from_pending")
+    public ResponseEntity<String> removeUserFromPending(@Valid @RequestBody User user, @RequestParam String messageId) {
+        boolean success;
+        success = messageService.removeUserFromPending(user, messageId);
+
+        if(success)
+            return new ResponseEntity<>("User was removed successfully!", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("The user was not found in the given message id list!", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping("/user_has_messages")

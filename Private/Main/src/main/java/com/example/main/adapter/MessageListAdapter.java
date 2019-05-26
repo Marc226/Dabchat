@@ -46,6 +46,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         @Override
         public void onClick(View v) {
+            System.out.println("Hello");
             noteListner.showPopup(getAdapterPosition());
         }
     }

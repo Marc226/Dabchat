@@ -179,7 +179,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         });
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> {
-            if (!targetFriends.isEmpty() || imageData != null) {
+            if (!targetFriends.isEmpty() && imageData != null) {
                 Message m = new Message(null, imageData);
                 for(User friend : targetFriends) {
                     m.addRecipient(friend.getId());

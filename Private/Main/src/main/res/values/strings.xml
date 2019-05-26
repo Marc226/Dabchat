@@ -26,6 +26,7 @@
     <string name="background_channel_name">DabChat Notification</string>
     <string name="background_channel_description">This is the notification channel that informs the user, that they have received new messages.</string>
     <string name="friend_added">Friend added successfully!</string>
+    <string name="full_image">Full image</string>
     <string name="send">Send</string>
     <string name="logout">Logout</string>
     <string name="friend_s_email">Friend\'s Email</string>
