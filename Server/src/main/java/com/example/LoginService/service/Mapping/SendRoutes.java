@@ -6,6 +6,7 @@ import com.example.LoginService.model.User;
 import com.example.LoginService.service.RegisterService;
 import com.example.LoginService.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +26,10 @@ public class SendRoutes {
 
     @RequestMapping("/upload")
     public ResponseEntity<Message> uploadMessage(@Valid @RequestBody Message message){
-        System.out.println("image data: \n"+message.getImage());
-        System.out.println("Recipients!:");
-        for(String rec : message.getRecipientsID()) {
-            System.out.println(rec);
-        }
+
         messageService.sendMessage(message);
 
-        return null;
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @RequestMapping("/get_pending")

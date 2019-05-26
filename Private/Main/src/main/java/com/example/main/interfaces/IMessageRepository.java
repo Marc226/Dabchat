@@ -17,4 +17,5 @@ public interface IMessageRepository{
     public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
 
 
+    public void clearPending();
 }

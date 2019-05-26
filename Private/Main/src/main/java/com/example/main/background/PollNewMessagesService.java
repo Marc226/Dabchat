@@ -8,8 +8,7 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.example.main.R;
-import com.example.main.di.Module.LoginModule;
-import com.example.main.di.Module.UploadModule;
+import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.User;
 
@@ -19,22 +18,23 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.MutableLiveData;
-import dagger.Module;
 import dagger.android.AndroidInjection;
 
 
 public class PollNewMessagesService extends Service {
     private Executor executor;
     private static String CHANNEL_ID = "Message Notification Channel";
-    private List<User> currentUsers;
+    private List<User> usersThatHasSent;
+    private User currentUser;
 
     @Inject
     IMessageRepository messageRepository;
+    @Inject
+    ILoginRepository loginRepository;
 
     public PollNewMessagesService() {
     }
@@ -56,18 +56,17 @@ public class PollNewMessagesService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("BackgroundService Start Command!");
         createNotificationChannel();
-        currentUsers = new ArrayList<>();
+        usersThatHasSent = new ArrayList<>();
         final Service s = this;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 if(messageRepository!=null) {
+
                     MutableLiveData<List<User>> users = new MutableLiveData<>();
                     messageRepository.receiveFriendsWithPendingMessages(null, users);
 
-
-
-                    if(messageRepository.getPendingFromUsers()!=null && userListChanged(messageRepository.getPendingFromUsers())) {
+                    if(messageRepository.getPendingFromUsers()!=null && messageRepository.getPendingFromUsers().size()>0) {
                         String fromUsers = "";
                         for (User user : messageRepository.getPendingFromUsers())
                             fromUsers += user.getMail() + "\n";
@@ -82,6 +81,7 @@ public class PollNewMessagesService extends Service {
 
                         // notificationId is a unique int for each notification that you must define
                         notificationManager.notify(0, builder.build());
+                        messageRepository.getPendingFromUsers().clear();
                     }
                 }
 
@@ -103,10 +103,10 @@ public class PollNewMessagesService extends Service {
     }
 
     private boolean userListChanged(List<User> users) {
-        if(this.currentUsers.containsAll(users)) return false;
+        if(this.usersThatHasSent.containsAll(users)) return false;
 
-        currentUsers.clear();
-        currentUsers.addAll(users);
+        usersThatHasSent.clear();
+        usersThatHasSent.addAll(users);
 
         return true;
     }

@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.example.main.R;
 import com.example.main.adapter.FriendListAdapter;
 import com.example.main.background.PollNewMessagesService;
+import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
 import com.example.main.model.User;
@@ -63,7 +64,8 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     MainActivityController mainActivityController;
     @Inject
     FriendListViewModel viewModel;
-
+    @Inject
+    IMessageRepository userRep;
 
     private RecyclerView recyclerView;
     private File imageFile;
@@ -187,6 +189,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                 }
         );
         logoutBut.setOnClickListener(v -> {
+            userRep.clearPending();
             viewModel.Logout();
             mainActivityController.logout();
         });
