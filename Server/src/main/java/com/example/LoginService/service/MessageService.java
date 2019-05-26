@@ -86,5 +86,20 @@ public class MessageService implements IMessageService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @Override
+    public boolean removeUserFromPending(User user, String mailId) {
+        Message message = repository.findByid(mailId);
+        if(message==null) return false;
+
+        message.removeRecipient(user.getId());
+        if(message.recipientCount()>0) {
+            repository.save(message);
+        } else {
+            repository.delete(message);
+        }
+
+        return true;
+    }
+
 
 }
