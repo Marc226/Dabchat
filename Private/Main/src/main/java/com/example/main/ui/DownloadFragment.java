@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 
 
 import com.example.main.R;
@@ -41,6 +42,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private Button donwload_button;
+    private ProgressBar progressBar;
     private MessageListAdapter messageListAdapter;
     private List<Message> messageList;
 
@@ -58,6 +60,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         initUI();
         initRecycler();
 
@@ -71,11 +74,11 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     }
 
     private void initUI() {
+        progressBar = getView().findViewById(R.id.progressBar);
+        progressBar.setVisibility(getView().VISIBLE);
         recyclerView = getView().findViewById(R.id.message_recycleView);
-        this.donwload_button = getView().findViewById(R.id.download_button);
-        /*this.donwload_button.setOnClickListener(v -> {
-            updateMessageList();
-        });*/
+        donwload_button = getView().findViewById(R.id.download_button);
+
     }
 
 
@@ -91,6 +94,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private void updateMessageList() {
         viewModel.downloadMessages().observe(this, messages -> {
             messageList = messages;
+            progressBar.setVisibility(getView().GONE);
             messageListAdapter.updateMessages(messageList);
         });
 
