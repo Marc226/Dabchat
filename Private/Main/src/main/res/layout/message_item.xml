@@ -7,7 +7,7 @@
         android:id="@+id/messageNameRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/appbar_padding_top"
         android:text="Image will popup here." />
 
 </androidx.cardview.widget.CardView>
