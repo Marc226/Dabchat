@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.main.R;
 import com.example.main.model.Message;
+import com.example.main.model.ResponseMessage;
 
 import java.util.List;
 
@@ -15,12 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageListViewHolder>{
-    private List<Message> messageList;
+    private List<ResponseMessage> messageList;
     private OnMessageNoteListner messageNoteListener;
-    private Message currentMessage;
+    private ResponseMessage currentMessage;
     private ViewGroup parent;
 
-    public MessageListAdapter(List<Message> messageList, OnMessageNoteListner messageNoteListener) {
+    public MessageListAdapter(List<ResponseMessage> messageList, OnMessageNoteListner messageNoteListener) {
         this.messageList = messageList;
         this.messageNoteListener = messageNoteListener;
     }
@@ -58,7 +59,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         void showPopup(int position);
     }
 
-    public void updateMessages(List<Message> messages){
+    public void updateMessages(List<ResponseMessage> messages){
         this.messageList = messages;
         notifyDataSetChanged();
     }
@@ -80,7 +81,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         System.out.println("messageName: "+holder.messageName);
 
 
-        holder.messageName.setText(currentMessage.getFromUser().getMail());
+        holder.messageName.setText(currentMessage.getFromUserMail());
     }
 
 

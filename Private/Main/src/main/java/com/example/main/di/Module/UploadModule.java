@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.main.ServiceImpl.FriendListRepository;
 import com.example.main.ServiceImpl.MessageRepository;
 import com.example.main.dao.FriendDatabase;
+import com.example.main.dao.MessageDatabase;
 import com.example.main.di.Scopes.LoginScope;
 import com.example.main.di.Scopes.UploadScope;
 import com.example.main.interfaces.IFriendListRepository;
@@ -28,10 +29,17 @@ public class UploadModule {
 
     @Provides
     @UploadScope
-    public  IMessageRepository providesMessageRepository(Retrofit retrofit, ILoginRepository rep, Executor executor){
-        IMessageRepository messageRepository = new MessageRepository(retrofit, rep, executor);
+    public  IMessageRepository providesMessageRepository(Retrofit retrofit, ILoginRepository rep, Executor executor, MessageDatabase database){
+        IMessageRepository messageRepository = new MessageRepository(retrofit, rep, executor, database);
         return messageRepository;
     }
+
+    @Provides
+    @UploadScope
+    public MessageDatabase provideMessageDatabase(@Named("App-Context") Context context){
+        return Room.inMemoryDatabaseBuilder(context, MessageDatabase.class).build();
+    }
+
 
     @Provides
     @UploadScope

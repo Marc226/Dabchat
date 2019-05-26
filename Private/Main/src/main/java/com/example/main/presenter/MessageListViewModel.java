@@ -3,6 +3,7 @@ package com.example.main.presenter;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.Message;
+import com.example.main.model.ResponseMessage;
 import com.example.main.model.User;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public class MessageListViewModel extends ViewModel {
     IMessageRepository messageRepository;
     ILoginRepository loginRepository;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
-    private MutableLiveData<List<Message>> receivedListOfMessages;
     private User currentUser;
 
     public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository){
@@ -31,13 +31,8 @@ public class MessageListViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<Message>> downloadMessages(){
-        this.receivedListOfMessages = new MutableLiveData<>();
-        executor.submit(() ->{
-            messageRepository.receiveMessagesByUserID(currentUser.getId(), receivedListOfMessages);
-        });
-
-        return receivedListOfMessages;
+    public LiveData<List<ResponseMessage>> downloadMessages(){
+        return messageRepository.receiveMessagesByUserID(currentUser.getId());
     }
 
 }

@@ -3,10 +3,12 @@ package com.example.main.ServiceImpl;
 import android.app.Activity;
 import android.util.Log;
 
+import com.example.main.dao.MessageDatabase;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.LoginForm;
 import com.example.main.model.Message;
+import com.example.main.model.ResponseMessage;
 import com.example.main.model.User;
 import com.example.main.webservice.MessageWebService;
 
@@ -17,6 +19,7 @@ import java.util.concurrent.Executor;
 import javax.inject.Singleton;
 
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,15 +31,17 @@ public class MessageRepository implements IMessageRepository {
 
     private final String TAG = "message repository";
     private final ILoginRepository loginRepository;
-    MessageWebService webService;
+    private MessageWebService webService;
+    private MessageDatabase database;
 
     private Executor executor;
     private List<User> pendingFromUsers;
 
-    public MessageRepository(Retrofit retrofit, ILoginRepository loginRepository, Executor executor){
+    public MessageRepository(Retrofit retrofit, ILoginRepository loginRepository, Executor executor, MessageDatabase database){
         this.webService = retrofit.create(MessageWebService.class);
         this.executor = executor;
         this.loginRepository = loginRepository;
+        this.database = database;
         pendingFromUsers = new ArrayList();
     }
 
@@ -64,13 +69,20 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data) {
+    public LiveData<List<ResponseMessage>> receiveMessagesByUserID(String id) {
         Call<List<Message>> call = webService.receiveMessages(id);
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if(response.isSuccessful()){
-                    data.setValue(response.body());
+                    ResponseMessage responseMessage;
+                    for(Message message: response.body()) {
+                        responseMessage = new ResponseMessage();
+                        responseMessage.setFromUserMail(message.getFromUser().getMail());
+                        responseMessage.setId(message.getId());
+                        responseMessage.setImage(message.getImage());
+                        database.messageDao().insertMessage(responseMessage);
+                    }
                 } else {
                     Log.d(TAG,"Could not find list");
                 }
@@ -83,10 +95,11 @@ public class MessageRepository implements IMessageRepository {
 
             }
         });
+        return database.messageDao().getAllMessages();
     }
 
-    @Override
-    public void removeUserFromRecipients(User user, Message message, MutableLiveData<String> data) {
+
+    private void removeUserFromRecipients(User user, ResponseMessage message, MutableLiveData<String> data) {
         this.webService.userRemoveFromPendingMessageList(user, message.getId());
 
         Call<String> call = webService.userRemoveFromPendingMessageList(user, message.getId());
@@ -95,6 +108,9 @@ public class MessageRepository implements IMessageRepository {
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
                     data.setValue(response.body());
+                    executor.execute(()->{
+                        database.messageDao().removeMessage(message);
+                    });
                 } else {
                     Log.d(TAG,"Error:\n"+response.body());
                 }
@@ -115,7 +131,7 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public void removeUserFromRecipients(Message message) {
+    public void removeUserFromRecipients(ResponseMessage message) {
         executor.execute(() -> removeUserFromRecipients(loginRepository.getLoggedInUser(), message, new MutableLiveData<>()));
     }
 

@@ -51,7 +51,7 @@
         tools:layout="@layout/message_popup" >
         <argument
             android:name="message"
-            app:argType="com.example.main.model.Message"
+            app:argType="com.example.main.model.ResponseMessage"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

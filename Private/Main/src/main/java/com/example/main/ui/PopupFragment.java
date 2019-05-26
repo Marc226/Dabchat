@@ -1,9 +1,9 @@
 package com.example.main.ui;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.main.R;
 import com.example.main.model.Message;
+import com.example.main.model.ResponseMessage;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,8 +34,8 @@ public class PopupFragment extends DaggerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         message_imageView = view.findViewById(R.id.popUpImageView);
-        Message message = PopupFragmentArgs.fromBundle(getArguments()).getMessage();
-        byte[] imageArray = message.getImage();
+        ResponseMessage message = PopupFragmentArgs.fromBundle(getArguments()).getMessage();
+        byte[] imageArray = Base64.decode(message.getImage(), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
         ViewTreeObserver vto = message_imageView.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

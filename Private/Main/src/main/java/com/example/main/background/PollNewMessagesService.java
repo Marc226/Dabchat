@@ -29,7 +29,7 @@ public class PollNewMessagesService extends Service {
     private Executor executor;
     private static String CHANNEL_ID = "Message Notification Channel";
     private List<User> usersThatHasSent;
-    private User currentUser;
+
 
     @Inject
     IMessageRepository messageRepository;

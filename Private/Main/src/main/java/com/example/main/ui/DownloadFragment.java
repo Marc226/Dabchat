@@ -1,8 +1,6 @@
 package com.example.main.ui;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,10 +14,7 @@ import dagger.android.support.DaggerFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 
@@ -28,6 +23,7 @@ import com.example.main.adapter.MessageListAdapter;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
+import com.example.main.model.ResponseMessage;
 import com.example.main.presenter.MessageListViewModel;
 
 import java.util.ArrayList;
@@ -45,7 +41,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private Button donwload_button;
     private ProgressBar progressBar;
     private MessageListAdapter messageListAdapter;
-    private List<Message> messageList;
+    private List<ResponseMessage> messageList;
 
 
     @Inject
@@ -105,9 +101,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Override
     public void showPopup(int position) {
-        Message currentMessage = messageList.get(position);
-
-        byte[] imageArray = currentMessage.getImage();
+        ResponseMessage currentMessage = messageList.get(position);
 
         DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
         action.setMessage(currentMessage);
@@ -116,8 +110,6 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
         Navigation.findNavController(getView()).navigate(action);
 
 
-
-        //popupWindow.showAsDropDown(popupView, 0, 0);
     }
 
 

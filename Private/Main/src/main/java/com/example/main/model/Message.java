@@ -12,9 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Keep
+public class Message implements Parcelable {
 
-@Keep public class Message implements Parcelable {
 
 
     private String id;
@@ -57,7 +62,11 @@ import androidx.annotation.Keep;
         }
     }
 
-    public byte[] getImage() {
+    public String getImage() {
+        return image;
+    }
+
+    public byte[] getImageByte() {
         return Base64.decode(image, Base64.DEFAULT);
     }
 
@@ -97,5 +106,17 @@ import androidx.annotation.Keep;
         dest.writeList(recipientsID);
         dest.writeString(image);
 
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setRecipientsID(List<String> recipientsID) {
+        this.recipientsID = recipientsID;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

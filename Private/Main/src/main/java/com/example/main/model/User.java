@@ -20,11 +20,11 @@ public class User implements Serializable {
     @ColumnInfo(name = "last_name")
     private String lastName = "";
     @ColumnInfo(name = "pw")
-    private String passWord;
+    private String passWord = "";
     @ColumnInfo(name = "e_mail")
-    private String mail;
+    private String mail = "";
     @ColumnInfo(name = "phone_number")
-    private int phoneNumber;
+    private int phoneNumber = 0;
 
     @Ignore
     public User(){
