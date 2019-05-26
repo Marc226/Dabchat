@@ -17,7 +17,7 @@ public class MessageListViewModel extends ViewModel {
     IMessageRepository messageRepository;
     ILoginRepository loginRepository;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
-    private MutableLiveData<List<Message>> receivedListOfMessages;
+    private MutableLiveData<List<Message>> receivedListOfMessages = new MutableLiveData<>();
     private User currentUser;
 
     public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository){
@@ -32,12 +32,15 @@ public class MessageListViewModel extends ViewModel {
 
 
     public LiveData<List<Message>> downloadMessages(){
-        this.receivedListOfMessages = new MutableLiveData<>();
         executor.submit(() ->{
             messageRepository.receiveMessagesByUserID(currentUser.getId(), receivedListOfMessages);
         });
 
         return receivedListOfMessages;
+    }
+
+    public void removeRecipent(Message currentMessage){
+        messageRepository.removeUserFromRecipients(currentMessage);
     }
 
 }

@@ -53,8 +53,6 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Inject
     MainActivityController mainActivityController;
-    @Inject
-    IMessageRepository messageRepository;
 
     public DownloadFragment() {
         // Required empty public constructor
@@ -106,18 +104,13 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     @Override
     public void showPopup(int position) {
         Message currentMessage = messageList.get(position);
-
+        viewModel.removeRecipent(currentMessage);
         byte[] imageArray = currentMessage.getImage();
 
         DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
         action.setMessage(currentMessage);
 
-        messageRepository.removeUserFromRecipients(currentMessage);
         Navigation.findNavController(getView()).navigate(action);
-
-
-
-        //popupWindow.showAsDropDown(popupView, 0, 0);
     }
 
 

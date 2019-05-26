@@ -34,6 +34,7 @@ public class FriendListViewModel extends ViewModel {
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private MutableLiveData<String> sendMes;
     private User currentUser;
+    private MutableLiveData<String> friend = new MutableLiveData();
 
     public FriendListViewModel(IFriendListRepository rep, ILoginRepository i, IMessageRepository m) {
         friendListRepository=rep;
@@ -46,7 +47,6 @@ public class FriendListViewModel extends ViewModel {
     }
 
     public LiveData<String> addFriend(String mail) {
-        MutableLiveData<String> friend = new MutableLiveData();
         executor.submit(()->{
             friendListRepository.addFriend(currentUser, mail, friend);
         });
