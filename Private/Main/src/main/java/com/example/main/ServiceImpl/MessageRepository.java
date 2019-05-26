@@ -86,12 +86,42 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
+    public void removeUserFromRecipients(User user, Message message, MutableLiveData<String> data) {
+        this.webService.userRemoveFromPendingMessageList(user, message.getId());
+
+        Call<String> call = webService.userRemoveFromPendingMessageList(user, message.getId());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    data.setValue(response.body());
+                } else {
+                    Log.d(TAG,"Error:\n"+response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
+
+            }
+        });
+    }
+
+    @Override
     public void clearPending() {
         this.pendingFromUsers.clear();
     }
 
     @Override
+    public void removeUserFromRecipients(Message message) {
+        executor.execute(() -> removeUserFromRecipients(loginRepository.getLoggedInUser(), message, new MutableLiveData<>()));
+    }
+
+    @Override
     public void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data) {
+
         User user = loginRepository.getLoggedInUser();
         if(user == null) return;
         Call<List<User>> call = webService.userHasMessage(new LoginForm(user.getMail(), user.getPassWord()));
