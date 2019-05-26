@@ -35,6 +35,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     @Override
     public void onBindViewHolder(@NonNull FriendListViewHolder holder, int position) {
         User user = friendList.get(position);
+        holder.itemView.setBackgroundColor(Color.WHITE);
         holder.friendName.setText(user.getMail());
     }
 
@@ -42,6 +43,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
         this.friendList = friends;
         notifyDataSetChanged();
     }
+
 
     @Override
     public int getItemCount() {
