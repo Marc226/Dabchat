@@ -24,6 +24,7 @@ import android.widget.PopupWindow;
 
 import com.example.main.R;
 import com.example.main.adapter.MessageListAdapter;
+import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
 import com.example.main.presenter.MessageListViewModel;
@@ -50,6 +51,8 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
     @Inject
     MainActivityController mainActivityController;
+    @Inject
+    IMessageRepository messageRepository;
 
     public DownloadFragment() {
         // Required empty public constructor
@@ -105,6 +108,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
         DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
         action.setMessage(currentMessage);
 
+        messageRepository.removeUserFromRecipients(currentMessage);
         Navigation.findNavController(getView()).navigate(action);
 
 
