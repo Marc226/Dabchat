@@ -10,15 +10,15 @@
     <dimen name="LoginProgressBarHeight">45dp</dimen>
     <dimen name="LoginProgressBarMarginTop">40dp</dimen>
     <dimen name="LoginProgressBarMarginEnd">8dp</dimen>
-    <dimen name="LoginTextViewMarginTop">120dp</dimen>
+    <dimen name="LoginTextViewMarginTop">64dp</dimen>
     <dimen name="TitleTextSize">30sp</dimen>
     <dimen name="LoginEmailEditTextWidth">300dp</dimen>
     <dimen name="LoginEmailMarginTop">40dp</dimen>
     <dimen name="LoginPasswordEditTextWidth">300dp</dimen>
     <dimen name="LoginPasswordMarginTop">16dp</dimen>
     <dimen name="LoginRegisterMarginTop">16dp</dimen>
-    <dimen name="LoginRegisterMarginEnd">96dp</dimen>
-    <dimen name="LoginLoginMarginStart">96dp</dimen>
+    <dimen name="LoginRegisterMarginEnd">212dp</dimen>
+    <dimen name="LoginLoginMarginStart">216dp</dimen>
     <dimen name="LoginLoginMarginEnd">16dp</dimen>
     <dimen name="StandardButtonTextSize">12sp</dimen>
 </resources>
