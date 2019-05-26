@@ -23,4 +23,5 @@
     <dimen name="StandardButtonTextSize">12sp</dimen>
     <dimen name="standardButtonHeight">40dp</dimen>
     <dimen name="standardButtonWidth">90dp</dimen>
+    <dimen name="MessageMarginTop">4dp</dimen>
 </resources>
