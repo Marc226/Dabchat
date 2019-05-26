@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.main.R;
@@ -58,6 +59,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     private Button send_button;
     private Button add_friend_button;
     private Button logoutBut;
+    private ProgressBar progressBar;
 
     private RecyclerView.LayoutManager layoutManager;
     private FriendListAdapter friendListAdapter;
@@ -163,6 +165,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         add_friend_button = getView().findViewById(R.id.button_add_friend);
         textfield_email = getView().findViewById(R.id.textfield_email);
         logoutBut = getView().findViewById(R.id.logoutBut);
+        progressBar = getView().findViewById(R.id.progressBarUpload);
 
         add_friend_button.setOnClickListener(view ->
                 {
@@ -180,11 +183,23 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> {
             if (!targetFriends.isEmpty() && imageData != null) {
+                progressBar.setVisibility(View.VISIBLE);
+                send_button.setEnabled(false);
+                upload_button.setEnabled(false);
                 Message m = new Message(null, imageData);
                 for(User friend : targetFriends) {
                     m.addRecipient(friend.getId());
                 }
-                viewModel.sendMessage(m).observe(getViewLifecycleOwner(), s -> displayToast(s));
+                viewModel.sendMessage(m).observe(getViewLifecycleOwner(), s -> {
+                    displayToast(s);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    send_button.setEnabled(true);
+                    upload_button.setEnabled(true);
+                    upload_imageView.setImageResource(0);
+                    friendListAdapter.updateFriends(friendList);
+                    targetFriends.clear();
+                    upload_imageView.setVisibility(View.INVISIBLE);
+                });
             } else if(targetFriends.isEmpty()){
                 displayToast("Please select a friend");
             } else {
