@@ -1,40 +1,26 @@
 package com.example.main.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.navigation.NavController;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import dagger.android.support.DaggerFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.adapter.FriendListAdapter;
+import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
 import com.example.main.model.User;
 import com.example.main.presenter.FriendListViewModel;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,6 +32,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.support.DaggerFragment;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -56,6 +48,8 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     MainActivityController mainActivityController;
     @Inject
     FriendListViewModel viewModel;
+    @Inject
+    IMessageRepository userRep;
 
     private RecyclerView recyclerView;
     private File imageFile;
@@ -74,9 +68,9 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
     private List<User> targetFriends;
     private List<User> friendList;
-
     public UploadFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -179,12 +173,13 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                 }
         );
         logoutBut.setOnClickListener(v -> {
+            userRep.clearPending();
             viewModel.Logout();
             mainActivityController.logout();
         });
         upload_button.setOnClickListener(v -> openGallery());
         send_button.setOnClickListener(v -> {
-            if (!targetFriends.isEmpty() || imageData != null) {
+            if (!targetFriends.isEmpty() && imageData != null) {
                 Message m = new Message(null, imageData);
                 for(User friend : targetFriends) {
                     m.addRecipient(friend.getId());

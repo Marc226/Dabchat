@@ -20,7 +20,9 @@
         <service
             android:name=".background.PollNewMessagesService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:stopWithTask="true">
+        </service>
 
         
         <activity android:name=".ui.MainActivity">

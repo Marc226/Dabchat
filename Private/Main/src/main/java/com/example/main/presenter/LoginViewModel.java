@@ -29,8 +29,4 @@ public class LoginViewModel implements LoginContract.iLoginViewModel {
         LoginForm form = new LoginForm(username, password);
         return repository.Login(form);
     }
-
-    @Override
-    public void Logout() {
-    }
 }

@@ -1,23 +1,14 @@
 package com.example.main.adapter;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.main.R;
 import com.example.main.model.Message;
-import com.example.main.ui.DownloadFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;

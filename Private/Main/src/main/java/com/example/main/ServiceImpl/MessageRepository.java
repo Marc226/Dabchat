@@ -86,12 +86,14 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
+    public void clearPending() {
+        this.pendingFromUsers.clear();
+    }
+
+    @Override
     public void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data) {
         User user = loginRepository.getLoggedInUser();
         if(user == null) return;
-
-        System.out.println("User: "+user.getMail());
-
         Call<List<User>> call = webService.userHasMessage(new LoginForm(user.getMail(), user.getPassWord()));
         call.enqueue(new Callback<List<User>>() {
             @Override

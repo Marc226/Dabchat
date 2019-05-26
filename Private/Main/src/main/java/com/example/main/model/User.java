@@ -1,6 +1,5 @@
 package com.example.main.model;
 
-import org.mockito.internal.matchers.Equals;
 
 import java.io.Serializable;
 

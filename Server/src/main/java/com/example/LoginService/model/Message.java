@@ -56,7 +56,7 @@ public class Message {
     }
 
     public void removeRecipient(String id) {
-        this.recipientsID.remove(id);
+        recipientsID.remove(id);
     }
 
     public int recipientCount() {

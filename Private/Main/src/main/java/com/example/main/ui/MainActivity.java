@@ -46,11 +46,10 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
         setContentView(R.layout.main_screen_tabbar);
         navController = Navigation.findNavController(this, R.id.main_nav);
         setupButtonNavigation();
-
-        //Start Background Service
         Intent startPollService = new Intent(MainActivity.this, PollNewMessagesService.class);
         startService(startPollService);
     }
+
 
 
     private void setupButtonNavigation(){

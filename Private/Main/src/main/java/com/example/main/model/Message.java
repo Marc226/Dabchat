@@ -7,6 +7,7 @@ import android.util.Base64;
 
 import java.io.File;
 import java.io.Serializable;
+import android.util.Base64;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -5,8 +5,6 @@ import com.example.main.model.User;
 
 import java.util.List;
 
-import java.util.List;
-
 import androidx.lifecycle.MutableLiveData;
 
 
@@ -17,4 +15,5 @@ public interface IMessageRepository{
     public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
 
 
+    public void clearPending();
 }
