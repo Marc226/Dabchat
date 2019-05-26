@@ -14,8 +14,8 @@
         android:id="@+id/friendNameRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="20sp"
+        android:padding="@dimen/FriendTextViewPadding"
+        android:textSize="@dimen/StandardTextSize"
         android:text="PlaceHolderFriend" />
 
 </androidx.cardview.widget.CardView>
