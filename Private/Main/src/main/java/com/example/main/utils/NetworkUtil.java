@@ -26,26 +26,22 @@ public class NetworkUtil {
     public boolean hasNetwork() {
         ConnectivityManager connection = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = connection.getActiveNetworkInfo();
-        Log.d(TAG, "Network connection established");
         if(network !=null && network.isConnected()){
             return true;
         }
         return false;
     }
 
-    public Interceptor responseInterceptor = new Interceptor() {
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            okhttp3.Response originalResponse = chain.proceed(chain.request());
-            String cacheControl = originalResponse.header("Cache-Control");
-            if (checkControl(cacheControl)) {
-                return originalResponse.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, max-age=" + 5000)
-                        .build();
-            } else {
-                return originalResponse;
-            }
+    public Interceptor responseInterceptor = chain -> {
+        okhttp3.Response originalResponse = chain.proceed(chain.request());
+        String cacheControl = originalResponse.header("Cache-Control");
+        if (checkControl(cacheControl)) {
+            return originalResponse.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, max-age=" + 5000)
+                    .build();
+        } else {
+            return originalResponse;
         }
     };
 
@@ -60,18 +56,15 @@ public class NetworkUtil {
         return false;
     }
 
-    public Interceptor responseInterceptorOffline = new Interceptor() {
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            if (!hasNetwork()) {
-                request = request.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, only-if-cached, max-age=" + 67800)
-                        .build();
-            }
-            return chain.proceed(request);
+    public Interceptor responseInterceptorOffline = chain -> {
+        Request request = chain.request();
+        if (!hasNetwork()) {
+            request = request.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, only-if-cached, max-age=" + 67800)
+                    .build();
         }
+        return chain.proceed(request);
     };
 
 }
