@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 public interface MessageWebService  {
     @POST("send/upload")
     Call<Message> sendMessage (@Body Message message);
-    @POST("/send/get_pending")
+    @POST("send/get_pending")
     Call<List<Message>> receiveMessages (@Body String id);
     @POST("send/user_has_messages")
     Call<List<User>> userHasMessage (@Body LoginForm form);

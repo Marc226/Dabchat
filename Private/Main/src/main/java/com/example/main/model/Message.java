@@ -1,9 +1,6 @@
 package com.example.main.model;
 
-import android.media.Image;
 import android.util.Base64;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
