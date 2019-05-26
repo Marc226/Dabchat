@@ -71,6 +71,9 @@ public class FriendListViewModel extends ViewModel {
         loginRepository.Logout();
     }
 
-
+    public void closeDB(){
+        loginRepository.closeDB();
+        friendListRepository.closeDB();
+    }
 
 }

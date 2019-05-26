@@ -82,18 +82,22 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
 
 
     private void initRecycler(){
+        messageList = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         messageListAdapter = new MessageListAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(messageListAdapter);
         updateMessageList();
+        if(recyclerView.getAdapter().getItemCount() > 0){
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void updateMessageList() {
         viewModel.downloadMessages().observe(this, messages -> {
             messageList = messages;
-            progressBar.setVisibility(getView().GONE);
+            progressBar.setVisibility(getView().INVISIBLE);
             messageListAdapter.updateMessages(messageList);
         });
 
@@ -111,5 +115,9 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
         Navigation.findNavController(getView()).navigate(action);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.closeDB();
+    }
 }

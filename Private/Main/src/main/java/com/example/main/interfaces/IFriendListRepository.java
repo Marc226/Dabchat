@@ -11,4 +11,5 @@ public interface IFriendListRepository {
     void addFriend(User user, String currentUserId, MutableLiveData<String> data);
     LiveData<List<User>> getAllFriends(User currentUser);
     LiveData<User> getSpecificFriend(String id);
+    void closeDB();
 }

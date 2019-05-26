@@ -9,6 +9,7 @@ public interface LoginContract {
     interface iLoginViewModel{
         LiveData<String> Login(String username, String password);
         LiveData<User> getCurrentUser();
+        void closeDB();
     }
 
     interface iLoginView extends ServiceContract.baseView{

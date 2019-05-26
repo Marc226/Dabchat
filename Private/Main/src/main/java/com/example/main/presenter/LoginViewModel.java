@@ -23,6 +23,11 @@ public class LoginViewModel implements LoginContract.iLoginViewModel {
         return repository.autoLogin();
     }
 
+    @Override
+    public void closeDB() {
+        repository.closeDB();
+    }
+
 
     @Override
     public LiveData<String> Login(String username, String password) {

@@ -43,4 +43,8 @@ public class MessageListViewModel extends ViewModel {
         messageRepository.removeUserFromRecipients(currentMessage);
     }
 
+    public void closeDB(){
+        loginRepository.closeDB();
+    }
+
 }

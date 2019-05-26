@@ -227,4 +227,10 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     public void remove(int position) {
         targetFriends.remove(friendList.get(position));
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.closeDB();
+    }
 }

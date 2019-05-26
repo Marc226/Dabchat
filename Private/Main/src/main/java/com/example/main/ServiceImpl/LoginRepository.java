@@ -65,6 +65,11 @@ public class LoginRepository implements ILoginRepository {
     }
 
     @Override
+    public void closeDB() {
+        database.close();
+    }
+
+    @Override
     public LiveData<String> Login(LoginForm form) {
         MutableLiveData<String> message = new MutableLiveData<>();
         Call<User> call = webservice.loginUser(form);
@@ -132,4 +137,6 @@ public class LoginRepository implements ILoginRepository {
             }
         }
     }
+
+
 }
