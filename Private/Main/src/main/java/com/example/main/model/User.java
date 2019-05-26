@@ -2,6 +2,8 @@ package com.example.main.model;
 
 import org.mockito.internal.matchers.Equals;
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -10,7 +12,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class User {
+public class User implements Serializable {
     @PrimaryKey
     @NonNull
     private String id;

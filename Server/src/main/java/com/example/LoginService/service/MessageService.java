@@ -33,6 +33,7 @@ public class MessageService implements IMessageService {
     public ResponseEntity<List<Message>> getPendingMessages(String id) {
         List<Message> messages = repository.findAllByRecipientsIDContains(id);
         System.out.println("Length:     "+ messages.size());
+        
         for(Message msg : messages) {
             //msg.removeRecipient(id);
             //msg.setImage(null);

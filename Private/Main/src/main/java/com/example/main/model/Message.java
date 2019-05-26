@@ -1,15 +1,19 @@
 package com.example.main.model;
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Base64;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Keep;
 
 
-public class Message {
+@Keep public class Message implements Parcelable {
 
 
     private String id;
@@ -26,6 +30,25 @@ public class Message {
         this.image = Base64.encodeToString(image, Base64.DEFAULT);
         this.recipientsID = new ArrayList<>();
     }
+
+    public Message(Parcel parcel){
+        this.id = parcel.readString();
+        this.fromUser = (User) parcel.readSerializable();
+        this.recipientsID = parcel.readArrayList(null);
+        this.image = parcel.readString();
+    }
+
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel in) {
+            return new Message(in);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
 
     public void addRecipients(String... reps) {
         for(String str : reps) {
@@ -60,4 +83,18 @@ public class Message {
     }
 
     public List<String> getRecipientsID() {return recipientsID;}
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeSerializable(fromUser);
+        dest.writeList(recipientsID);
+        dest.writeString(image);
+
+    }
 }
