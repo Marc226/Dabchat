@@ -42,9 +42,9 @@ public class SendRoutes {
     }
 
     @RequestMapping("/remove_from_pending")
-    public ResponseEntity<String> removeUserFromPending(@Valid @RequestBody User user, @RequestParam String mailId) {
+    public ResponseEntity<String> removeUserFromPending(@Valid @RequestBody User user, @RequestParam String messageId) {
         boolean success;
-        success = messageService.removeUserFromPending(user, mailId);
+        success = messageService.removeUserFromPending(user, messageId);
 
         if(success)
             return new ResponseEntity<>("User was removed successfully!", HttpStatus.OK);
