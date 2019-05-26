@@ -11,7 +11,7 @@
         android:id="@+id/loginProgress"
         android:layout_width="@dimen/LoginProgresbarWidth"
         android:layout_height="@dimen/LoginProgressBarHeight"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/LoginEmailMarginTop"
         android:layout_marginEnd="@dimen/LoginProgressBarMarginEnd"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
