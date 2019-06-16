@@ -133,4 +133,10 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     public void LoginRequestFinished() {
         navController.navigate(LoginFragmentDirections.actionLoginFragmentToUploadFragment());
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.closeDB();
+    }
 }

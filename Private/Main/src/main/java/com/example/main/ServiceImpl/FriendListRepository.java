@@ -69,6 +69,11 @@ public class FriendListRepository implements IFriendListRepository {
         return database.friendDao().getFriend(id);
     }
 
+    @Override
+    public void closeDB() {
+        database.close();
+    }
+
     private void refreshFriendList(User currentUser){
         Call<List<User>> call = webservice.getAllFriends(currentUser);
 

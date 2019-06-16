@@ -253,4 +253,5 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         NavController navController = Navigation.findNavController(getActivity(), R.id.main_nav);
         navController.navigate(UploadFragmentDirections.actionUploadFragmentToLoginFragment());
     }
+
 }

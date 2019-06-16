@@ -24,7 +24,7 @@
     <dimen name="standardButtonHeight">40dp</dimen>
     <dimen name="standardButtonWidth">90dp</dimen>
     <dimen name="MessageMarginTop">4dp</dimen>
-    <dimen name="MessageRecycleViewWidth">240dp</dimen>
+    <dimen name="MessageRecycleViewWidth">450dp</dimen>
     <dimen name="MessageRecycleViewHeight">200dp</dimen>
     <dimen name="MessageMarginStart">4dp</dimen>
     <dimen name="MessageMarginEnd">4dp</dimen>

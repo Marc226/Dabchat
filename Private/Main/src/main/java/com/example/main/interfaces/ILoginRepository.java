@@ -13,4 +13,5 @@ public interface ILoginRepository extends LoginObserver {
     LiveData<User> autoLogin();
     User getLoggedInUser();
     void registerUser(User user);
+    void closeDB();
 }
