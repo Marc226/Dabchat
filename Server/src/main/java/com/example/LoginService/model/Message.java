@@ -13,11 +13,11 @@ import java.util.List;
 public class Message {
 
     @Id
-    String id;
+    private String id;
 
-    User fromUser;
-    List<String> recipientsID;
-    String image;
+    private User fromUser;
+    private List<String> recipientsID;
+    private String image;
 
 
     public Message(){

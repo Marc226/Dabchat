@@ -1,8 +1,10 @@
 package com.example.main.ui;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
@@ -16,20 +18,22 @@ import android.widget.Toast;
 
 import com.example.main.R;
 import com.example.main.interfaces.RegisterContract;
+import com.example.main.model.NetworkResponse;
 import com.example.main.model.User;
 
 import javax.inject.Inject;
 
-public class RegisterFragment extends DaggerFragment implements RegisterContract.iRegisterView {
+public class RegisterFragment extends DaggerFragment {
 
-    @Inject RegisterContract.iRegisterPresenter presenter;
+    @Inject
+    RegisterContract.iRegisterViewModel presenter;
 
-    EditText email;
-    EditText phone;
-    EditText password;
-    EditText password_repeat;
-    Button registerPageButton;
-    ProgressBar registerProgressBar;
+    private EditText email;
+    private EditText phone;
+    private EditText password;
+    private EditText password_repeat;
+    private Button registerPageButton;
+    private ProgressBar registerProgressBar;
 
     public RegisterFragment(){
 
@@ -56,60 +60,68 @@ public class RegisterFragment extends DaggerFragment implements RegisterContract
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initUI();
         setOnClickListener();
         super.onViewCreated(view, savedInstanceState);
 
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onAttach(this);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.onDetach();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
-    @Override
     public void displayToast(String message) {
         final Toast currentToast = Toast.makeText(this.getContext(), null, Toast.LENGTH_SHORT);
         currentToast.setText(message);
         currentToast.show();
     }
 
-    @Override
     public void enableButtonClick(boolean bool) {
         registerPageButton.setEnabled(bool);
     }
 
-    @Override
     public void showInProgress() {
         registerProgressBar.setVisibility(ProgressBar.VISIBLE);
     }
 
-    @Override
     public void stopInProgress() {
         registerProgressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
 
-    @Override
     public void RegisterRequestFinished() {
-        Navigation.findNavController(this.getView()).navigate(R.id.action_registerFragment_to_loginFragment);
+        Navigation.findNavController(getActivity(), R.id.main_nav).navigate(R.id.action_registerFragment_to_loginFragment);
     }
 
     public void setOnClickListener(){
-        registerPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(validateForm()){
-                    User user = new User(password.getText().toString(), email.getText().toString(), presenter.checkPhoneNumber(phone.getText().toString()));
-                    presenter.register(user);
-                }
+        registerPageButton.setOnClickListener(v -> {
+            if(validateForm()){
+                User user = new User(password.getText().toString(), email.getText().toString(), presenter.checkPhoneNumber(phone.getText().toString()));
+                showInProgress();
+                enableButtonClick(false);
+                presenter.register(user).observe(getViewLifecycleOwner(), networkResponse -> {
+                    stopInProgress();
+                    enableButtonClick(true);
+                    if(networkResponse == NetworkResponse.SUCCESS ){
+                        displayToast(getString(R.string.registerSuccess));
+                        RegisterRequestFinished();
+                    } else if (networkResponse == NetworkResponse.FAIL){
+                        displayToast(getString(R.string.failedRegister));
+                    } else {
+                        displayToast(getString(R.string.ServiceUnavailable));
+                    }
+                });
             }
         });
     }
@@ -120,18 +132,9 @@ public class RegisterFragment extends DaggerFragment implements RegisterContract
                 presenter.checkPhoneNumber(phone.getText().toString()) == 0){
             return false;
         }
-        if(stringsEmptyOrNull(email.getText().toString(), password.getText().toString(), password_repeat.getText().toString(), phone.getText().toString())) {
+        if(presenter.stringsEmptyOrNull(email.getText().toString(), password.getText().toString(), password_repeat.getText().toString(), phone.getText().toString())) {
             return false;
         }
         return true;
-    }
-
-    private boolean stringsEmptyOrNull(String... strings) {
-        for(String str : strings) {
-            if(str == null || str == "") {
-                return true;
-            }
-        }
-        return false;
     }
 }

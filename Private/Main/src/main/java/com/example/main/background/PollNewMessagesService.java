@@ -2,7 +2,9 @@ package com.example.main.background;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -11,6 +13,8 @@ import com.example.main.R;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.User;
+import com.example.main.ui.DownloadFragment;
+import com.example.main.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +75,17 @@ public class PollNewMessagesService extends Service {
                         for (User user : messageRepository.getPendingFromUsers())
                             fromUsers += user.getMail() + "\n";
 
+                        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                        stackBuilder.addNextIntentWithParentStack(resultIntent);
+                        PendingIntent resultPendingIntent =
+                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                                 .setSmallIcon(R.drawable.dabandroid)
                                 .setContentTitle("DabChat Message Received!")
                                 .setContentText(fromUsers)
+                                .setContentIntent(resultPendingIntent)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(fromUsers));
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(s);

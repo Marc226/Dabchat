@@ -32,4 +32,9 @@
     <string name="friend_s_email">Friend\'s Email</string>
     <string name="preview">preview</string>
     <string name="download_messages">Download Messages</string>
+    <string name="registerSuccess">User registered</string>
+    <string name="failedRegister">Failed to register user</string>
+    <string name="ServiceUnavailable">Service unavailable</string>
+    <string name="LoginSuccess">Login Successfully</string>
+    <string name="LoginFail">Failed to login</string>
 </resources>

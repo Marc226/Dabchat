@@ -5,6 +5,8 @@ import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.presenter.MessageListViewModel;
 
+import java.util.concurrent.ExecutorService;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -12,7 +14,7 @@ import dagger.Provides;
 public class DownloadModule {
     @Provides
     @DownloadScope
-    public MessageListViewModel providesMessageListViewModel(ILoginRepository repository, IMessageRepository messageRepository){
-        return new MessageListViewModel(messageRepository, repository);
+    public MessageListViewModel providesMessageListViewModel(ILoginRepository repository, IMessageRepository messageRepository, ExecutorService executorService){
+        return new MessageListViewModel(messageRepository, repository,  executorService);
     }
 }

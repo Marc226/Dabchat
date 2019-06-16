@@ -44,8 +44,8 @@
     <dimen name="StandardEditTextMarginEnd">16dp</dimen>
     <dimen name="StandardEditTextMinWidth">150dp</dimen>
     <dimen name="StandardEditTextWidth">300dp</dimen>
-    <dimen name="RegisterProgressBarMarginTop">24dp</dimen>
-    <dimen name="RegisterProgressBarMarginEnd">8dp</dimen>
+    <dimen name="RegisterProgressBarMarginTop">8dp</dimen>
+    <dimen name="RegisterProgressBarMarginStart">8dp</dimen>
     <dimen name="StandardButtonMarginEnd">8dp</dimen>
     <dimen name="StandardButtonMarginStart">8dp</dimen>
     <dimen name="StandardButtonMarginTop">8dp</dimen>
@@ -72,4 +72,7 @@
     <dimen name="UploadProgressBarMarginTop">80dp</dimen>
     <dimen name="UploadProgressBarMarginEnd">8dp</dimen>
     <dimen name="main_screen_margin_bot">58dp</dimen>
+    <dimen name="UploadRecyclerViewWidth">300dp</dimen>
+    <dimen name="UploadButtonMarginBot">8dp</dimen>
+    <dimen name="messageCardViewHeight">60dp</dimen>
 </resources>

@@ -16,14 +16,14 @@ import androidx.lifecycle.ViewModel;
 public class MessageListViewModel extends ViewModel {
     IMessageRepository messageRepository;
     ILoginRepository loginRepository;
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor;
     private MutableLiveData<List<Message>> receivedListOfMessages = new MutableLiveData<>();
     private User currentUser;
 
-    public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository){
+    public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository, ExecutorService executor){
         this.messageRepository = messageRepository;
         this.loginRepository = loginRepository;
-
+        this.executor = executor;
         executor.submit(()->{
             currentUser = loginRepository.getLoggedInUser();
         });

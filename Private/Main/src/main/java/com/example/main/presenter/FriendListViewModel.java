@@ -31,15 +31,16 @@ public class FriendListViewModel extends ViewModel {
 
     private IMessageRepository messageRepository;
 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor;
     private MutableLiveData<String> sendMes;
     private User currentUser;
     private MutableLiveData<String> friend = new MutableLiveData();
 
-    public FriendListViewModel(IFriendListRepository rep, ILoginRepository i, IMessageRepository m) {
-        friendListRepository=rep;
-        loginRepository=i;
-        messageRepository=m;
+    public FriendListViewModel(IFriendListRepository rep, ILoginRepository i, IMessageRepository m, ExecutorService executor) {
+        friendListRepository = rep;
+        loginRepository = i;
+        messageRepository = m;
+        this.executor = executor;
         executor.submit(()->{
             currentUser = loginRepository.getLoggedInUser();
         });

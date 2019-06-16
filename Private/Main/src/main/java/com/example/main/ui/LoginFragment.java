@@ -1,6 +1,7 @@
 package com.example.main.ui;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,14 +25,15 @@ import android.widget.Toast;
 import com.example.main.R;
 import com.example.main.interfaces.LoginContract;
 import com.example.main.interfaces.MainActivityController;
+import com.example.main.model.NetworkResponse;
 import com.example.main.model.User;
 
 import javax.inject.Inject;
 
 
-public class LoginFragment extends DaggerFragment implements LoginContract.iLoginView {
+public class LoginFragment extends DaggerFragment {
 
-    NavController navController;
+    private NavController navController;
 
     @Inject
     LoginContract.iLoginViewModel viewModel;
@@ -57,6 +59,8 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         navController = Navigation.findNavController(getActivity(), R.id.main_nav);
         initUI();
         mainActivityController.hideNavBar();
@@ -71,21 +75,23 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
             showInProgress();
             viewModel.Login(username.getText().toString(), password.getText().toString()).observe(getViewLifecycleOwner(), s -> {
                 stopInProgress();
-                displayToast(s);
+                if(s == NetworkResponse.SUCCESS){
+                    displayToast(getString(R.string.LoginSuccess));
+                } else if (s == NetworkResponse.FAIL){
+                    displayToast(getString(R.string.LoginFail));
+                } else {
+                    displayToast(getString(R.string.ServiceUnavailable));
+                }
             });
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
-            }
-        });
-        super.onViewCreated(view, savedInstanceState);
+        register.setOnClickListener(v -> navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment()));
     }
+
 
     @Override
     public void onResume() {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onResume();
     }
 
@@ -107,29 +113,25 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
-    @Override
     public void displayToast(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
     public void enableButtonClick(boolean bool) {
         login.setEnabled(bool);
     }
 
-    @Override
     public void showInProgress() {
         pbar.setVisibility(ProgressBar.VISIBLE);
     }
 
-    @Override
     public void stopInProgress() {
         pbar.setVisibility(ProgressBar.INVISIBLE);
     }
 
-    @Override
     public void LoginRequestFinished() {
         navController.navigate(LoginFragmentDirections.actionLoginFragmentToUploadFragment());
     }

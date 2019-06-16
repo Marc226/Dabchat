@@ -9,14 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 
 
 public interface IMessageRepository{
-    public void sendMessage (Message message, MutableLiveData<String> data);
-    public void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data);
-    public List<User> getPendingFromUsers();
-    public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
-    public void removeUserFromRecipients(User user, Message message, MutableLiveData<String> data);
-
-
-    public void clearPending();
-
-    public void removeUserFromRecipients(Message currentMessage);
+    void sendMessage (Message message, MutableLiveData<String> data);
+    void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data);
+    List<User> getPendingFromUsers();
+    void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
+    void removeUserFromRecipients(User user, Message message, MutableLiveData<String> data);
+    void clearPending();
+    void removeUserFromRecipients(Message currentMessage);
 }

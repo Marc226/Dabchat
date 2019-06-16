@@ -47,23 +47,23 @@
         android:layout_marginTop="@dimen/StandardButtonMarginTop"
         android:layout_marginEnd="@dimen/StandardButtonMarginEnd"
         android:text="@string/add_friend"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview" />
+        app:layout_constraintStart_toEndOf="@+id/textfield_email"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/preview"
         android:layout_width="@dimen/ImagePreviewWidth"
         android:layout_height="@dimen/ImagePreviewHeight"
-        android:maxHeight="@dimen/ImagePreviewMaxWidth"
-        android:maxWidth="@dimen/ImagePreviewMaxHeight"
         android:layout_marginStart="@dimen/ImagePreviewMarginStart"
         android:layout_marginTop="@dimen/ImagePreviewMarginTop"
         android:layout_marginEnd="@dimen/ImagePreviewMarginEnd"
         android:contentDescription="@string/preview"
+        android:maxWidth="@dimen/ImagePreviewMaxHeight"
+        android:maxHeight="@dimen/ImagePreviewMaxWidth"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.876"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/friendRecycler"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -77,21 +77,20 @@
         android:ems="10"
         android:hint="@string/friend_s_email"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toStartOf="@+id/button_add_friend"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friendRecycler"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/UploadRecyclerViewWidth"
         android:layout_height="@dimen/UploadRecycleViewHeight"
         android:layout_marginStart="@dimen/UploadRecycleViewMarginStart"
         android:layout_marginTop="@dimen/UploadRecycleViewMarginTop"
         android:layout_marginEnd="@dimen/UploadRecycleViewMarginEnd"
         android:layout_marginBottom="@dimen/UploadButtonMarginBot"
-        app:layout_constraintBottom_toTopOf="@+id/logoutBut"
+        app:layout_constraintBottom_toTopOf="@+id/upload_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textfield_email"
         app:layout_constraintVertical_bias="0.0" />
@@ -115,11 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/UploadProgressBarMarginStart"
         android:layout_marginTop="@dimen/UploadProgressBarMarginTop"
-        android:layout_marginEnd="@dimen/UploadProgressBarMarginEnd"
-        app:layout_constraintEnd_toStartOf="@+id/preview"
-        app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/friendRecycler"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

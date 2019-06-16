@@ -28,7 +28,7 @@ public class MessageRepository implements IMessageRepository {
 
     private final String TAG = "message repository";
     private final ILoginRepository loginRepository;
-    MessageWebService webService;
+    private MessageWebService webService;
 
     private Executor executor;
     private List<User> pendingFromUsers;
@@ -65,12 +65,14 @@ public class MessageRepository implements IMessageRepository {
 
     @Override
     public void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data) {
+        Log.d(TAG, "getting messages");
         Call<List<Message>> call = webService.receiveMessages(id);
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if(response.isSuccessful()){
                     data.setValue(response.body());
+                    Log.d(TAG, "list loaded successfully");
                 } else {
                     Log.d(TAG,"Could not find list");
                 }

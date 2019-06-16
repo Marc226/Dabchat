@@ -5,14 +5,16 @@ import android.content.Context;
 
 import com.example.main.dao.UserDatabase;
 import com.example.main.di.Scopes.LoginScope;
+import com.example.main.di.Scopes.MainActivityScope;
 import com.example.main.presenter.LoginViewModel;
-import com.example.main.presenter.RegisterPresenter;
+import com.example.main.presenter.RegisterViewModel;
 import com.example.main.ServiceImpl.LoginRepository;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.LoginContract;
 import com.example.main.interfaces.RegisterContract;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 import javax.inject.Named;
 
@@ -36,18 +38,16 @@ public class LoginModule {
     }
 
     @Provides
-    @LoginScope
-    public ILoginRepository provideRepository(Retrofit retrofit, UserDatabase database, Executor exec){
+    @MainActivityScope
+    public ILoginRepository provideRepository(Retrofit retrofit, UserDatabase database, ExecutorService exec){
         ILoginRepository repo = new LoginRepository(retrofit, database, exec);
         return repo;
     }
 
-
-
     @Provides
     @LoginScope
-    public RegisterContract.iRegisterPresenter provideRegisterPresenter(ILoginRepository repository){
-        RegisterContract.iRegisterPresenter presenter = new RegisterPresenter(repository);
+    public RegisterContract.iRegisterViewModel provideRegisterPresenter(ILoginRepository repository, ExecutorService exec){
+        RegisterContract.iRegisterViewModel presenter = new RegisterViewModel(repository, exec);
         return presenter;
     }
 

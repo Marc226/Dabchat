@@ -13,5 +13,4 @@ public abstract class ServiceModule {
     @ContributesAndroidInjector
     abstract PollNewMessagesService providePollService();
 
-
 }

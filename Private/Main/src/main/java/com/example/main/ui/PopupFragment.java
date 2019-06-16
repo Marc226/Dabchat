@@ -21,7 +21,6 @@ import dagger.android.support.DaggerFragment;
 public class PopupFragment extends DaggerFragment {
 
     private ImageView message_imageView;
-    private Bitmap bmp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +46,9 @@ public class PopupFragment extends DaggerFragment {
             }
         });
 
-        message_imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.popBackStack();
-            }
+        message_imageView.setOnClickListener(v -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.popBackStack();
         });
     }
 

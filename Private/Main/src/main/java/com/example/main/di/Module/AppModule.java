@@ -8,6 +8,7 @@ import com.example.main.utils.ApplicationConfig;
 import com.example.main.App;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.inject.Named;
@@ -33,8 +34,8 @@ public class AppModule {
 
     @Provides
     @AppScope
-    public Executor provideExecutor(){
-        return Executors.newSingleThreadExecutor();
+    public ExecutorService provideExecutor(){
+        return Executors.newCachedThreadPool();
     }
 
 
