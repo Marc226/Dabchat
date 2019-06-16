@@ -71,5 +71,6 @@
     <dimen name="UploadProgressBarMarginStart">8dp</dimen>
     <dimen name="UploadProgressBarMarginTop">80dp</dimen>
     <dimen name="UploadProgressBarMarginEnd">8dp</dimen>
+    <dimen name="main_screen_margin_bot">58dp</dimen>
 
 </resources>

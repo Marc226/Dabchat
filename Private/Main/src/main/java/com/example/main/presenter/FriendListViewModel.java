@@ -46,6 +46,10 @@ public class FriendListViewModel extends ViewModel {
 
     }
 
+    public LiveData<User> getCurrentUser(){
+        return loginRepository.autoLogin();
+    }
+
     public LiveData<String> addFriend(String mail) {
         executor.submit(()->{
             friendListRepository.addFriend(currentUser, mail, friend);

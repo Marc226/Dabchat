@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/StandardButtonMarginStart"
-        android:layout_marginTop="@dimen/StandardButtonMarginTop"
+        android:layout_marginBottom="8dp"
         android:text="@string/upload_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendRecycler" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -33,11 +33,11 @@
         android:id="@+id/send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/StandardButtonMarginTop"
         android:layout_marginEnd="@dimen/StandardButtonMarginEnd"
+        android:layout_marginBottom="8dp"
         android:text="@string/send"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendRecycler" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <Button
@@ -88,22 +88,25 @@
         android:layout_marginStart="@dimen/UploadRecycleViewMarginStart"
         android:layout_marginTop="@dimen/UploadRecycleViewMarginTop"
         android:layout_marginEnd="@dimen/UploadRecycleViewMarginEnd"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/logoutBut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textfield_email" />
+        app:layout_constraintTop_toBottomOf="@+id/textfield_email"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/logoutBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/StandardButtonMarginStart"
-        android:layout_marginTop="@dimen/StandardButtonMarginTop"
         android:layout_marginEnd="@dimen/StandardButtonMarginEnd"
+        android:layout_marginBottom="8dp"
         android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button"
-        app:layout_constraintStart_toEndOf="@+id/upload_btn"
-        app:layout_constraintTop_toBottomOf="@+id/friendRecycler" />
+        app:layout_constraintStart_toEndOf="@+id/upload_btn" />
 
     <ProgressBar
         android:id="@+id/progressBarUpload"

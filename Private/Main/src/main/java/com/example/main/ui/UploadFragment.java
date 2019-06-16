@@ -35,6 +35,11 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
@@ -85,9 +90,16 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initUI();
-        initRecycler();
-        mainActivityController.showNavBar();
+        viewModel.getCurrentUser().observe(this, user -> {
+            if(user == null){
+                logout();
+            } else {
+                initUI();
+                initRecycler();
+                mainActivityController.showNavBar();
+            }
+        });
+
     }
 
     private void initRecycler(){
@@ -175,12 +187,15 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
                     });
                 }
         );
+
         logoutBut.setOnClickListener(v -> {
             userRep.clearPending();
             viewModel.Logout();
-            mainActivityController.logout();
+            logout();
         });
+
         upload_button.setOnClickListener(v -> openGallery());
+
         send_button.setOnClickListener(v -> {
             if (!targetFriends.isEmpty() && imageData != null) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -226,5 +241,16 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     @Override
     public void remove(int position) {
         targetFriends.remove(friendList.get(position));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.closeDB();
+    }
+
+    private void logout(){
+        NavController navController = Navigation.findNavController(getActivity(), R.id.main_nav);
+        navController.navigate(UploadFragmentDirections.actionUploadFragmentToLoginFragment());
     }
 }

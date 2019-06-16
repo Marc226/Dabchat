@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.main.R;
 import com.example.main.background.PollNewMessagesService;
+import com.example.main.interfaces.LoginContract;
 import com.example.main.interfaces.MainActivityController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -64,21 +65,6 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
 
     public void showNavBar(){
         bottomNav.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void navigateToUpload() {
-        navController.navigate(R.id.action_loginFragment_to_uploadFragment);
-    }
-
-    @Override
-    public void logout() {
-        navController.navigate(R.id.action_uploadFragment_to_loginFragment);
-    }
-
-    @Override
-    public void navigateToPopup() {
-        navController.navigate(R.id.downloadToImage);
     }
 
 

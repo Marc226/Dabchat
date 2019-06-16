@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
@@ -28,16 +31,19 @@ import javax.inject.Inject;
 
 public class LoginFragment extends DaggerFragment implements LoginContract.iLoginView {
 
+    NavController navController;
+
     @Inject
     LoginContract.iLoginViewModel viewModel;
     @Inject
     MainActivityController mainActivityController;
 
-    EditText username;
-    EditText password;
-    Button login;
-    Button register;
-    ProgressBar pbar;
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private Button register;
+    private ProgressBar pbar;
+
 
     public LoginFragment() {
     }
@@ -51,7 +57,9 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        navController = Navigation.findNavController(getActivity(), R.id.main_nav);
         initUI();
+        mainActivityController.hideNavBar();
         viewModel.getCurrentUser().observe(this, user -> {
             if(user != null) {
                 enableButtonClick(true);
@@ -59,7 +67,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
                 LoginRequestFinished();
             }
         });
-        mainActivityController.hideNavBar();
         login.setOnClickListener(v -> {
             showInProgress();
             viewModel.Login(username.getText().toString(), password.getText().toString()).observe(getViewLifecycleOwner(), s -> {
@@ -71,7 +78,7 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment);
+                navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
             }
         });
         super.onViewCreated(view, savedInstanceState);
@@ -124,6 +131,6 @@ public class LoginFragment extends DaggerFragment implements LoginContract.iLogi
 
     @Override
     public void LoginRequestFinished() {
-        mainActivityController.navigateToUpload();
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToUploadFragment());
     }
 }

@@ -15,4 +15,11 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:icon="@mipmap/ic_launcher_round"
         android:title="Download"
         android:visible="true" />
+
+    <!--<item
+        android:id="@id/registerFragment"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Register"
+        android:visible="true" />-->
 </menu>
