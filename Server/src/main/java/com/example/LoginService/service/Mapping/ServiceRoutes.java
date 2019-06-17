@@ -43,7 +43,6 @@ public class ServiceRoutes {
     @CrossOrigin
     @RequestMapping("/loginUser")
     public ResponseEntity<User> loginUser(@Valid @RequestBody LoginForm form){
-        System.out.println("connected");
         return regService.login(form.getEmail(), form.getPassword());
     }
 

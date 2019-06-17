@@ -80,9 +80,7 @@ public class MessageRepository implements IMessageRepository {
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
-
                 Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
-
             }
         });
     }
@@ -105,7 +103,7 @@ public class MessageRepository implements IMessageRepository {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
-                Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
+                Log.d(TAG, "tried to remove recipient, but it did not work\n"+t.getMessage());
 
             }
         });
@@ -141,7 +139,7 @@ public class MessageRepository implements IMessageRepository {
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
                 data.setValue(null);
-                Log.d(TAG, "tried to receive a list of messages, but it did not work\n"+t);
+                Log.d(TAG, "tried to get pending, but it did not work\n"+t.getMessage());
 
             }
         });

@@ -31,7 +31,7 @@ public class MessageService implements IMessageService {
 
     @Override
     public ResponseEntity<Message> sendMessage(Message message) {
-        if(repository.findByid(message.getId()) == null) {
+        if(repository.findMessageById(message.getId()) == null) {
             message.setId(ObjectId.get().toString());
             repository.save(message);
 
@@ -47,13 +47,9 @@ public class MessageService implements IMessageService {
     @Override
     public ResponseEntity<List<Message>> getPendingMessages(String id) {
         List<Message> messages = repository.findAllByRecipientsIDContains(id);
-        System.out.println("Length:     "+ messages.size());
         
         for(Message msg : messages) {
-            //msg.removeRecipient(id);
-            //msg.setImage(null);
             if(msg.recipientCount() > 0) {
-               // repository.save(msg);
             } else {
                 repository.delete(msg);
             }
@@ -69,7 +65,7 @@ public class MessageService implements IMessageService {
         boolean alreadyRead = false;
         for(MessageSeen msg : messageIsSeen) {
             //Get user from original message.
-            User fromUser = repository.findByid(msg.getMessageId()).getFromUser();
+            User fromUser = repository.findMessageById(msg.getMessageId()).getFromUser();
             msg.getRecipientsNotSeenId().remove(id);
 
             //Remove object if all users have seen the message.
@@ -88,7 +84,7 @@ public class MessageService implements IMessageService {
     @Override
     public ResponseEntity<Message> getMessage(String id) {
         if(!id.equals(null)){
-            Message receivedMessage = repository.findByid(id);
+            Message receivedMessage = repository.findMessageById(id);
               return new ResponseEntity<>(receivedMessage, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -100,7 +96,7 @@ public class MessageService implements IMessageService {
         //In case no id is given, but mail is accessible.
         if(user.getId()==null) user = userRepository.findByMail(user.getMail());
 
-        Message message = repository.findByid(mailId);
+        Message message = repository.findMessageById(mailId);
 
         if(message==null || !message.getRecipientsID().contains(user.getId())) return false;
 

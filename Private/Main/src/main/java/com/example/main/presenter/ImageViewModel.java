@@ -32,7 +32,7 @@ public class ImageViewModel extends ViewModel {
         Glide
             .with(fragment)
             .load(url)
-            .centerCrop()
+            .fitCenter()
             .into(view);
     }
 
