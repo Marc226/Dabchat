@@ -3,7 +3,9 @@ package com.example.main.presenter;
 import com.example.main.interfaces.IFriendListRepository;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
+import com.example.main.model.LoginForm;
 import com.example.main.model.Message;
+import com.example.main.model.NetworkResponse;
 import com.example.main.model.User;
 
 import java.util.List;
@@ -49,6 +51,10 @@ public class FriendListViewModel extends ViewModel {
 
     public LiveData<User> getCurrentUser(){
         return loginRepository.autoLogin();
+    }
+
+    public LiveData<NetworkResponse> login(User user){
+        return loginRepository.Login(new LoginForm(user.getMail(), user.getPassWord()));
     }
 
     public LiveData<String> addFriend(String mail) {

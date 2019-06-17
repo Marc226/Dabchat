@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.main.adapter.FriendListAdapter;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
+import com.example.main.model.NetworkResponse;
 import com.example.main.model.User;
 import com.example.main.presenter.FriendListViewModel;
 
@@ -90,6 +92,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         viewModel.getCurrentUser().observe(this, user -> {
             if(user == null){
                 logout();
@@ -180,12 +183,10 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         progressBar = getView().findViewById(R.id.progressBarUpload);
 
         add_friend_button.setOnClickListener(view ->
-                {
-                    viewModel.addFriend(textfield_email.getText().toString()).observe(this, s -> {
-                        updateFriendList();
-                        displayToast(s);
-                    });
-                }
+            viewModel.addFriend(textfield_email.getText().toString()).observe(this, s -> {
+            updateFriendList();
+            displayToast(s);
+        })
         );
 
         logoutBut.setOnClickListener(v -> {
@@ -244,9 +245,8 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.closeDB();
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void logout(){

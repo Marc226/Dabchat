@@ -1,5 +1,7 @@
 package com.example.main.presenter;
 
+import android.util.Log;
+
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.Message;
@@ -14,10 +16,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class MessageListViewModel extends ViewModel {
-    IMessageRepository messageRepository;
-    ILoginRepository loginRepository;
+    private IMessageRepository messageRepository;
+    private ILoginRepository loginRepository;
     private ExecutorService executor;
-    private MutableLiveData<List<Message>> receivedListOfMessages = new MutableLiveData<>();
     private User currentUser;
 
     public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository, ExecutorService executor){
@@ -32,16 +33,20 @@ public class MessageListViewModel extends ViewModel {
 
 
     public LiveData<List<Message>> downloadMessages(){
+        MutableLiveData<List<Message>> receivedListOfMessages = new MutableLiveData<>();
         executor.submit(() ->{
-            messageRepository.receiveMessagesByUserID(currentUser.getId(), receivedListOfMessages);
+            Boolean bool = true;
+            while(bool) {
+                if (currentUser != null) {
+                    messageRepository.receiveMessagesByUserID(currentUser.getId(), receivedListOfMessages);
+                    bool = false;
+                }
+            }
         });
 
         return receivedListOfMessages;
     }
 
-    public void removeRecipent(Message currentMessage){
-        messageRepository.removeUserFromRecipients(currentMessage);
-    }
 
     public void closeDB(){
         loginRepository.closeDB();

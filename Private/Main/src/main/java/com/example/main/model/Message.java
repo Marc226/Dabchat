@@ -1,13 +1,9 @@
 package com.example.main.model;
 
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 
-import java.io.File;
-import java.io.Serializable;
-import android.util.Base64;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +53,19 @@ import androidx.annotation.Keep;
         }
     }
 
-    public byte[] getImage() {
+    public void setStringImage(String image){
+        this.image = image;
+    }
+
+    public String getStringImage(){
+        return this.image;
+    }
+
+    public byte[] getByteImage() {
         return Base64.decode(image, Base64.DEFAULT);
     }
 
-    public void setImage(byte[] image) {
+    public void setByteImage(byte[] image) {
         this.image = Base64.encodeToString(image, Base64.DEFAULT);
 
     }

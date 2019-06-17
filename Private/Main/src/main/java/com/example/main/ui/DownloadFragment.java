@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private List<Message> messageList;
 
 
+
     @Inject
     MessageListViewModel viewModel;
 
@@ -77,7 +79,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
         progressBar = getView().findViewById(R.id.progressBar);
         progressBar.setVisibility(getView().VISIBLE);
         recyclerView = getView().findViewById(R.id.message_recycleView);
-
+        mainActivityController.showNavBar();
     }
 
 
@@ -86,9 +88,8 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        messageListAdapter = new MessageListAdapter(new ArrayList<>(), this);
+        messageListAdapter = new MessageListAdapter(messageList, this);
         recyclerView.setAdapter(messageListAdapter);
-        updateMessageList();
         if(recyclerView.getAdapter().getItemCount() > 0){
             progressBar.setVisibility(View.INVISIBLE);
         }
@@ -104,11 +105,15 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     }
 
     @Override
+    public void onResume() {
+        updateMessageList();
+        super.onResume();
+    }
+
+    @Override
     public void showPopup(int position) {
         Message currentMessage = messageList.get(position);
-        viewModel.removeRecipent(currentMessage);
-        byte[] imageArray = currentMessage.getImage();
-
+        messageList.remove(position);
         DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
         action.setMessage(currentMessage);
 
@@ -116,8 +121,7 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.closeDB();
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

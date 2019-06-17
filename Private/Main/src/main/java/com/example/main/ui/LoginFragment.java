@@ -137,8 +137,7 @@ public class LoginFragment extends DaggerFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.closeDB();
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

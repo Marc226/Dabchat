@@ -78,7 +78,10 @@ public class LoginRepository implements ILoginRepository {
                     Log.d(TAG, "Login attempt failed, at " + call.request().url());
                 } else {
                     message.setValue(NetworkResponse.SUCCESS);
-                    executor.submit(() -> database.userDao().insertCurrentUser(response.body()));
+                    executor.submit(() -> {
+                        database.userDao().dropTable();
+                        database.userDao().insertCurrentUser(response.body());
+                    });
                     Log.d(TAG, "Login attempt successful");
                 }
             }

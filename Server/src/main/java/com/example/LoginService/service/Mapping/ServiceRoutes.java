@@ -67,7 +67,6 @@ public class ServiceRoutes {
     @RequestMapping("/getAllFriends")
     public ResponseEntity<List<User>> getAllFriends(@Valid @RequestBody User user){
         ResponseEntity<List<User>> users = userService.getAllFriends(user);
-        System.out.println(users.getBody().size());
         return users;
     }
 

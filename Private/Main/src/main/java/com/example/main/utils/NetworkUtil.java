@@ -35,7 +35,7 @@ public class NetworkUtil {
         if (checkControl(cacheControl)) {
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
-                    .header("Cache-Control", "public, max-age=" + 5000)
+                    .header("Cache-Control", "public, max-age=" + 500)
                     .build();
         } else {
             return originalResponse;

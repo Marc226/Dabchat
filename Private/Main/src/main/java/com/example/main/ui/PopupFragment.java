@@ -12,6 +12,9 @@ import android.widget.ImageView;
 
 import com.example.main.R;
 import com.example.main.model.Message;
+import com.example.main.presenter.ImageViewModel;
+
+import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,9 @@ import androidx.fragment.app.FragmentManager;
 import dagger.android.support.DaggerFragment;
 
 public class PopupFragment extends DaggerFragment {
+
+    @Inject
+    ImageViewModel viewModel;
 
     private ImageView message_imageView;
 
@@ -33,20 +39,9 @@ public class PopupFragment extends DaggerFragment {
         super.onViewCreated(view, savedInstanceState);
         message_imageView = view.findViewById(R.id.popUpImageView);
         Message message = PopupFragmentArgs.fromBundle(getArguments()).getMessage();
-        byte[] imageArray = message.getImage();
-        Bitmap bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
-
-        ViewTreeObserver vto = message_imageView.getViewTreeObserver();
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                message_imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                message_imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(), bmp.getHeight(), false));
-                return true;
-            }
-        });
-
+        viewModel.loadImage(this, message.getStringImage(), message_imageView);
         message_imageView.setOnClickListener(v -> {
+            viewModel.removeRecipent(message);
             FragmentManager fm = getActivity().getSupportFragmentManager();
             fm.popBackStack();
         });

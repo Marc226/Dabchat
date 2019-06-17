@@ -1,9 +1,6 @@
 package com.example.LoginService.service;
 
-import com.example.LoginService.common.IMessageService;
-import com.example.LoginService.common.MessageRepository;
-import com.example.LoginService.common.MessageSeenRepository;
-import com.example.LoginService.common.UserRepository;
+import com.example.LoginService.common.*;
 import com.example.LoginService.model.Message;
 import com.example.LoginService.model.MessageSeen;
 import com.example.LoginService.model.User;
@@ -19,12 +16,19 @@ import java.util.List;
 @Service
 public class MessageService implements IMessageService {
 
+    private final MessageRepository repository;
+    private final MessageSeenRepository messageSeenRepository;
+    private final UserRepository userRepository;
+    private final IImageService imageService;
+
     @Autowired
-    private MessageRepository repository;
-    @Autowired
-    private MessageSeenRepository messageSeenRepository;
-    @Autowired
-    private UserRepository userRepository;
+    public MessageService(MessageRepository repository, MessageSeenRepository messageSeenRepository, UserRepository userRepository, IImageService imageService) {
+        this.repository = repository;
+        this.messageSeenRepository = messageSeenRepository;
+        this.userRepository = userRepository;
+        this.imageService = imageService;
+    }
+
     @Override
     public ResponseEntity<Message> sendMessage(Message message) {
         if(repository.findByid(message.getId()) == null) {
@@ -104,6 +108,7 @@ public class MessageService implements IMessageService {
         if(message.recipientCount()>0) {
             repository.save(message);
         } else {
+            imageService.removeImagePending(message.getImage());
             repository.delete(message);
         }
 
