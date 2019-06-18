@@ -44,8 +44,6 @@ public class PollNewMessagesService extends Service {
     public PollNewMessagesService() {
     }
 
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
     @Override
     public void onCreate() {
