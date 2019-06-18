@@ -2,6 +2,7 @@ package com.example.main.di.Module;
 
 
 import com.example.main.background.PollNewMessagesService;
+import com.example.main.background.UploadService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,5 +13,8 @@ public abstract class ServiceModule {
 
     @ContributesAndroidInjector
     abstract PollNewMessagesService providePollService();
+
+    @ContributesAndroidInjector
+    abstract UploadService provideUploadService();
 
 }

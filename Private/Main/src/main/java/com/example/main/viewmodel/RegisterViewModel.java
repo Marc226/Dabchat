@@ -1,4 +1,4 @@
-package com.example.main.presenter;
+package com.example.main.viewmodel;
 
 import android.util.Patterns;
 
@@ -7,13 +7,11 @@ import com.example.main.model.User;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.RegisterContract;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class RegisterViewModel extends ViewModel implements RegisterContract.iRegisterViewModel {
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.support.DaggerFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import com.example.main.R;
 import com.example.main.adapter.MessageListAdapter;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
-import com.example.main.presenter.MessageListViewModel;
+import com.example.main.viewmodel.MessageListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,12 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class DownloadFragment extends DaggerFragment implements MessageListAdapter.OnMessageNoteListner {
-
+    private static final String TAG = "DownloadFragment";
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private MessageListAdapter messageListAdapter;
     private List<Message> messageList;
-    private List<Message> excludedMessages = new ArrayList<>();
 
 
     @Inject
@@ -90,22 +90,13 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     private void updateMessageList() {
         viewModel.downloadMessages().observe(this, messages -> {
             messageList = messages;
-            removeExcludedMessages();
             progressBar.setVisibility(getView().INVISIBLE);
             messageListAdapter.updateMessages(messageList);
         });
 
     }
 
-    private void removeExcludedMessages(){
-        for(Message message: messageList){
-            for(Message excludedMessage: excludedMessages){
-                if(message.getId().contains(excludedMessage.getId())){
-                    messageList.remove(message);
-                }
-            }
-        }
-    }
+
 
     @Override
     public void onResume() {
@@ -116,8 +107,6 @@ public class DownloadFragment extends DaggerFragment implements MessageListAdapt
     @Override
     public void showPopup(int position) {
         Message currentMessage = messageList.get(position);
-        excludedMessages.clear();
-        excludedMessages.add(currentMessage);
         DownloadFragmentDirections.DownloadToImage action = DownloadFragmentDirections.downloadToImage();
         action.setMessage(currentMessage);
         Navigation.findNavController(getView()).navigate(action);

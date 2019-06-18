@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-@Singleton
 public class MessageRepository implements IMessageRepository {
 
     private final String TAG = "message repository";
@@ -42,23 +41,22 @@ public class MessageRepository implements IMessageRepository {
 
 
     @Override
-    public void sendMessage(Message message, MutableLiveData<String> data) {
+    public void sendMessage(Message message) {
 
         Call<Message> call = webService.sendMessage(message);
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if(response.isSuccessful()){
-                    data.setValue("Upload successful");
+                    Log.d(TAG, "onResponse: upload successful");
                 } else {
-                    data.setValue("Upload failed");
+                    Log.d(TAG, "onResponse: upload unsuccesful: " + response.code() + " = " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
                 Log.d(TAG, "message service called, but not available\n"+t);
-                data.setValue("Service unavailable!");
             }
         });
     }

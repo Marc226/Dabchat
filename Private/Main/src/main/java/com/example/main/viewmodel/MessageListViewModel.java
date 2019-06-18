@@ -1,6 +1,4 @@
-package com.example.main.presenter;
-
-import android.util.Log;
+package com.example.main.viewmodel;
 
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
@@ -19,6 +17,7 @@ public class MessageListViewModel extends ViewModel {
     private ILoginRepository loginRepository;
     private ExecutorService executor;
     private User currentUser;
+
 
     public MessageListViewModel(IMessageRepository messageRepository, ILoginRepository loginRepository, ExecutorService executor){
         this.messageRepository = messageRepository;
@@ -46,6 +45,11 @@ public class MessageListViewModel extends ViewModel {
         return receivedListOfMessages;
     }
 
+    @Override
+    protected void onCleared() {
+        closeDB();
+        super.onCleared();
+    }
 
     public void closeDB(){
         loginRepository.closeDB();

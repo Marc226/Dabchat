@@ -6,28 +6,31 @@ import android.content.Context;
 import com.example.main.dao.UserDatabase;
 import com.example.main.di.Scopes.LoginScope;
 import com.example.main.di.Scopes.MainActivityScope;
-import com.example.main.presenter.LoginViewModel;
-import com.example.main.presenter.RegisterViewModel;
+import com.example.main.viewmodel.LoginViewModel;
+import com.example.main.viewmodel.RegisterViewModel;
 import com.example.main.ServiceImpl.LoginRepository;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.LoginContract;
 import com.example.main.interfaces.RegisterContract;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
+import androidx.room.RoomDatabase;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 
 @Module
 public class LoginModule {
+
+
     @Provides
-    @LoginScope
+    @MainActivityScope
     public UserDatabase provideUserDatabase(@Named("App-Context")Context context){
-        return Room.databaseBuilder(context, UserDatabase.class, "login").build();
+        return UserDatabase.getDatabase(context);
     }
 
     @Provides

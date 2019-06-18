@@ -22,7 +22,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-@Singleton
 public class FriendListRepository implements IFriendListRepository {
 
     private final String TAG = "FriendList Repo";

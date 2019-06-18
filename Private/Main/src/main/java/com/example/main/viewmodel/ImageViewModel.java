@@ -1,4 +1,4 @@
-package com.example.main.presenter;
+package com.example.main.viewmodel;
 
 import android.util.Log;
 import android.widget.ImageView;
@@ -32,6 +32,9 @@ public class ImageViewModel extends ViewModel {
         Glide
             .with(fragment)
             .load(url)
+            .placeholder(R.drawable.ic_downloading_96dp)
+            .error(R.drawable.ic_image_error_48dp)
+            .dontAnimate()
             .fitCenter()
             .into(view);
     }

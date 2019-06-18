@@ -20,6 +20,7 @@ import androidx.annotation.Keep;
 
 
     public Message (){
+        this.recipientsID = new ArrayList<>();
     }
 
     public Message(String id, byte[] image) {
@@ -75,6 +76,9 @@ import androidx.annotation.Keep;
     }
 
     public void addRecipient(String id){
+        if(recipientsID != null){
+            recipientsID = new ArrayList<>();
+        }
         this.recipientsID.add(id);
     }
 

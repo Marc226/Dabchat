@@ -1,94 +1,91 @@
 package com.example.main.background;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.example.main.R;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.model.User;
-import com.example.main.ui.DownloadFragment;
 import com.example.main.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
-
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.MutableLiveData;
 import dagger.android.AndroidInjection;
 
+import static com.example.main.App.CHANNEL_ID;
+
 
 public class PollNewMessagesService extends Service {
-    private Executor executor;
-    private static String CHANNEL_ID = "Message Notification Channel";
+    public static final String TAG = "Notification Service";
     private List<User> usersThatHasSent;
-    private User currentUser;
 
     @Inject
     IMessageRepository messageRepository;
     @Inject
     ILoginRepository loginRepository;
+    @Inject
+    ExecutorService executor;
 
     public PollNewMessagesService() {
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public void onCreate() {
         AndroidInjection.inject(this);
-        executor = Executors.newSingleThreadExecutor();
         System.out.println("BackgroundService Started!");
         super.onCreate();
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("BackgroundService Start Command!");
-        createNotificationChannel();
         usersThatHasSent = new ArrayList<>();
         final Service s = this;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 if(messageRepository!=null) {
-
                     MutableLiveData<List<User>> users = new MutableLiveData<>();
                     messageRepository.receiveFriendsWithPendingMessages(null, users);
-
                     if(messageRepository.getPendingFromUsers()!=null && messageRepository.getPendingFromUsers().size()>0) {
+                        Log.d(TAG, "run: notfication triggered");
                         String fromUsers = "";
                         for (User user : messageRepository.getPendingFromUsers())
                             fromUsers += user.getMail() + "\n";
 
-                        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                        Intent resultIntent = new Intent(s, MainActivity.class);
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(s);
                         stackBuilder.addNextIntentWithParentStack(resultIntent);
                         PendingIntent resultPendingIntent =
-                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                .setSmallIcon(R.drawable.dabandroid)
+                                .setSmallIcon(R.drawable.ic_notify_24dp)
                                 .setContentTitle("DabChat Message Received!")
                                 .setContentText(fromUsers)
                                 .setContentIntent(resultPendingIntent)
+                                .setAutoCancel(true)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(fromUsers));
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(s);
+                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
                         // notificationId is a unique int for each notification that you must define
                         notificationManager.notify(0, builder.build());
@@ -104,8 +101,8 @@ public class PollNewMessagesService extends Service {
                 }
             }
         };
-        executor.execute(r);
-        return super.onStartCommand(intent, flags, startId);
+        executor.submit(r);
+        return START_STICKY;
     }
     @Override
     public void onDestroy() {
@@ -113,28 +110,11 @@ public class PollNewMessagesService extends Service {
         System.out.println("BackgroundService Destroyed!");
     }
 
-    private boolean userListChanged(List<User> users) {
-        if(this.usersThatHasSent.containsAll(users)) return false;
-
-        usersThatHasSent.clear();
-        usersThatHasSent.addAll(users);
-
-        return true;
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.background_channel_name);
-            String description = getString(R.string.background_channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
 }

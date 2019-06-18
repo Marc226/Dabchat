@@ -4,7 +4,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
@@ -26,7 +25,7 @@ import javax.inject.Inject;
 public class RegisterFragment extends DaggerFragment {
 
     @Inject
-    RegisterContract.iRegisterViewModel presenter;
+    RegisterContract.iRegisterViewModel viewModel;
 
     private EditText email;
     private EditText phone;
@@ -107,10 +106,10 @@ public class RegisterFragment extends DaggerFragment {
     public void setOnClickListener(){
         registerPageButton.setOnClickListener(v -> {
             if(validateForm()){
-                User user = new User(password.getText().toString(), email.getText().toString(), presenter.checkPhoneNumber(phone.getText().toString()));
+                User user = new User(password.getText().toString(), email.getText().toString(), viewModel.checkPhoneNumber(phone.getText().toString()));
                 showInProgress();
                 enableButtonClick(false);
-                presenter.register(user).observe(getViewLifecycleOwner(), networkResponse -> {
+                viewModel.register(user).observe(getViewLifecycleOwner(), networkResponse -> {
                     stopInProgress();
                     enableButtonClick(true);
                     if(networkResponse == NetworkResponse.SUCCESS ){
@@ -127,12 +126,12 @@ public class RegisterFragment extends DaggerFragment {
     }
 
     public boolean validateForm(){
-        if(!presenter.validMail(email.getText().toString()) ||
-                !presenter.checkPasswordMatch(password.getText().toString(), password_repeat.getText().toString()) ||
-                presenter.checkPhoneNumber(phone.getText().toString()) == 0){
+        if(!viewModel.validMail(email.getText().toString()) ||
+                !viewModel.checkPasswordMatch(password.getText().toString(), password_repeat.getText().toString()) ||
+                viewModel.checkPhoneNumber(phone.getText().toString()) == 0){
             return false;
         }
-        if(presenter.stringsEmptyOrNull(email.getText().toString(), password.getText().toString(), password_repeat.getText().toString(), phone.getText().toString())) {
+        if(viewModel.stringsEmptyOrNull(email.getText().toString(), password.getText().toString(), password_repeat.getText().toString(), phone.getText().toString())) {
             return false;
         }
         return true;

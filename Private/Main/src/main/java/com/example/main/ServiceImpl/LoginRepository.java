@@ -23,14 +23,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-@Singleton
 public class LoginRepository implements ILoginRepository {
 
     private final String TAG = "user repository";
 
-    LoginWebService webservice;
-    UserDatabase database;
-    ExecutorService executor;
+    private LoginWebService webservice;
+    private UserDatabase database;
+    private ExecutorService executor;
 
     public LoginRepository(Retrofit retrofit, UserDatabase database, ExecutorService executor){
         this.webservice = retrofit.create(LoginWebService.class);

@@ -37,6 +37,7 @@ dependencies {
     //Version
     def room_version = '2.1.0-alpha07'
     def dagger_version = "2.21"
+    def glide_version = "4.9.0"
 
     //Kotlin-navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
@@ -66,8 +67,8 @@ dependencies {
 
     //Glide
 
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
 
 

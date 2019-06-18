@@ -15,7 +15,7 @@ public abstract class FriendDatabase extends RoomDatabase {
 
     public abstract FriendDao friendDao();
 
-    public static FriendDatabase getMemoryDatabase(Context context){
+    public static FriendDatabase getDatabase(Context context){
         if(INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), FriendDatabase.class, "FriendList")
                     .build();

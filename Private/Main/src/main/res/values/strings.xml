@@ -37,4 +37,8 @@
     <string name="ServiceUnavailable">Service unavailable</string>
     <string name="LoginSuccess">Login Successfully</string>
     <string name="LoginFail">Failed to login</string>
+    <string name="messageUploadId">message</string>
+    <string name="uploadStarted">Upload started</string>
+    <string name="uploadFinish">Upload finished!</string>
+    <string name="uriUploadID">uriUpload</string>
 </resources>

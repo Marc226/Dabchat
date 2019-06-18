@@ -1,4 +1,4 @@
-package com.example.main.presenter;
+package com.example.main.viewmodel;
 
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.model.LoginForm;
@@ -32,4 +32,12 @@ public class LoginViewModel extends ViewModel implements LoginContract.iLoginVie
         LoginForm form = new LoginForm(username, password);
         return repository.Login(form);
     }
+
+    @Override
+    protected void onCleared() {
+        closeDB();
+        super.onCleared();
+    }
+
+
 }

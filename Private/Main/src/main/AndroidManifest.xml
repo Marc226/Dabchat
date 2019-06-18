@@ -21,9 +21,16 @@
             android:name=".background.PollNewMessagesService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="true">
+            android:stopWithTask="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
         </service>
-
+        <service
+            android:name=".background.UploadService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
         
         <activity android:name=".ui.MainActivity">
             <intent-filter>

@@ -1,5 +1,11 @@
-package com.example.main.presenter;
+package com.example.main.viewmodel;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
+import com.example.main.R;
+import com.example.main.background.UploadService;
 import com.example.main.interfaces.IFriendListRepository;
 import com.example.main.interfaces.ILoginRepository;
 import com.example.main.interfaces.IMessageRepository;
@@ -34,7 +40,6 @@ public class FriendListViewModel extends ViewModel {
     private IMessageRepository messageRepository;
 
     private ExecutorService executor;
-    private MutableLiveData<String> sendMes;
     private User currentUser;
     private MutableLiveData<String> friend = new MutableLiveData();
 
@@ -69,13 +74,12 @@ public class FriendListViewModel extends ViewModel {
     }
 
     
-    public LiveData<String> sendMessage(Message message){
-        sendMes = new MutableLiveData<>();
-        executor.submit(() ->{
-            message.setFromUser(this.loginRepository.getLoggedInUser());
-            messageRepository.sendMessage(message, sendMes);
-        });
-        return sendMes;
+    public void sendMessage(Message message, Context context, Uri imageuri){
+        message.setFromUser(currentUser);
+        Intent intent = new Intent(context, UploadService.class);
+        intent.putExtra(context.getString(R.string.messageUploadId), message);
+        intent.putExtra(context.getString(R.string.uriUploadID), imageuri.toString());
+        UploadService.enqueueWork(context, intent);
     }
 
     public void Logout(){

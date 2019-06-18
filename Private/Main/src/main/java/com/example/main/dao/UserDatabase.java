@@ -15,9 +15,9 @@ public abstract class UserDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
 
-    public static UserDatabase getMemoryDatabase(Context context){
+    public static UserDatabase getDatabase(Context context){
         if(INSTANCE == null){
-            INSTANCE = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), UserDatabase.class)
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), UserDatabase.class, "CurrentUserDB")
                     .build();
         }
         return INSTANCE;

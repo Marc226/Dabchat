@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,8 @@ import com.example.main.adapter.FriendListAdapter;
 import com.example.main.interfaces.IMessageRepository;
 import com.example.main.interfaces.MainActivityController;
 import com.example.main.model.Message;
-import com.example.main.model.NetworkResponse;
 import com.example.main.model.User;
-import com.example.main.presenter.FriendListViewModel;
+import com.example.main.viewmodel.FriendListViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,9 +35,6 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,7 +55,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     IMessageRepository userRep;
 
     private RecyclerView recyclerView;
-    private File imageFile;
+
     private ImageView upload_imageView;
     private Button upload_button;
     private Button send_button;
@@ -71,7 +66,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
     private RecyclerView.LayoutManager layoutManager;
     private FriendListAdapter friendListAdapter;
     private EditText textfield_email;
-    byte[] imageData;
+
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
 
@@ -135,20 +130,7 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
             upload_imageView.setImageURI(imageUri);
             upload_imageView.setVisibility(View.VISIBLE);
-            imageFile = new File(imageUri.getPath());
 
-            try (InputStream imageS = this.getContext().getContentResolver().openInputStream(imageUri)) {
-                Bitmap bm = BitmapFactory.decodeStream(imageS);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-                imageData= baos.toByteArray();
-            } catch (FileNotFoundException e) {
-                System.out.println(e);
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
         }
     }
 
@@ -198,24 +180,17 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         upload_button.setOnClickListener(v -> openGallery());
 
         send_button.setOnClickListener(v -> {
-            if (!targetFriends.isEmpty() && imageData != null) {
-                progressBar.setVisibility(View.VISIBLE);
-                send_button.setEnabled(false);
-                upload_button.setEnabled(false);
-                Message m = new Message(null, imageData);
+            if (!targetFriends.isEmpty() && imageUri != null) {
+                Message m = new Message();
                 for(User friend : targetFriends) {
                     m.addRecipient(friend.getId());
                 }
-                viewModel.sendMessage(m).observe(getViewLifecycleOwner(), s -> {
-                    displayToast(s);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    send_button.setEnabled(true);
-                    upload_button.setEnabled(true);
-                    upload_imageView.setImageResource(0);
-                    friendListAdapter.updateFriends(friendList);
-                    targetFriends.clear();
-                    upload_imageView.setVisibility(View.INVISIBLE);
-                });
+                viewModel.sendMessage(m, getContext(), imageUri);
+                upload_imageView.setImageResource(0);
+                friendListAdapter.updateFriends(friendList);
+                targetFriends.clear();
+                upload_imageView.setVisibility(View.INVISIBLE);
+
             } else if(targetFriends.isEmpty()){
                 displayToast("Please select a friend");
             } else {

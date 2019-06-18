@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 
 public interface IMessageRepository{
-    void sendMessage (Message message, MutableLiveData<String> data);
+    void sendMessage (Message message);
     void receiveFriendsWithPendingMessages(String id, MutableLiveData<List<User>> data);
     List<User> getPendingFromUsers();
     void receiveMessagesByUserID(String id, MutableLiveData<List<Message>> data);
