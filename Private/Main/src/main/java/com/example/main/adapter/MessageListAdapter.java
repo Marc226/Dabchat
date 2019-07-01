@@ -46,7 +46,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         @Override
         public void onClick(View v) {
-            System.out.println("Hello");
             noteListner.showPopup(getAdapterPosition());
         }
     }
@@ -77,7 +76,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public void onBindViewHolder(@NonNull MessageListViewHolder holder, int position) {
        this.currentMessage = messageList.get(position);
-        System.out.println("messageName: "+holder.messageName);
 
 
         holder.messageName.setText(currentMessage.getFromUser().getMail());

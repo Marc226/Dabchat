@@ -62,8 +62,8 @@ public class RegisterService implements IRegisterService {
 
 
     @Override
-    public ResponseEntity<User> getProfile(ObjectId id) {
-        User user = repository.findById(id);
+    public ResponseEntity<User> getProfile(String id) {
+        User user = repository.findUserById(id);
 
         user.setPassWord(null);
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 
@@ -130,7 +132,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
 
             upload_imageView.setImageURI(imageUri);
             upload_imageView.setVisibility(View.VISIBLE);
-
         }
     }
 
@@ -228,5 +229,6 @@ public class UploadFragment extends DaggerFragment implements FriendListAdapter.
         NavController navController = Navigation.findNavController(getActivity(), R.id.main_nav);
         navController.navigate(UploadFragmentDirections.actionUploadFragmentToLoginFragment());
     }
+
 
 }

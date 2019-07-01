@@ -76,7 +76,7 @@ import androidx.annotation.Keep;
     }
 
     public void addRecipient(String id){
-        if(recipientsID != null){
+        if(recipientsID == null){
             recipientsID = new ArrayList<>();
         }
         this.recipientsID.add(id);

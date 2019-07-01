@@ -81,6 +81,7 @@ public class FriendListRepository implements IFriendListRepository {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if(response.isSuccessful()){
                     executor.execute(()->{
+                        database.friendDao().dropTable();
                         for(User user: response.body()){
                             database.friendDao().insertFriend(user);
                         }

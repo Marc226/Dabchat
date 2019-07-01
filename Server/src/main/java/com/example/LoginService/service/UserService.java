@@ -27,14 +27,15 @@ public class UserService implements IUserService {
 
     @Override
     public ResponseEntity<List<User>> getAllFriends(User user) {
-        user = repository.findById(user.getId()).get();
+        user = repository.findUserById(user.getId());
         List<User> populatedFriendsList = new ArrayList<>();
-        for(String mail : user.getFrientList()){
-            User friend = repository.findByMail(mail);
-            friend.createFriendList();
-            friend.setPassWord("");
-            populatedFriendsList.add(friend);
-
+        if(user.getFrientList() != null) {
+            for (String mail : user.getFrientList()) {
+                User friend = repository.findByMail(mail);
+                friend.createFriendList();
+                friend.setPassWord("");
+                populatedFriendsList.add(friend);
+            }
         }
         return new ResponseEntity<List<User>>(populatedFriendsList, HttpStatus.OK);
     }

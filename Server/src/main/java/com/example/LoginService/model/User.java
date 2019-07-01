@@ -9,7 +9,7 @@ import java.util.List;
 public class User {
 
     @Id
-    private String _id;
+    private String id;
 
     private String firstName = "";
     private String lastName = "";
@@ -23,17 +23,17 @@ public class User {
     }
 
     public User(String id, String passWord, String mail) {
-        this._id = id;
+        this.id = id;
         this.passWord = passWord;
         this.mail = mail;
     }
 
     public String getId() {
-        return _id;
+        return id;
     }
 
     public void setId(String id) {
-        this._id = id;
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -87,7 +87,7 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof User)) return false;
-        return _id.equals(((User) obj)._id);
+        return id.equals(((User) obj).id);
     }
 
     public void setFrientList(List<String> frientList) {
